@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BaThemeConfigProvider, colorHelper} from '../../../theme';
 
 @Injectable()
-export class PieChartService {
+export class KpiContainerService {
 
   constructor(private _baConfig:BaThemeConfigProvider) {
   }
@@ -12,24 +12,19 @@ export class PieChartService {
     return [
       {
         color: pieColor,
-        description: 'New Visits',
+        description: 'T-12 NOI',
         stats: '57,820',
-        icon: 'person',
-      }, {
-        color: pieColor,
-        description: 'Purchases',
-        stats: '$ 89,745',
         icon: 'money',
       }, {
         color: pieColor,
-        description: 'Active Users',
-        stats: '178,391',
-        icon: 'face',
+        description: 'T-12 Net Income',
+        stats: '89,745',
+        icon: 'money',
       }, {
         color: pieColor,
-        description: 'Returned',
-        stats: '32,592',
-        icon: 'refresh',
+        description: 'T-12 DCR',
+        stats: '178,391',
+        icon: 'money',
       }
     ];
   }

@@ -7,12 +7,38 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Dashboard',
-            icon: 'ion-android-home',
+            icon: 'ion-stats-bars',
             selected: false,
             expanded: false,
             order: 0
           }
-        }
+        },
+        children: [
+          {
+            path: 'financial',
+            data: {
+              menu: {
+                title: 'Financial',
+              }
+            }
+          },
+          {
+            path: 'operation',
+            data: {
+              menu: {
+                title: 'Operation',
+              }
+            }
+          },
+          {
+            path: 'cash',
+            data: {
+              menu: {
+                title: 'Cash Analysis',
+              }
+            }
+          }
+        ]
       },
       {
         path: 'editors',

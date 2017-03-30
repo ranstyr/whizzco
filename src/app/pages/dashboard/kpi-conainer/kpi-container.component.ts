@@ -1,22 +1,22 @@
 import {Component} from '@angular/core';
 
-import {PieChartService} from './pieChart.service';
+import {KpiContainerService} from './kpi-container.service';
 
 import 'easy-pie-chart/dist/jquery.easypiechart.js';
-import 'style-loader!./pieChart.scss';
+import 'style-loader!./kpi-container.scss';
 
 @Component({
-  selector: 'pie-chart',
-  templateUrl: './pieChart.html'
+  selector: 'kpi-container',
+  templateUrl: 'kpi-container.html'
 })
 // TODO: move easypiechart to component
-export class PieChart {
+export class kpiContainer {
 
   public charts: Array<Object>;
   private _init = false;
 
-  constructor(private _pieChartService: PieChartService) {
-    this.charts = this._pieChartService.getData();
+  constructor(private _KpiContainerService: KpiContainerService) {
+    this.charts = this._KpiContainerService.getData();
   }
 
   ngAfterViewInit() {

@@ -18,7 +18,7 @@ import { ChartistJsService } from './components/chartistJs/chartistJs.service';
   ],
   declarations: [
     Charts,
-    ChartistJs
+    ChartistJs,
   ],
   providers: [
     ChartistJsService

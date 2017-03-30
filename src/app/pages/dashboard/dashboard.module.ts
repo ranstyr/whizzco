@@ -3,11 +3,18 @@ import { CommonModule }  from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
 
+
 import { Dashboard } from './dashboard.component';
 import { routing }       from './dashboard.routing';
 
+import { FinancialDashboard } from './pages/financial'
+import { OperationDashboard } from './pages/operation'
+import { CashDashboard } from './pages/cash'
+
+
+
 import { PopularApp } from './popularApp';
-import { PieChart } from './pieChart';
+import { kpiContainer } from './kpi-conainer';
 import { TrafficChart } from './trafficChart';
 import { UsersMap } from './usersMap';
 import { LineChart } from './lineChart';
@@ -17,7 +24,7 @@ import { Calendar } from './calendar';
 import { CalendarService } from './calendar/calendar.service';
 import { FeedService } from './feed/feed.service';
 import { LineChartService } from './lineChart/lineChart.service';
-import { PieChartService } from './pieChart/pieChart.service';
+import { KpiContainerService } from './kpi-conainer/kpi-container.service';
 import { TodoService } from './todo/todo.service';
 import { TrafficChartService } from './trafficChart/trafficChart.service';
 import { UsersMapService } from './usersMap/usersMap.service';
@@ -31,20 +38,23 @@ import { UsersMapService } from './usersMap/usersMap.service';
   ],
   declarations: [
     PopularApp,
-    PieChart,
+    kpiContainer,
     TrafficChart,
     UsersMap,
     LineChart,
     Feed,
     Todo,
     Calendar,
-    Dashboard
+    Dashboard,
+    FinancialDashboard,
+    OperationDashboard,
+    CashDashboard
   ],
   providers: [
     CalendarService,
     FeedService,
     LineChartService,
-    PieChartService,
+    KpiContainerService,
     TodoService,
     TrafficChartService,
     UsersMapService
