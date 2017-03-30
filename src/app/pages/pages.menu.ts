@@ -41,6 +41,28 @@ export const PAGES_MENU = [
         ]
       },
       {
+        path: 'properties',
+        data: {
+          menu: {
+            title: 'Properties',
+            icon: 'ion-stats-bars',
+            selected: false,
+            expanded: false,
+            order: 0
+          }
+        },
+        children: [
+          {
+            path: 'list',
+            data: {
+              menu: {
+                title: 'Properties List',
+              }
+            }
+          }
+        ]
+      },
+      {
         path: 'editors',
         data: {
           menu: {

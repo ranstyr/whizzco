@@ -31,6 +31,11 @@ export class App {
               private viewContainerRef: ViewContainerRef,
               private themeConfig: BaThemeConfig) {
 
+    //todo ran - need to add login page!!!!!!!
+    localStorage.setItem('company', 'syndi');
+    //////////////////////////////
+
+
     themeConfig.config();
 
     this._loadImages();

@@ -61,7 +61,7 @@ export class mortgageBalanceChartComponent {
           verticalAlign: 'bottom',
           y: 0,
           floating: false,
-          backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+          backgroundColor: null,
           shadow: false
         },
         tooltip: {

@@ -18,6 +18,9 @@ import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
 
+import { AngularFireModule } from 'angularfire2';
+
+
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
@@ -46,7 +49,14 @@ export type StoreType = {
     ReactiveFormsModule,
     NgaModule.forRoot(),
     PagesModule,
-    routing
+    routing,
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyBjD_n5SfImCqK1n8RKdHnVvbNIoWIiTEU",
+      authDomain: "syndi-finance.firebaseapp.com",
+      databaseURL: "https://syndi-finance.firebaseio.com",
+      storageBucket: "syndi-finance.appspot.com",
+      messagingSenderId: "564436814559"
+    }),
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
