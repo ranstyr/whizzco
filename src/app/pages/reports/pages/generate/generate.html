@@ -1,0 +1,97 @@
+<div baCardBlur class="card">
+  <div *ngIf="title" class="card-header clearfix">
+    <h3 class="card-title">{{title}}</h3>
+  </div>
+  <div class="card-body">
+    <div class="generate">
+      <form class="form-horizontal">
+        <!--Report Type-->
+        <div class="form-group row">
+          <label for="report-type" class="col-sm-2 form-control-label">Report Type</label>
+          <div class="col-sm-10">
+            <select (change)="selectorReportOnChange($event.target.value)" class="form-control" id="report-type">
+              <option [value]="i" *ngFor="let i of reports">{{i}}</option>
+            </select></div>
+        </div>
+        <!--Properties-->
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-2 form-control-label">Properties</label>
+          <div class="col-sm-10">
+            <form [formGroup]="form">
+              <ng-select
+                [options]="optionsProperties"
+                [multiple]="multiple1"
+                placeholder="Select Properties"
+                formControlName="selectMultiple"
+                (opened)="onMultipleOpened()"
+                (closed)="onMultipleClosed()"
+                (selected)="onMultipleSelected($event)"
+                (deselected)="onMultipleDeselected($event)">
+              </ng-select>
+              <!--
+              <pre #preMultiple>{{logMultipleString}}</pre>
+              -->
+            </form>
+
+          </div>
+        </div>
+        <!--Granularity-->
+        <div class="form-group row">
+          <label for="granularity" class="col-sm-2 form-control-label">Granularity</label>
+          <div class="col-sm-10">
+            <select (change)="selectorGranularityOnChange($event.target.value)" class="form-control" id="granularity">
+              <option [value]="i" *ngFor="let i of granularity">{{i}}</option>
+            </select></div>
+        </div>
+        <!--Pick Dates-->
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-2 form-control-label">Pick Dates</label>
+          <div class="col-sm-10">
+            <form [formGroup]="form">
+              <div class="input-group" daterangepicker (selected)="selectedDate($event, mainInput)"
+                   (cancelDaterangepicker)="calendarEventsHandler($event)"
+                   (applyDaterangepicker)="calendarEventsHandler($event)"
+                   (hideDaterangepicker)="calendarEventsHandler($event)"
+                   (showDaterangepicker)="calendarEventsHandler($event)"
+              >
+                    <span class="form-control uneditable-input" name="daterange">
+                        {{ mainInput.start | date:'M/dd/y' }} - {{ mainInput.end| date:'M/dd/y' }}
+                    </span>
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-info btn-icon btn-color"><i class="ion-calendar"></i></button>
+          </span>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!--Send To:-->
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-2 form-control-label">Send To:</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="inputEmail3" placeholder="Syndi@example.com">
+          </div>
+        </div>
+
+
+        <div class="form-group row">
+          <div class="offset-sm-2 col-sm-10">
+            <button type="submit" data-toggle="modal" data-target="#generate-report" class="btn btn-warning">Generate
+              Report
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <ba-modals></ba-modals>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+

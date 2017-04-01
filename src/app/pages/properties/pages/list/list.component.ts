@@ -1,9 +1,7 @@
-import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component} from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { ListService } from './list.service'
 import 'style-loader!./list.scss';
-import { Observable } from "rxjs";
-import { FirebaseListObservable, FirebaseObjectObservable } from "angularfire2";
+import { BaPropertiesModel } from "../../../../theme/services/model/BaPropertiesModel";
 
 @Component({
   selector: 'list-component',
@@ -183,27 +181,18 @@ export class ListProperties {
   };
 
 
-  constructor(public _ListService:ListService) {
+  constructor(private _BaPropertiesModel : BaPropertiesModel) {
     this.listData = new LocalDataSource();
   }
 
   ngOnInit() {
-    this._ListService.getDataObservable()
-      .map((value : any)=>{
-        let _Data = [];
-        let tempArr = value ? value.data : null;
-        if (tempArr) {
-          for (let key in tempArr) {
-            _Data.push(tempArr[ key ]);
-          }
-          this.listData.load(_Data);
-          return _Data;
-        }else return null;
-
-      })
+    this._BaPropertiesModel.getDataObservable()
       .subscribe((value : any)=>{
-        console.log("value" + value);
-    })
+        //LocalDataSource load the Properties data
+        //_BaPropertiesModel.getData returns the data in the right format
+        //this.listData.load asynch load for ng2-smart-table
+        this.listData.load(this._BaPropertiesModel.getData(value));
+      })
   }
 
   ngAfterViewInit() {

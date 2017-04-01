@@ -7,7 +7,6 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { routing }       from './properties.routing';
 import { Properties } from './properties.component';
 import { ListProperties } from "./pages/list/list.component";
-import { ListService } from "./pages/list/list.service";
 
 
 @NgModule({
@@ -21,9 +20,6 @@ import { ListService } from "./pages/list/list.service";
   declarations: [
     Properties,
     ListProperties
-  ],
-  providers: [
-    ListService
   ]
 })
 export class PropertiesModule {

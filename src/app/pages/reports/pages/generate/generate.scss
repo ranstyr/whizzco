@@ -1,0 +1,66 @@
+@import '../../../../theme/sass/conf/conf';
+
+
+select.form-control[multiple] {
+  overflow-y: scroll;
+}
+
+select.form-control {
+  color: $default;
+}
+
+ng-select > div {
+  color: #ffffff;
+  border: 1px solid #bbcfe7!important;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  font-size: 14px;
+}
+
+ng-select > div > div.multiple input{
+  height: 2rem!important;
+}
+
+select-dropdown > div {
+  z-index: 10!important;
+  background-color: #61a7d2!important;
+}
+
+ng-select > div > div.multiple > div.option {
+  background-color: #ebf2f9!important;
+}
+
+
+
+.multiple {
+  input {
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+    font-size: 14px;
+  }
+}
+
+.generate {
+  .input-group {
+    margin-bottom: 0px!important;
+  }
+  .input-group-btn {
+    .btn-color {
+      background: #6683b7;
+      border-color: #bac9e0;
+      line-height: 1.38;
+    }
+  }
+  .form-control{
+    height: 2rem!important;
+  }
+  .input-group .form-control{
+    border-bottom-left-radius: 5px; border-top-left-radius: 5px;
+  }
+}
+
+

@@ -69,6 +69,22 @@ export class operationalExpenseAnalysisChartComponent {
         pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y}</b> ({point.percentage:.0f}%)<br/>',
         shared: true
       },
+      navigation: {
+        buttonOptions: {
+          theme: {
+            fill: "#71B0D9",
+            states: {
+              hover: {
+                fill: '#5585C0'
+              },
+              select: {
+                stroke: '#039',
+                fill: '#5585C0'
+              }
+            }
+          }
+        }
+      },
       plotOptions: {
         column: {
           stacking: 'normal',

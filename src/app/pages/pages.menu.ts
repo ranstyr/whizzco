@@ -45,7 +45,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Properties',
-            icon: 'ion-stats-bars',
+            icon: 'ion-android-funnel',
             selected: false,
             expanded: false,
             order: 0
@@ -57,6 +57,28 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: 'Properties List',
+              }
+            }
+          }
+        ]
+      },
+      {
+        path: 'reports',
+        data: {
+          menu: {
+            title: 'Reports',
+            icon: 'ion-android-funnel',
+            selected: false,
+            expanded: false,
+            order: 0
+          }
+        },
+        children: [
+          {
+            path: 'generate',
+            data: {
+              menu: {
+                title: 'Generate Reports',
               }
             }
           }

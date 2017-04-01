@@ -68,6 +68,22 @@ export class mortgageBalanceChartComponent {
           headerFormat: '<b>{point.x}</b><br/>',
           pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
         },
+        navigation: {
+          buttonOptions: {
+            theme: {
+              fill: "#5B8DB5",
+              states: {
+                hover: {
+                  fill: '#5585C0'
+                },
+                select: {
+                  stroke: '#039',
+                  fill: '#5585C0'
+                }
+              }
+            }
+          }
+        },
         plotOptions: {
           column: {
             stacking: 'normal',

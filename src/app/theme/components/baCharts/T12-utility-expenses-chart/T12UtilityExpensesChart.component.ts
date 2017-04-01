@@ -63,6 +63,22 @@ export class T12UtilityExpenseChartComponent {
             },
           }
         },
+        navigation: {
+          buttonOptions: {
+            theme: {
+              fill: "#5B8DB5",
+              states: {
+                hover: {
+                  fill: '#5585C0'
+                },
+                select: {
+                  stroke: '#039',
+                  fill: '#5585C0'
+                }
+              }
+            }
+          }
+        },
         series: [{
           name: 'Brands',
           colorByPoint: true,

@@ -48,6 +48,22 @@ export class noiNetIncomeChartComponent {
         credits: {
           enabled: false
         },
+        navigation: {
+          buttonOptions: {
+            theme: {
+              fill: "#5B8DB5",
+              states: {
+                hover: {
+                  fill: '#5585C0'
+                },
+                select: {
+                  stroke: '#039',
+                  fill: '#5585C0'
+                }
+              }
+            }
+          }
+        },
         series: [{
           name: 'NOI',
           data: [15599, 16009, 15628, 5890, 15618, 16068, 15033, 6705, 15646, 15876, 16387, 16214]

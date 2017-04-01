@@ -1,5 +1,11 @@
 @import "~normalize.css";
 @import "theme/theme";
 
-.highcharts-background {
+.daterangepicker.dropdown-menu {
+  background-color: #42609f;
 }
+
+.daterangepicker .calendar-table, .daterangepicker .input-mini {
+  background-color: whitesmoke;
+}
+

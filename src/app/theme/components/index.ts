@@ -13,4 +13,4 @@ export * from './baPictureUploader';
 export * from './baCheckbox';
 export * from './baMultiCheckbox';
 export * from './baCharts';
-
+export * from './baModals';

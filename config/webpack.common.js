@@ -337,6 +337,8 @@ module.exports = function (options) {
         $: "jquery",
         jQuery: "jquery",
         "window.jQuery": "jquery",
+        moment: "moment",
+        "window.moment": "moment",
         Tether: "tether",
         "window.Tether": "tether",
         Tooltip: "exports-loader?Tooltip!bootstrap/js/dist/tooltip",

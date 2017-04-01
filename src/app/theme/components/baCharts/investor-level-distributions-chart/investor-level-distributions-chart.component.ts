@@ -78,6 +78,22 @@ export class investorLevelDistributionsChartComponent {
       tooltip: {
         shared: true
       },
+      navigation: {
+        buttonOptions: {
+          theme: {
+            fill: "#71B0D9",
+            states: {
+              hover: {
+                fill: '#5585C0'
+              },
+              select: {
+                stroke: '#039',
+                fill: '#5585C0'
+              }
+            }
+          }
+        }
+      },
       series: [{
         name: 'Distributions',
         type: 'column',

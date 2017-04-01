@@ -64,6 +64,22 @@ export class T12MaintenanceExpensesChartComponent {
             },
           }
         },
+        navigation: {
+          buttonOptions: {
+            theme: {
+              fill: "#71B0D9",
+              states: {
+                hover: {
+                  fill: '#5585C0'
+                },
+                select: {
+                  stroke: '#039',
+                  fill: '#5585C0'
+                }
+              }
+            }
+          }
+        },
         series: [ {
           type: 'pie',
           name: 'Expense amount',
