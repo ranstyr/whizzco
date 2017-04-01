@@ -67,7 +67,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Reports',
-            icon: 'ion-android-funnel',
+            icon: 'ion-document',
             selected: false,
             expanded: false,
             order: 0

@@ -54,8 +54,7 @@ export type StoreType = {
       apiKey: "AIzaSyBjD_n5SfImCqK1n8RKdHnVvbNIoWIiTEU",
       authDomain: "syndi-finance.firebaseapp.com",
       databaseURL: "https://syndi-finance.firebaseio.com",
-      storageBucket: "syndi-finance.appspot.com",
-      messagingSenderId: "564436814559"
+      storageBucket: "syndi-finance.appspot.com"
     }),
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
