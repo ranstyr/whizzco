@@ -4,7 +4,7 @@
   </div>
   <div class="card-body">
     <div class="generate">
-      <form class="form-horizontal">
+      <form class="form-horizontal" (submit)="submitForm()">
         <!--Report Type-->
         <div class="form-group row">
           <label for="report-type" class="col-sm-2 form-control-label">Report Type</label>
@@ -75,7 +75,7 @@
 
         <div class="form-group row">
           <div class="offset-sm-2 col-sm-10">
-            <button type="submit" data-toggle="modal" data-target="#generate-report" class="btn btn-warning">Generate
+            <button type="submit" class="btn btn-warning">Generate
               Report
             </button>
           </div>

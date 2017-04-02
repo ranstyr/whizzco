@@ -18,7 +18,7 @@ import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
 
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 
 // Application wide providers
@@ -31,6 +31,23 @@ export type StoreType = {
   state: InternalStateType,
   restoreInputValues: () => void,
   disposeOldHosts: () => void
+};
+
+export const FirebaseConfig = {
+  apiKey: "AIzaSyBjD_n5SfImCqK1n8RKdHnVvbNIoWIiTEU",
+  authDomain: "syndi-finance.firebaseapp.com",
+  databaseURL: "https://syndi-finance.firebaseio.com",
+  storageBucket: "syndi-finance.appspot.com",
+  messagingSenderId: "564436814559"
+};
+
+//todo ran we can delete firebase init or angularfire init
+firebase.initializeApp(FirebaseConfig);
+
+
+export const FirebaseAuthConfig = {
+  provider: AuthProviders.Password,
+  method: AuthMethods.Password
 };
 
 /**
@@ -50,12 +67,8 @@ export type StoreType = {
     NgaModule.forRoot(),
     PagesModule,
     routing,
-    AngularFireModule.initializeApp({
-      apiKey: "AIzaSyBjD_n5SfImCqK1n8RKdHnVvbNIoWIiTEU",
-      authDomain: "syndi-finance.firebaseapp.com",
-      databaseURL: "https://syndi-finance.firebaseio.com",
-      storageBucket: "syndi-finance.appspot.com"
-    }),
+    AngularFireModule.initializeApp(FirebaseConfig, FirebaseAuthConfig),
+
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

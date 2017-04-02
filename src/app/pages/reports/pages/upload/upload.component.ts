@@ -1,76 +1,47 @@
-import { Component } from '@angular/core';
-import 'style-loader!./generate.scss';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import 'style-loader!./upload.scss';
 import { FormGroup, FormControl } from "@angular/forms";
 import { Daterangepicker } from 'ng2-daterangepicker';
 import { DaterangepickerConfig } from 'ng2-daterangepicker';
 import { BaPropertiesModel } from "../../../../theme/services/model/BaPropertiesModel";
 import { FirebaseObjectObservable } from "angularfire2";
 import { ModalDirective } from 'ng2-bootstrap';
+import { NgUploaderOptions } from "ngx-uploader";
+import { BaFilesUploader } from "../../../../theme/components/baFilesUploader/baFilesUploader.component";
 
 
-declare var moment: any;
 
 
 @Component({
-  selector: 'generate-component',
-  templateUrl: 'generate.html',
+  selector: 'upload-component',
+  templateUrl: 'upload.html',
 })
 
-export class GenerateReport {
+export class UploadReport {
 
-  // The FormGroup object as you may remember from the simple form example exposes various API’s for dealing with forms. Here we are creating a new object and setting its type to FormGroup
-  complexForm: FormGroup;
-
-  //modal
-  generateReportModal: any;
-
-  //datepicker
-
-  public mainInput = {
-    start: moment().subtract(3, 'month'),
-    end: moment().subtract(0, 'month')
-  };
-
-  public eventLog = '';
-
-
-  //selects
-
-  granularity = 'Yearly,Quarterly,Monthly'.split(',');
-  selectedGranularity = 'Yearly';
-
-  reports = 'Cash Flow,Cash Reconciling,VAR,Bookkeeping,Budget'.split(',');
+  reports = 'Properties,General Ledger,Budget,Rent Roll,Bank statements,Landlord expenses,Partnership expenses,corporate expense'.split(',');
   selectedReport = 'Properties';
 
-  //properties
+  //properties multi select
   propertiesRef: FirebaseObjectObservable<any>;
   properties: Array<string>;
   selectedProperty = '';
 
-
-  //multi select
   multiple1: boolean = true;
   optionsProperties: Array<any> = [];
   logMultipleString: string = '';
   form: FormGroup;
 
+  @ViewChild(BaFilesUploader) BaFilesUploader: BaFilesUploader;
 
-  constructor( private daterangepickerOptions: DaterangepickerConfig, private _BaPropertiesModel: BaPropertiesModel ) {
-    //datepicker
-    this.daterangepickerOptions.settings = {
-      locale: {format: 'YYYY-MM-DD'},
-      alwaysShowCalendars: false,
-      ranges: {
-        'Last Month': [ moment().subtract(1, 'month'), moment() ],
-        'Last 3 Months': [ moment().subtract(4, 'month'), moment() ],
-        'Last 6 Months': [ moment().subtract(6, 'month'), moment() ],
-        'Last 12 Months': [ moment().subtract(12, 'month'), moment() ],
-      }
-    };
+
+
+  constructor( private _BaPropertiesModel: BaPropertiesModel ) {
+
   }
 
   ngOnInit() {
-    //multiselct
+    //properties multiselct
     this.form = new FormGroup({});
     this.form.addControl('selectSingle', new FormControl(''));
     this.form.addControl('selectMultiple', new FormControl(''));
@@ -100,9 +71,7 @@ export class GenerateReport {
   submitForm( value: any ): void {
     console.log('Reactive Form Data: ');
     console.log(value);
-    this.generateReportModal = $('#generate-report');
-    this.generateReportModal.modal('show');
-
+    this.BaFilesUploader.handleFileSelect();
   }
 
 
@@ -120,33 +89,10 @@ export class GenerateReport {
     // ... do other stuff here ...
   }
 
-  selectorGranularityOnChange( newValue ) {
-    console.log(newValue);
-    this.selectedGranularity = newValue;
-    // ... do other stuff here ...
-  }
 
 
-  //datePicker////////////////////////
-  private selectedDate( value: any, dateInput: any ) {
-    dateInput.start = value.start;
-    dateInput.end = value.end;
-  }
 
-
-  private applyDate( value: any, dateInput: any ) {
-    dateInput.start = value.start;
-    dateInput.end = value.end;
-  }
-
-  public calendarEventsHandler( e: any ) {
-    console.log(e);
-    this.eventLog += '\nEvent Fired: ' + e.event.type;
-  }
-
-  ///////////////////////////////////
-
-  //multi selcet  /////////////////////////////////////////////////////////////
+  //properties multi selcet  /////////////////////////////////////////////////////////////
 
   onMultipleOpened() {
     this.logMultiple('- opened');

@@ -1,1 +1,14 @@
 @import '../../theme/sass/auth';
+
+.auth-main{
+  .error-label{
+    text-align: center;
+    color: red;
+    font-size: inherit;
+    display: block;
+    transition: all 0.2s ease;
+    text-decoration: none !important;
+    font: 14px/16px "Roboto", sans-serif;
+    font-weight: bold;
+  }
+}

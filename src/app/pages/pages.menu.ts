@@ -81,10 +81,18 @@ export const PAGES_MENU = [
                 title: 'Generate Reports',
               }
             }
+          },
+          {
+            path: 'upload',
+            data: {
+              menu: {
+                title: 'Upload Reports',
+              }
+            }
           }
         ]
       },
-      {
+/*      {
         path: 'editors',
         data: {
           menu: {
@@ -382,13 +390,13 @@ export const PAGES_MENU = [
             ]
           }
         ]
-      },
+      },*/
       {
         path: '',
         data: {
           menu: {
             title: 'External Link',
-            url: 'http://akveo.com',
+            url: 'https://gosyndi.com',
             icon: 'ion-android-exit',
             order: 800,
             target: '_blank'

@@ -1,7 +1,7 @@
 <div class="auth-main">
   <div class="auth-block">
-    <h1>Sign up to ng2-admin</h1>
-    <a routerLink="/login" class="auth-link">Already have an ng2-admin account? Sign in!</a>
+    <h1>Sign up to Syndi</h1>
+    <a routerLink="/login" class="auth-link">Already have an Syndi account? Sign in!</a>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
       <div class="form-group row" [ngClass]="{'has-error': (!name.valid && name.touched), 'has-success': (name.valid && name.touched)}">
@@ -18,6 +18,13 @@
           <input [formControl]="email" type="email" class="form-control" id="inputEmail3" placeholder="Email">
         </div>
       </div>
+      <div class="form-group row" [ngClass]="{'has-error': (!company.valid && company.touched), 'has-success': (company.valid && company.touched)}">
+        <label for="company" class="col-sm-2 control-label">Company</label>
+
+        <div class="col-sm-10">
+          <input [formControl]="company" type="company" class="form-control" id="company" placeholder="Company">
+        </div>
+      </div>
       <div class="form-group row" [ngClass]="{'has-error': (!password.valid && password.touched), 'has-success': (password.valid && password.touched)}">
         <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
 
@@ -30,8 +37,11 @@
 
         <div class="col-sm-10">
           <input [formControl]="repeatPassword" type="password" class="form-control" id="inputPassword4" placeholder="Repeat">
-          <span *ngIf="!passwords.valid && (password.touched || repeatPassword.touched)" class="help-block sub-little-text">Passwords don't match.</span>
+          <span *ngIf="!passwords.valid && (password.touched || repeatPassword.touched)" class="help-block sub-little-text error-label">Passwords don't match.</span>
         </div>
+      </div>
+      <div class="form-group row" [ngClass]="{'has-error': (loginErrorMessage)}">
+        <label for="company" class="col-sm-12 help-block sub-little-text error-label">{{loginErrorMessage}}</label>
       </div>
       <div class="form-group row">
         <div class="offset-sm-2 col-sm-10">

@@ -1,0 +1,75 @@
+<div baCardBlur class="card">
+  <div *ngIf="title" class="card-header clearfix">
+    <h3 class="card-title">{{title}}</h3>
+  </div>
+  <div class="card-body">
+    <div class="upload">
+      <div class="row">
+        <div class="col-md-6">
+          <form class="form-horizontal" (submit)="submitForm()">
+            <!--Report Type-->
+            <div class="form-group row">
+              <label for="report-type" class="col-sm-3 form-control-label">Report Type</label>
+              <div class="col-sm-9">
+                <select (change)="selectorReportOnChange($event.target.value)" class="form-control" id="report-type">
+                  <option [value]="i" *ngFor="let i of reports">{{i}}</option>
+                </select></div>
+            </div>
+            <!--Properties-->
+            <div *ngIf="selectedReport!='Properties'">
+              <div class="form-group row">
+                <div class="col-sm-3">
+                  <label class="form-control-label properties-label">Properties</label>
+                  <i class="fa fa-info-circle properties-icon" tooltip="Please select the properties for which the report contains data"
+                     data-placement="bottom" aria-hidden="true"></i>
+                </div>
+                <div class="col-sm-9">
+                  <form [formGroup]="form">
+                    <ng-select
+                      [options]="optionsProperties"
+                      [multiple]="multiple1"
+                      placeholder="Select Properties"
+                      formControlName="selectMultiple"
+                      (opened)="onMultipleOpened()"
+                      (closed)="onMultipleClosed()"
+                      (selected)="onMultipleSelected($event)"
+                      (deselected)="onMultipleDeselected($event)">
+                    </ng-select>
+                    <!--
+                    <pre #preMultiple>{{logMultipleString}}</pre>
+                    -->
+                  </form>
+
+                </div>
+              </div>
+            </div>
+            <!--Upload-->
+            <div class="form-group row">
+              <div class="offset-sm-3 col-sm-9">
+                <button type="submit" class="btn btn-warning">Upload
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <ba-card title="Files Uploader" baCardClass="with-scroll">
+            <ba-files-uploader [selectedReport]="selectedReport" [selectedProperty]="selectedProperty"
+            ></ba-files-uploader>
+          </ba-card>
+        </div>
+      </div>
+    </div>
+    <ba-modals></ba-modals>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+

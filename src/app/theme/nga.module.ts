@@ -7,7 +7,6 @@ import { chartsModule } from './components/baCharts'
 import { ModalModule } from 'ng2-bootstrap';
 
 
-
 import {
   BaThemeConfig
 } from './theme.config';
@@ -31,7 +30,8 @@ import {
   BaPageTop,
   BaPictureUploader,
   BaSidebar,
-  BaModals
+  BaModals,
+  BaFilesUploader
 } from './components';
 
 import { BaCardBlur } from './components/baCard/baCardBlur.directive';
@@ -53,7 +53,8 @@ import {
   BaMenuService,
   BaThemePreloader,
   BaThemeSpinner,
-  BaPropertiesModel
+  BaPropertiesModel,
+  BaAuth
 } from './services';
 
 import {
@@ -75,6 +76,7 @@ const NGA_COMPONENTS = [
   BaMultiCheckbox,
   BaPageTop,
   BaPictureUploader,
+  BaFilesUploader,
   BaSidebar,
   BaModals
 ];
@@ -97,7 +99,8 @@ const NGA_SERVICES = [
   BaThemePreloader,
   BaThemeSpinner,
   BaMenuService,
-  BaPropertiesModel
+  BaPropertiesModel,
+  BaAuth
 ];
 
 const NGA_VALIDATORS = [

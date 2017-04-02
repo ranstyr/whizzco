@@ -1,0 +1,57 @@
+<div class="upload">
+  <div class="col-xs-12">
+    <label class="file-upload">
+      <input type="file" (change)="fileChangeEvent($event)" id="uploadFile" multiple>
+      <!--
+                      <span>Drag &amp; Drop or Click to Browse for File</span>
+
+      -->
+      <span *ngIf="filesToUpload.length<1">Browse a File to upload it</span>
+      <div *ngIf="filesToUpload || 0 < filesToUpload.length">
+        <div *ngFor="let file of filesToUpload" class="files-container">
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 text-right padding">
+              <img class="image" src="../../../assets/img/excel-icon.jpeg">
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 text-left padding padding-top-1em">
+              <span class="text" >{{file.name}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </label>
+  </div>
+  <div class="col-xs-12 text-center margin-buttom-2em">
+    <!--Download template-->
+    <div *ngIf="selectedReport" class="row link ">
+      <!--
+                  <a class="template" href="http://www.tutorialrepublic.com/" target="_top">Download template</a>
+      -->
+      <span>Don't have a {{selectedReport}} report available? <br>
+        <a href="../../../../assets/files/{{selectedReport}}.xlsx" download="{{selectedReport}}.xls">Download our template</a> and try it out</span>
+    </div>
+
+  </div>
+
+</div>
+
+<!--<div class="picture-group" [ngClass]="{uploading: uploadInProgress}">
+  <div class="picture-wrapper" (click)="bringFileSelector();">
+    <img [src]="picture" *ngIf="picture">
+    <img [src]="defaultPicture" *ngIf="!!!picture && !!defaultPicture">
+
+    <div class="loading" *ngIf="uploadInProgress">
+      <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+      </div>
+    </div>
+  </div>
+  <i class="ion-ios-close-outline" (click)="removePicture();" *ngIf="picture && canDelete"></i>
+  <a href class="change-picture" (click)="bringFileSelector();">Upload Report</a>
+  <input #fileUpload ngFileSelect [options]="uploaderOptions"
+         (onUpload)="_onUpload($event)"
+         (beforeUpload)="beforeUpload($event)"
+         type="file" hidden="true">
+</div>-->
