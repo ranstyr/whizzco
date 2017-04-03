@@ -7,6 +7,7 @@ import { BaPropertiesModel } from "../../theme/services/model/BaPropertiesModel"
 declare var moment: any;
 
 import 'style-loader!./dashboard.scss';
+import { BaThemeSpinner } from "../../theme/services/baThemeSpinner/baThemeSpinner.service";
 
 
 @Component({
@@ -38,7 +39,9 @@ export class Dashboard {
   };
 
 
-  constructor(private daterangepickerOptions: DaterangepickerConfig , private _BaPropertiesModel: BaPropertiesModel) {
+  constructor(private daterangepickerOptions: DaterangepickerConfig ,
+              private _BaPropertiesModel: BaPropertiesModel,
+              private _spinner: BaThemeSpinner) {
     //datepicker
     this.daterangepickerOptions.settings = {
       locale: {format: 'YYYY-MM-DD'},
@@ -57,6 +60,8 @@ export class Dashboard {
     this.form = new FormGroup({});
     this.form.addControl('selectSingle', new FormControl(''));
     this.form.addControl('selectMultiple', new FormControl(''));
+
+    this._spinner.hide();
 
     //properties data
 

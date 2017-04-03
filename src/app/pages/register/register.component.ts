@@ -7,6 +7,7 @@ import { Http } from "@angular/http";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AngularFire } from "angularfire2";
 import { BaAuth } from "../../theme/services/baAuth/baAuth.service";
+import { BaThemeSpinner } from "../../theme/services/baThemeSpinner/baThemeSpinner.service";
 
 @Component({
   selector: 'register',
@@ -29,7 +30,8 @@ export class Register {
   private loginFlag: boolean;
 
   constructor( fb: FormBuilder, private _http: Http, public route: ActivatedRoute,
-               public af: AngularFire, public _auth: BaAuth, public router: Router ) {
+               public af: AngularFire, public _auth: BaAuth, public router: Router,
+               private _spinner: BaThemeSpinner) {
 
     this.form = fb.group({
       'name': [ '', Validators.compose([ Validators.required ]) ],
@@ -58,6 +60,7 @@ export class Register {
 
   private signUp() {
     if (this.company.value && this.email.value && this.password.value) {
+      this._spinner.show();
       this._auth.signup({email: this.email.value, password: this.password.value})
         .then(( val: any ) => {
           this._auth.setUserUid(val[ 'uid' ]);
@@ -81,8 +84,8 @@ export class Register {
             temp.code = 300;
             temp.message = err;
             err = temp;
-          }
-          ;
+          };
+          this._spinner.hide();
           console.log('error message: ' + err.message + '/n' + 'error code: ' + err.code);
           this.loginErrorMessage = err.message;
         });

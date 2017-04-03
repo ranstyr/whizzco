@@ -6,61 +6,41 @@ export class BaMsgCenterService {
   private _notifications = [
     {
       name: 'Vlad',
-      text: 'Vlad posted a new article.',
+      text: 'Syndi posted a new article.',
       time: '1 min ago'
     },
     {
       name: 'Kostya',
-      text: 'Kostya changed his contact information.',
+      text: 'New Cash Flow Report was generated.',
       time: '2 hrs ago'
     },
     {
-      image: 'assets/img/shopping-cart.svg',
-      text: 'New orders received.',
-      time: '5 hrs ago'
-    },
-    {
       name: 'Andrey',
-      text: 'Andrey replied to your comment.',
+      text: 'New Var report generated.',
       time: '1 day ago'
     },
     {
       name: 'Nasta',
-      text: 'Today is Nasta\'s birthday.',
+      text: 'General ledger report uploaded.',
       time: '2 days ago'
-    },
-    {
-      image: 'assets/img/comments.svg',
-      text: 'New comments on your post.',
-      time: '3 days ago'
-    },
-    {
-      name: 'Kostya',
-      text: 'Kostya invited you to join the event.',
-      time: '1 week ago'
     }
   ];
 
   private _messages = [
     {
       name: 'Nasta',
-      text: 'After you get up and running, you can place Font Awesome icons just about...',
+      text: 'After you get up and running, you can place questions on the blog',
       time: '1 min ago'
     },
     {
       name: 'Vlad',
-      text: 'You asked, Font Awesome delivers with 40 shiny new icons in version 4.2.',
+      text: 'Syndi support team will contact you shortly',
       time: '2 hrs ago'
     },
     {
       name: 'Kostya',
-      text: 'Want to request new icons? Here\'s how. Need vectors or want to use on the...',
+      text: 'Want to request new reports? Here\'s how.',
       time: '10 hrs ago'
-    },
-    {
-      name: 'Andrey',
-      text: 'Explore your passions and discover new ones by getting involved. Stretch your...',
-      time: '1 day ago'
     },
     {
       name: 'Nasta',
