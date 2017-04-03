@@ -9,7 +9,7 @@
     <ba-card class="col-xlg-10 col-xl-10 col-lg-10 col-sm-12 col-xs-12">
       <router-outlet></router-outlet>
     </ba-card>
-    <ba-card class="filter-Data col-xlg-2 col-xl-2 col-lg-2 col-sm-12 col-xs-12"
+    <ba-card class="filter-Data col-xlg-2 col-xl-2 col-lg-2 col-sm-12 col-xs-12 no-padding"
              title="Filter Data">
       <!--Properties-->
       <div class="form-group row">
@@ -30,7 +30,6 @@
             <pre #preMultiple>{{logMultipleString}}</pre>
             -->
           </form>
-
         </div>
       </div>
       <!--Pick Dates-->
@@ -45,10 +44,8 @@
                  (hideDaterangepicker)="calendarEventsHandler($event)"
                  (showDaterangepicker)="calendarEventsHandler($event)"
             >
-                    <span class="form-control uneditable-input dates-height" name="daterange">
-                      <div class="row">{{ mainInput.start | date:'MM/dd/y' }}</div>
-                      <div class="row">-</div>
-                      <div class="row"> {{ mainInput.end| date:'MM/dd/y' }}</div>
+                    <span class="form-control uneditable-input" name="daterange">
+                        {{ mainInput.start | date:'MM/dd/y' }} - {{ mainInput.end| date:'MM/dd/y' }}
                     </span>
             </div>
           </form>

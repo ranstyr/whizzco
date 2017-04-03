@@ -76,6 +76,7 @@ select-dropdown > div {
   }
   .card-body {
     height: 100%;
+    padding: 1em;
   }
 
   .input-group {
@@ -91,13 +92,21 @@ select-dropdown > div {
   .form-control {
     height: 2rem !important;
   }
+
   .input-group .form-control {
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
+    padding-top: 1.1em;
+    font-size: 10.4px;
   }
 
   .dates-height{
     height: 4rem!important;
   }
 
+  .no-padding{
+    padding: 0px;
+  }
 }
+
+
