@@ -11,7 +11,49 @@
     </ba-card>
     <ba-card class="filter-Data col-xlg-2 col-xl-2 col-lg-2 col-sm-12 col-xs-12"
              title="Filter Data">
-      filters
+      <!--Properties-->
+      <div class="form-group row">
+        <label class="col-sm-12 form-control-label">Properties</label>
+        <div class="col-sm-12">
+          <form [formGroup]="form" class="text-center">
+            <ng-select
+              [options]="optionsProperties"
+              [multiple]="multiple1"
+              placeholder="Select Properties"
+              formControlName="selectMultiple"
+              (opened)="onMultipleOpened()"
+              (closed)="onMultipleClosed()"
+              (selected)="onMultipleSelected($event)"
+              (deselected)="onMultipleDeselected($event)">
+            </ng-select>
+            <!--
+            <pre #preMultiple>{{logMultipleString}}</pre>
+            -->
+          </form>
+
+        </div>
+      </div>
+      <!--Pick Dates-->
+      <div class="form-group row">
+        <label class="col-sm-12 form-control-label">Dates</label>
+        <div class="col-sm-12">
+
+          <form [formGroup]="form">
+            <div class="input-group text-center" daterangepicker (selected)="selectedDate($event, mainInput)"
+                 (cancelDaterangepicker)="calendarEventsHandler($event)"
+                 (applyDaterangepicker)="calendarEventsHandler($event)"
+                 (hideDaterangepicker)="calendarEventsHandler($event)"
+                 (showDaterangepicker)="calendarEventsHandler($event)"
+            >
+                    <span class="form-control uneditable-input dates-height" name="daterange">
+                      <div class="row">{{ mainInput.start | date:'MM/dd/y' }}</div>
+                      <div class="row">-</div>
+                      <div class="row"> {{ mainInput.end| date:'MM/dd/y' }}</div>
+                    </span>
+            </div>
+          </form>
+        </div>
+      </div>
     </ba-card>
   </div>
 </div>

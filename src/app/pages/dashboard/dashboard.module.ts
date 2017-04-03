@@ -1,6 +1,6 @@
 import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
 
 
@@ -29,12 +29,18 @@ import { TodoService } from './todo/todo.service';
 import { TrafficChartService } from './trafficChart/trafficChart.service';
 import { UsersMapService } from './usersMap/usersMap.service';
 
+import { SelectModule } from 'angular2-select';
+import { Daterangepicker } from 'ng2-daterangepicker';
+
 @NgModule({
   imports: [
+    ReactiveFormsModule,
     CommonModule,
     FormsModule,
     NgaModule,
-    routing
+    routing,
+    SelectModule,
+    Daterangepicker
   ],
   declarations: [
     PopularApp,

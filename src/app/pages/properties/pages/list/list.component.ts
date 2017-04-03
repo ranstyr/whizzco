@@ -191,7 +191,9 @@ export class ListProperties {
         //LocalDataSource load the Properties data
         //_BaPropertiesModel.getData returns the data in the right format
         //this.listData.load asynch load for ng2-smart-table
-        this.listData.load(this._BaPropertiesModel.getData(value));
+        if(value.$exists()){
+          this.listData.load(this._BaPropertiesModel.getData(value));
+        }
       })
   }
 

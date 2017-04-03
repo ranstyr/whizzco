@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import 'style-loader!./generate.scss';
 import { FormGroup, FormControl } from "@angular/forms";
 import { Daterangepicker } from 'ng2-daterangepicker';
 import { DaterangepickerConfig } from 'ng2-daterangepicker';
@@ -10,6 +9,7 @@ import { ModalDirective } from 'ng2-bootstrap';
 
 declare var moment: any;
 
+import 'style-loader!./generate.scss';
 
 @Component({
   selector: 'generate-component',
@@ -48,7 +48,7 @@ export class GenerateReport {
   selectedProperty = '';
 
 
-  //multi select
+  //properties multi select
   multiple1: boolean = true;
   optionsProperties: Array<any> = [];
   logMultipleString: string = '';
@@ -80,16 +80,18 @@ export class GenerateReport {
     this.propertiesRef = this._BaPropertiesModel.getDataObservable();
     this._BaPropertiesModel.getDataObservable()
       .subscribe(( value: any ) => {
-        let propertiesTemp = this._BaPropertiesModel.getData(value);
-        this.properties = propertiesTemp.map(( a ) => {
-          return a.PropertyName;
-        });
-        this.optionsProperties = propertiesTemp.map(( a ) => {
-          return {
-            value: a.PropertyName.toString(),
-            label: a.PropertyName.toString()
-          }
-        });
+        if(value.$exists()) {
+          let propertiesTemp = this._BaPropertiesModel.getData(value);
+          this.properties = propertiesTemp.map(( a ) => {
+            return a.PropertyName;
+          });
+          this.optionsProperties = propertiesTemp.map(( a ) => {
+            return {
+              value: a.PropertyName.toString(),
+              label: a.PropertyName.toString()
+            }
+          });
+        }
       });
   }
 

@@ -51,16 +51,19 @@ export class UploadReport {
     this.propertiesRef = this._BaPropertiesModel.getDataObservable();
     this._BaPropertiesModel.getDataObservable()
       .subscribe(( value: any ) => {
-        let propertiesTemp = this._BaPropertiesModel.getData(value);
-        this.properties = propertiesTemp.map(( a ) => {
-          return a.PropertyName;
-        });
-        this.optionsProperties = propertiesTemp.map(( a ) => {
-          return {
-            value: a.PropertyName.toString(),
-            label: a.PropertyName.toString()
-          }
-        });
+
+        if(value.$exists()){
+          let propertiesTemp = this._BaPropertiesModel.getData(value);
+          this.properties = propertiesTemp.map(( a ) => {
+            return a.PropertyName;
+          });
+          this.optionsProperties = propertiesTemp.map(( a ) => {
+            return {
+              value: a.PropertyName.toString(),
+              label: a.PropertyName.toString()
+            }
+          });
+        }
       });
   }
 
