@@ -8,14 +8,17 @@ export class BaPropertiesModel {
   _propertiesData: any;
 
   constructor( private _af: AngularFire ) {
-    this._ref = this._af.database.object(localStorage.getItem('company') + `/properties`);
-    this._ref.subscribe(
-      value => console.log("properties data reterived from firebase : " + value ? value.data : null),
-      err => console.error("error at BaPropertiesModel - _ref.subscribe" + err + err ? err.message : err)
-    );
   }
 
   public getDataObservable(): FirebaseObjectObservable<any> {
+    this._ref = this._af.database.object(localStorage.getItem('company') + `/properties`);
+    this._ref.subscribe(
+      value => {
+        console.log("properties data reterived from firebase : ");
+        console.log(value ? value.data : null);
+      },
+      err => console.error("error at BaPropertiesModel - _ref.subscribe" + err + err ? err.message : err)
+    );
     return this._ref;
   }
 
@@ -25,9 +28,9 @@ export class BaPropertiesModel {
    * @param {object} angular fire object
    * @returns {string}
    */
-  public getData(value : any) {
+  public getData( value: any ) {
     let _Data = [];
-    let tempArr = value ? value.data : null;
+    let tempArr = value;
     if (tempArr) {
       for (let key in tempArr) {
         _Data.push(tempArr[ key ]);

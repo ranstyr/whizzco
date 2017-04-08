@@ -28,6 +28,7 @@ import { KpiContainerService } from './kpi-conainer/kpi-container.service';
 import { TodoService } from './todo/todo.service';
 import { TrafficChartService } from './trafficChart/trafficChart.service';
 import { UsersMapService } from './usersMap/usersMap.service';
+import { FilterService } from "./filters.service";
 
 import { SelectModule } from 'angular2-select';
 import { Daterangepicker } from 'ng2-daterangepicker';
@@ -63,7 +64,8 @@ import { Daterangepicker } from 'ng2-daterangepicker';
     KpiContainerService,
     TodoService,
     TrafficChartService,
-    UsersMapService
+    UsersMapService,
+    FilterService
   ]
 })
 export class DashboardModule {}

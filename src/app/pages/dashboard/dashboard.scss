@@ -39,6 +39,7 @@ ng-select > div > div.multiple input{
 
 ng-select > div > div.multiple > div.option {
   background-color: #ebf2f9!important;
+  width:100%;
 }
 
 select-dropdown > div {
@@ -96,8 +97,8 @@ select-dropdown > div {
   .input-group .form-control {
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
-    padding-top: 1.1em;
-    font-size: 10.4px;
+    padding-top: 0.7em;
+    font-size: 12.4px;
   }
 
   .dates-height{

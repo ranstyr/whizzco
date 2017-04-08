@@ -14,7 +14,7 @@ import { Component, OnInit, Input } from '@angular/core';
   </ul> 
     `
 })
-export class operatingExpenseRatioChartComponent {
+export class OperatingExpenseRatioChartComponent {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 

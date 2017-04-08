@@ -1,10 +1,17 @@
-import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+
+import { MaintenanceExpensesPerUnit } from "../../../../theme/components/baCharts/maintenance-expense-per-unit-chart/maintenance-expense-per-unit.component";
+import { UtilityExpensesPerUnitComponent } from "../../../../theme/components/baCharts/utility-expenses-per-unit-chart/utility-expenses-per-unit";
+import { MaintenanceExpensesPerSqft } from "../../../../theme/components/baCharts/maintenance-expense-per-sqft-chart/maintenance-expense-per-sqft-chart.component";
+import { UtilityExpensesPerSqftComponent } from "../../../../theme/components/baCharts/utility-expenses-per-sqft-chart/utility-expenses-per-sqft";
+import { OperatingExpenseRatioChartComponent } from "../../../../theme/components/baCharts/operating-expense-ratio-chart/operating-expense-ratio-chart.component";
+
+import { BaPropertiesDataModel } from "../../../../theme/services/baModel/BaPropertiesDataModel";
+import { FilterService } from "../../filters.service";
+
+import { PageDashboard } from "../page";
 
 import 'style-loader!./operation.scss';
-import { T12MaintenanceExpensesChartComponent } from "../../../../theme/components/baCharts/T12-maintenance-expenses-chart/T12MaintenanceExpensesChart.component";
-import { T12UtilityExpenseChartComponent } from "../../../../theme/components/baCharts/T12-utility-expenses-chart/T12UtilityExpensesChart.component";
-import { maintenanceExpenseAnalysisChartComponent } from "../../../../theme/components/baCharts/maintenance-expense-analysis-chart/maintenance-expense-analysis-chart.component";
-import { utilityExpenseAnalysisChartComponent } from "../../../../theme/components/baCharts/utility-expense-analysis-chart/utility-expense-analysis-chart.component";
 
 @Component({
   selector: 'operation-component',
@@ -12,31 +19,35 @@ import { utilityExpenseAnalysisChartComponent } from "../../../../theme/componen
 
 })
 
-export class OperationDashboard {
-  @ViewChild(T12MaintenanceExpensesChartComponent) T12MaintenanceExpensesChartComponent: T12MaintenanceExpensesChartComponent;
-  @ViewChild(T12UtilityExpenseChartComponent) T12UtilityExpenseChartComponent: T12UtilityExpenseChartComponent;
-  @ViewChild(maintenanceExpenseAnalysisChartComponent) maintenanceExpenseAnalysisChartComponent: maintenanceExpenseAnalysisChartComponent;
-  @ViewChild(utilityExpenseAnalysisChartComponent) utilityExpenseAnalysisChartComponent: utilityExpenseAnalysisChartComponent;
+export class OperationDashboard extends PageDashboard {
+  filters : Object;
 
-  constructor() {
-  }
 
-  ngOnInit() {
+  @ViewChild(MaintenanceExpensesPerUnit) maintenanceExpensesPerUnit: MaintenanceExpensesPerUnit;
+  @ViewChild(UtilityExpensesPerUnitComponent) utilityExpensesPerUnitComponent: UtilityExpensesPerUnitComponent;
+  @ViewChild(MaintenanceExpensesPerSqft) maintenanceExpensesPerSqft: MaintenanceExpensesPerSqft;
+  @ViewChild(UtilityExpensesPerSqftComponent) utilityExpensesPerSqftComponent: UtilityExpensesPerSqftComponent;
+  @ViewChild(OperatingExpenseRatioChartComponent) operatingExpenseRatioChartComponent: OperatingExpenseRatioChartComponent;
 
+  constructor( private filtersService: FilterService, private baPropertiesDataModel: BaPropertiesDataModel ) {
+    super(filtersService , baPropertiesDataModel);
   }
 
   ngAfterViewInit() {
-    if(this.T12MaintenanceExpensesChartComponent){
-      this.T12MaintenanceExpensesChartComponent.renderChart(null);
+    if(this.maintenanceExpensesPerUnit){
+      this.maintenanceExpensesPerUnit.renderChart(null);
     }
-    if(this.T12UtilityExpenseChartComponent){
-      this.T12UtilityExpenseChartComponent.renderChart(null);
+    if(this.utilityExpensesPerUnitComponent){
+      this.utilityExpensesPerUnitComponent.renderChart(null);
     }
-    if(this.maintenanceExpenseAnalysisChartComponent){
-      this.maintenanceExpenseAnalysisChartComponent.renderChart(null);
+    if(this.maintenanceExpensesPerSqft){
+      this.maintenanceExpensesPerSqft.renderChart(null);
     }
-    if(this.utilityExpenseAnalysisChartComponent){
-      this.utilityExpenseAnalysisChartComponent.renderChart(null);
+    if(this.utilityExpensesPerSqftComponent){
+      this.utilityExpensesPerSqftComponent.renderChart(null);
+    }
+    if(this.operatingExpenseRatioChartComponent){
+      this.operatingExpenseRatioChartComponent.renderChart(null);
     }
 
   }

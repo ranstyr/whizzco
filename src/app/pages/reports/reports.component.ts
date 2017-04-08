@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 import 'style-loader!./reports.scss';
-import { BaPropertiesModel } from "../../theme/services/model/BaPropertiesModel";
+import { BaPropertiesModel } from "../../theme/services/baModel/BaPropertiesModel";
 
 
 @Component({

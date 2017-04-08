@@ -14,7 +14,7 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
   </ul> 
     `
 })
-export class noiNetIncomeChartComponent {
+export class NoiNetIncomeChartComponent {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 

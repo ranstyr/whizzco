@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import 'style-loader!./list.scss';
-import { BaPropertiesModel } from "../../../../theme/services/model/BaPropertiesModel";
+import { BaPropertiesModel } from "../../../../theme/services/baModel/BaPropertiesModel";
 
 @Component({
   selector: 'list-component',
@@ -194,7 +194,7 @@ export class ListProperties {
         if(value.$exists()){
           this.listData.load(this._BaPropertiesModel.getData(value));
         }
-      })
+      });
   }
 
   ngAfterViewInit() {

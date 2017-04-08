@@ -1,11 +1,17 @@
 import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 
+import { SourcesChartComponent } from '../../../../theme/components/baCharts/sourcesChart/sourcesChart.component';
+import { UsesChartComponent } from '../../../../theme/components/baCharts/usesChart/usesChart.component';
+import { CashReservesChartComponent } from '../../../../theme/components/baCharts/cash-reserves-chart/cash-reserves-chart.component';
+import { MortgageBalanceChartComponent } from '../../../../theme/components/baCharts/mortgage-balance-chart/mortgage-balance-chart.componenet';
+import { InvestorLevelDistributionsChartComponent } from '../../../../theme/components/baCharts/investor-level-distributions-chart/investor-level-distributions-chart.component';
+
+import { FilterService } from "../../filters.service";
+import { BaPropertiesDataModel } from "../../../../theme/services/baModel/BaPropertiesDataModel";
+
+import { PageDashboard } from "../page";
+
 import 'style-loader!./cash.scss';
-import { sourcesChartComponent } from "../../../../theme/components/baCharts/sourcesChart/sourcesChart.component";
-import { usesChartComponent } from "../../../../theme/components/baCharts/usesChart/usesChart.component";
-import { cashReservesChartComponent } from "../../../../theme/components/baCharts/cash-reserves-chart/cash-reserves-chart.component";
-import { mortgageBalanceChartComponent } from "../../../../theme/components/baCharts/mortgage-balance-chart/mortgage-balance-chart.componenet";
-import { investorLevelDistributionsChartComponent } from "../../../../theme/components/baCharts/investor-level-distributions-chart/investor-level-distributions-chart.component";
 
 @Component({
   selector: 'cash-component',
@@ -13,39 +19,37 @@ import { investorLevelDistributionsChartComponent } from "../../../../theme/comp
 
 })
 
-export class CashDashboard {
-  @ViewChild(sourcesChartComponent) sourcesChartComponent: sourcesChartComponent;
-  @ViewChild(usesChartComponent) usesChartComponent: usesChartComponent;
-  @ViewChild(investorLevelDistributionsChartComponent) investorLevelDistributionsChartComponent: investorLevelDistributionsChartComponent;
-  @ViewChild(cashReservesChartComponent) cashReservesChartComponent: cashReservesChartComponent;
-  @ViewChild(mortgageBalanceChartComponent) mortgageBalanceChartComponent: mortgageBalanceChartComponent;
+export class CashDashboard extends PageDashboard{
 
-  constructor() {
-  }
+  @ViewChild(SourcesChartComponent) sourcesChartComponent: SourcesChartComponent;
+  @ViewChild(UsesChartComponent) usesChartComponent: UsesChartComponent;
+  @ViewChild(InvestorLevelDistributionsChartComponent) investorLevelDistributionsChartComponent: InvestorLevelDistributionsChartComponent;
+  @ViewChild(CashReservesChartComponent) cashReservesChartComponent: CashReservesChartComponent;
+  @ViewChild(MortgageBalanceChartComponent) mortgageBalanceChartComponent: MortgageBalanceChartComponent;
 
-  ngOnInit() {
-
+  constructor( private filtersService: FilterService, private baPropertiesDataModel: BaPropertiesDataModel ) {
+    super(filtersService , baPropertiesDataModel);
   }
 
   ngAfterViewInit() {
-    if(this.sourcesChartComponent){
+
+    if (this.sourcesChartComponent) {
       this.sourcesChartComponent.renderChart(null);
     }
-    if(this.usesChartComponent){
+    if (this.usesChartComponent) {
       this.usesChartComponent.renderChart(null);
     }
-    if(this.investorLevelDistributionsChartComponent){
+    if (this.investorLevelDistributionsChartComponent) {
       this.investorLevelDistributionsChartComponent.renderChart(null);
     }
-    if(this.cashReservesChartComponent){
+    if (this.cashReservesChartComponent) {
       this.cashReservesChartComponent.renderChart(null);
     }
-    if(this.mortgageBalanceChartComponent){
+    if (this.mortgageBalanceChartComponent) {
       this.mortgageBalanceChartComponent.renderChart(null);
     }
 
   }
-
 
 
 }

@@ -13,7 +13,7 @@ import { Component, OnInit, Input } from '@angular/core';
   </ul> 
     `
 })
-export class cashReservesChartComponent {
+export class CashReservesChartComponent {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 

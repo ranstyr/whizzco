@@ -2,14 +2,17 @@
  * Created by ran.styr on 17/11/2016.
  */
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var angularfire2_1 = require("angularfire2");
-var usesChartComponent = (function () {
-    function usesChartComponent(_af) {
-        this._af = _af;
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var core_1 = require('@angular/core');
+var UsesChartComponent = (function () {
+    function UsesChartComponent() {
     }
-    usesChartComponent.prototype.renderChart = function (data) {
+    UsesChartComponent.prototype.renderChart = function (data) {
         if (this.el.nativeElement) {
             Highcharts.setOptions({
                 lang: {
@@ -21,11 +24,12 @@ var usesChartComponent = (function () {
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
                     plotShadow: false,
-                    type: 'pie'
+                    type: 'pie',
+                    backgroundColor: null
                 },
                 title: {
                     align: 'center',
-                    text: 'T-12 Cash Uses'
+                    text: 'Cash Uses'
                 },
                 tooltip: {
                     pointFormat: '<b>${point.y}</b> Share: <b>{point.percentage:.1f}%</b>'
@@ -42,6 +46,22 @@ var usesChartComponent = (function () {
                             }
                         },
                         showInLegend: true
+                    }
+                },
+                navigation: {
+                    buttonOptions: {
+                        theme: {
+                            fill: "#5B8DB5",
+                            states: {
+                                hover: {
+                                    fill: '#5585C0'
+                                },
+                                select: {
+                                    stroke: '#039',
+                                    fill: '#5585C0'
+                                }
+                            }
+                        }
                     }
                 },
                 series: [{
@@ -61,22 +81,18 @@ var usesChartComponent = (function () {
             });
         }
     };
-    return usesChartComponent;
+    __decorate([
+        core_1.Input()
+    ], UsesChartComponent.prototype, "_data", void 0);
+    __decorate([
+        core_1.ViewChild('chart')
+    ], UsesChartComponent.prototype, "el", void 0);
+    UsesChartComponent = __decorate([
+        core_1.Component({
+            selector: 'uses-chart',
+            template: "\n       <div #chart id=\"usesChartContainer\" style=\"width:100%; height:100%;\"></div>\n       <ul>\n    \n  </ul> \n    "
+        })
+    ], UsesChartComponent);
+    return UsesChartComponent;
 }());
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Object)
-], usesChartComponent.prototype, "_data", void 0);
-__decorate([
-    core_1.ViewChild('chart'),
-    __metadata("design:type", core_1.ElementRef)
-], usesChartComponent.prototype, "el", void 0);
-usesChartComponent = __decorate([
-    core_1.Component({
-        selector: 'uses-chart',
-        template: "\n       <div #chart id=\"usesChartContainer\" style=\"width:100%; background-color:#FFFFFF;  height:100%;\"></div>\n       <ul>\n    \n  </ul> \n    "
-    }),
-    __metadata("design:paramtypes", [angularfire2_1.AngularFire])
-], usesChartComponent);
-exports.usesChartComponent = usesChartComponent;
-//# sourceMappingURL=usesChart.component.js.map
+exports.UsesChartComponent = UsesChartComponent;

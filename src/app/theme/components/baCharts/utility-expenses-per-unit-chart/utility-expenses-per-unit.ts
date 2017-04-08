@@ -7,15 +7,15 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 
 
 @Component({
-  selector: 'T12-maintenance-expenses-chart-container',
+  selector: 'utility-expenses-per-unit',
   template: `
-       <div #chart id="T12MaintenanceExpensesChartContainer" style="width:100%; height:50%;"></div>
+       <div #chart id="utility-expenses-per-unit-container" style="width:100%; height:50%;"></div>
        <ul>
     
   </ul> 
     `
 })
-export class T12MaintenanceExpensesChartComponent {
+export class UtilityExpensesPerUnitComponent {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 
@@ -23,7 +23,7 @@ export class T12MaintenanceExpensesChartComponent {
   @ViewChild('chart') el: ElementRef;
 
 
-  constructor( ) {
+  constructor(  ) {
 
   }
 
@@ -34,7 +34,7 @@ export class T12MaintenanceExpensesChartComponent {
           thousandsSep: ','
         }
       });
-      Highcharts.chart('T12MaintenanceExpensesChartContainer', {
+      Highcharts.chart('utility-expenses-per-unit-container', {
         chart: {
           plotBackgroundColor: null,
           plotBorderWidth: null,
@@ -44,8 +44,7 @@ export class T12MaintenanceExpensesChartComponent {
 
         },
         title: {
-          text: 'T-12 Maintenance Expenses (per unit)',
-          align: 'center',
+          text: 'Utility Expenses Per Unit'
         },
         tooltip: {
           pointFormat: '<b>${point.y}</b>'
@@ -54,7 +53,7 @@ export class T12MaintenanceExpensesChartComponent {
           pie: {
             allowPointSelect: true,
             cursor: 'pointer',
-            showInLegend: true,
+             showInLegend: true,
             dataLabels: {
               enabled: false,
               style: {
@@ -67,7 +66,7 @@ export class T12MaintenanceExpensesChartComponent {
         navigation: {
           buttonOptions: {
             theme: {
-              fill: "#71B0D9",
+              fill: "#5B8DB5",
               states: {
                 hover: {
                   fill: '#5585C0'
@@ -80,35 +79,23 @@ export class T12MaintenanceExpensesChartComponent {
             }
           }
         },
-        series: [ {
-          type: 'pie',
-          name: 'Expense amount',
+        series: [{
+          name: 'Brands',
+          colorByPoint: true,
           innerSize: '80%',
-          data: [ {
-            name: 'Janitorial',
-            y: 1200
+          data: [{
+            name: 'Electricity',
+            y: 130.71
           }, {
-            name: 'Pest Control',
-            y: 1260,
+            name: 'Water',
+            y: 4192.3,
             sliced: true,
             selected: true
           }, {
-            name: 'Painting',
-            y: 45
-          }, {
-            name: 'Plumbing',
-            y: 990
-          }, {
-            name: 'Roof Repair',
-            y: 3260
-          }, {
-            name: 'General Repairs',
-            y: 466
-          }, {
-            name: 'Supplies',
-            y: 395
-          } ]
-        } ]
+            name: 'Garbage and Recycling',
+            y: 3930.36
+          },]
+        }]
       });
     }
 

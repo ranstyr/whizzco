@@ -6,7 +6,6 @@
     "member-access": false,
     "member-ordering": [
       true,
-      "public-before-private",
       "static-before-instance",
       "variables-before-functions"
     ],
@@ -16,7 +15,7 @@
     "no-var-requires": false,
     "typedef": false,
     "typedef-whitespace": [
-      true,
+      false,
       {
         "call-signature": "nospace",
         "index-signature": "nospace",
@@ -35,7 +34,7 @@
 
     "ban": false,
     "curly": false,
-    "forin": true,
+    "forin": false,
     "label-position": true,
     "no-arg": true,
     "no-bitwise": true,
@@ -72,8 +71,8 @@
       "spaces"
     ],
     "max-line-length": [
-      true,
-      120
+      false,
+      150
     ],
     "no-require-imports": false,
     "no-trailing-whitespace": true,
@@ -89,7 +88,7 @@
     "align": false,
     "class-name": true,
     "comment-format": [
-      true,
+      false,
       "check-space"
     ],
     "interface-name": false,
@@ -105,7 +104,6 @@
     ],
     "quotemark": [
       true,
-      "single",
       "avoid-escape"
     ],
     "semicolon": [true, "always"],
@@ -116,13 +114,13 @@
       "ban-keywords"
     ],
     "whitespace": [
-      true,
+      false,
       "check-branch",
       "check-decl",
       "check-operator",
       "check-separator",
       "check-type"
     ],
-    "import-destructuring-spacing": true
+    "import-destructuring-spacing": false
   }
 }

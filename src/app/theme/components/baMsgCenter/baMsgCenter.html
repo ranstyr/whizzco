@@ -15,7 +15,7 @@
         <a href>Settings</a>
       </div>
       <div class="msg-list">
-        <a *ngFor="let msg of notifications" href class="clearfix">
+        <a *ngFor="let msg of notifications" href class="clearfix not-active">
           <div class="img-area"><img [ngClass]="{'photo-msg-item': !msg.image}"
                                      src="{{ ( msg.image ||  (msg.name | baProfilePicture)) }}"></div>
           <div class="msg-area">
@@ -24,7 +24,7 @@
           </div>
         </a>
       </div>
-      <a href>See all notifications</a>
+      <a href class="not-active">See all notifications</a>
     </div>
   </li>
   <li class="dropdown">
@@ -40,7 +40,7 @@
         <a href>Settings</a>
       </div>
       <div class="msg-list">
-        <a *ngFor="let msg of messages" href class="clearfix">
+        <a *ngFor="let msg of messages" [attr.href]='null' [class.disabled]="true" class="clearfix">
           <div class="img-area"><img [ngClass]="{'photo-msg-item': !msg.image}"
                                      src="{{ ( msg.image ||  (msg.name | baProfilePicture)) }}"></div>
           <div class="msg-area">
@@ -49,7 +49,7 @@
           </div>
         </a>
       </div>
-      <a href>See all messages</a>
+      <a href class="not-active">See all messages</a>
     </div>
   </li>
 </ul>

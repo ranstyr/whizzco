@@ -5,9 +5,10 @@ import {Component} from '@angular/core';
   templateUrl: './basicForm.html',
 })
 export class BasicForm {
+  isChecked: boolean = false;
 
   constructor() {
   }
 
-  isChecked: boolean = false;
+
 }

@@ -11,7 +11,7 @@ import { AngularFire } from 'angularfire2';
   </ul> 
     `
 })
-export class mortgageBalanceChartComponent {
+export class MortgageBalanceChartComponent {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 

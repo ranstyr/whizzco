@@ -2,14 +2,14 @@
   <ba-card class="financial-item-container col-sm-6">
     <div class="pie-chart-item">
       <div>
-        <T12-maintenance-expenses-chart-container></T12-maintenance-expenses-chart-container>
+        <maintenance-expense-per-unit></maintenance-expense-per-unit>
       </div>
     </div>
   </ba-card>
 
   <ba-card class="financial-item-container col-sm-6">
     <div class="pie-chart-item">
-      <T12-utility-expenses-chart-container></T12-utility-expenses-chart-container>
+      <utility-expenses-per-unit></utility-expenses-per-unit>
     </div>
   </ba-card>
 
@@ -18,17 +18,25 @@
 <div class="row financial text-center">
   <ba-card class="financial-item-container col-sm-6">
     <div class="pie-chart-item">
-      <maintenance-expense-analysis-chart></maintenance-expense-analysis-chart>
+      <maintenance-expense-per-sqft></maintenance-expense-per-sqft>
     </div>
   </ba-card>
 
   <ba-card class="financial-item-container col-sm-6">
     <div class="pie-chart-item">
-      <utility-expense-analysis-chart></utility-expense-analysis-chart>
+      <utility-expenses-per-sqft></utility-expenses-per-sqft>
     </div>
   </ba-card>
-
 </div>
+
+<div class="row financial text-center">
+  <ba-card class="financial-item-container col-sm-6">
+    <div class="pie-chart-item">
+      <operating-expense-ratio-chart></operating-expense-ratio-chart>
+    </div>
+  </ba-card>
+</div>
+
 
 
 

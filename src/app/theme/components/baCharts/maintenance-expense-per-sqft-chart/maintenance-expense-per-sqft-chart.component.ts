@@ -7,15 +7,15 @@ import { Component, OnInit, Input } from '@angular/core';
 
 
 @Component({
-  selector: 'maintenance-expense-analysis-chart',
+  selector: 'maintenance-expense-per-sqft',
   template: `
-       <div id="maintenance-expense-analysis-chart-container" style="width:100%; height:50%;"></div>
+       <div id="maintenance-expense-per-sqft-chart-container" style="width:100%; height:50%;"></div>
        <ul>
     
   </ul> 
     `
 })
-export class maintenanceExpenseAnalysisChartComponent {
+export class MaintenanceExpensesPerSqft {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 
@@ -32,14 +32,14 @@ export class maintenanceExpenseAnalysisChartComponent {
         thousandsSep: ',',
       }
     });
-    Highcharts.chart('maintenance-expense-analysis-chart-container', {
+    Highcharts.chart('maintenance-expense-per-sqft-chart-container', {
       chart: {
         type: 'column',
         backgroundColor: null
 
       },
       title: {
-        text: 'Maintenance Expenses (per unit)'
+        text: 'Maintenance Expenses Per Sqft'
       },
       xAxis: {
         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']      },
@@ -47,7 +47,7 @@ export class maintenanceExpenseAnalysisChartComponent {
         min: 0,
         stackLabels: {
           formatter: function () {
-            return '$' + Highcharts.numberFormat(this.total,0)
+            return '$' + Highcharts.numberFormat(this.total,0);
           },
           enabled: true,
           style: {

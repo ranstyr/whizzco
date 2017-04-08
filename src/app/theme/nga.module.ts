@@ -3,7 +3,7 @@ import { CommonModule }  from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgUploaderModule } from 'ngx-uploader';
-import { chartsModule } from './components/baCharts'
+import { ChartsModule } from './components/baCharts'
 import { ModalModule } from 'ng2-bootstrap';
 
 
@@ -54,6 +54,7 @@ import {
   BaThemePreloader,
   BaThemeSpinner,
   BaPropertiesModel,
+  BaPropertiesDataModel,
   BaAuth
 } from './services';
 
@@ -100,10 +101,11 @@ const NGA_SERVICES = [
   BaThemeSpinner,
   BaMenuService,
   BaPropertiesModel,
+  BaPropertiesDataModel,
   BaAuth
 ];
 
-const NGA_VALIDATORS = [
+  const NGA_VALIDATORS = [
   EmailValidator,
   EqualPasswordsValidator
 ];
@@ -120,14 +122,14 @@ const NGA_VALIDATORS = [
     FormsModule,
     ReactiveFormsModule,
     NgUploaderModule,
-    chartsModule,
+    ChartsModule,
     ModalModule.forRoot(),
   ],
   exports: [
     ...NGA_PIPES,
     ...NGA_DIRECTIVES,
     ...NGA_COMPONENTS,
-    chartsModule
+    ChartsModule
   ]
 })
 export class NgaModule {

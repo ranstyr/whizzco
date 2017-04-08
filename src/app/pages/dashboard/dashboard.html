@@ -38,7 +38,8 @@
         <div class="col-sm-12">
 
           <form [formGroup]="form">
-            <div class="input-group text-center" daterangepicker (selected)="selectedDate($event, mainInput)"
+            <div class="input-group text-center" daterangepicker
+                 (selected)="selectedDate($event, mainInput)"
                  (cancelDaterangepicker)="calendarEventsHandler($event)"
                  (applyDaterangepicker)="calendarEventsHandler($event)"
                  (hideDaterangepicker)="calendarEventsHandler($event)"

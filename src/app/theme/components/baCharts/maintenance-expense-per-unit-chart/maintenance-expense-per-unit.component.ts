@@ -7,15 +7,15 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 
 
 @Component({
-  selector: 'T12-utility-expenses-chart-container',
+  selector: 'maintenance-expense-per-unit',
   template: `
-       <div #chart id="T12UtilityExpensesChartContainer" style="width:100%; height:50%;"></div>
+       <div #chart id="maintenance-expense-per-sqft-container" style="width:100%; height:50%;"></div>
        <ul>
     
   </ul> 
     `
 })
-export class T12UtilityExpenseChartComponent {
+export class MaintenanceExpensesPerUnit {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 
@@ -23,7 +23,7 @@ export class T12UtilityExpenseChartComponent {
   @ViewChild('chart') el: ElementRef;
 
 
-  constructor(  ) {
+  constructor( ) {
 
   }
 
@@ -34,7 +34,7 @@ export class T12UtilityExpenseChartComponent {
           thousandsSep: ','
         }
       });
-      Highcharts.chart('T12UtilityExpensesChartContainer', {
+      Highcharts.chart('maintenance-expense-per-sqft-container', {
         chart: {
           plotBackgroundColor: null,
           plotBorderWidth: null,
@@ -44,7 +44,8 @@ export class T12UtilityExpenseChartComponent {
 
         },
         title: {
-          text: 'T-12 Utility Expenses (per unit)'
+          text: 'Maintenance Expenses Per Unit',
+          align: 'center',
         },
         tooltip: {
           pointFormat: '<b>${point.y}</b>'
@@ -53,7 +54,7 @@ export class T12UtilityExpenseChartComponent {
           pie: {
             allowPointSelect: true,
             cursor: 'pointer',
-             showInLegend: true,
+            showInLegend: true,
             dataLabels: {
               enabled: false,
               style: {
@@ -66,7 +67,7 @@ export class T12UtilityExpenseChartComponent {
         navigation: {
           buttonOptions: {
             theme: {
-              fill: "#5B8DB5",
+              fill: "#6095bf",
               states: {
                 hover: {
                   fill: '#5585C0'
@@ -79,23 +80,35 @@ export class T12UtilityExpenseChartComponent {
             }
           }
         },
-        series: [{
-          name: 'Brands',
-          colorByPoint: true,
+        series: [ {
+          type: 'pie',
+          name: 'Expense amount',
           innerSize: '80%',
-          data: [{
-            name: 'Electricity',
-            y: 130.71
+          data: [ {
+            name: 'Janitorial',
+            y: 1200
           }, {
-            name: 'Water',
-            y: 4192.3,
+            name: 'Pest Control',
+            y: 1260,
             sliced: true,
             selected: true
           }, {
-            name: 'Garbage and Recycling',
-            y: 3930.36
-          },]
-        }]
+            name: 'Painting',
+            y: 45
+          }, {
+            name: 'Plumbing',
+            y: 990
+          }, {
+            name: 'Roof Repair',
+            y: 3260
+          }, {
+            name: 'General Repairs',
+            y: 466
+          }, {
+            name: 'Supplies',
+            y: 395
+          } ]
+        } ]
       });
     }
 

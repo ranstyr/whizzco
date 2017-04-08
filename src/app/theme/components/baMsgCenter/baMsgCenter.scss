@@ -1,5 +1,13 @@
 @import '../../sass/conf/conf';
 
+/*
+todo ran - delete the below 2 lines - only for prototype
+*/
+.not-active {
+  pointer-events: none;
+  cursor: default;
+}
+
 /* msg center */
 @-webkit-keyframes pulsate {
   30% {

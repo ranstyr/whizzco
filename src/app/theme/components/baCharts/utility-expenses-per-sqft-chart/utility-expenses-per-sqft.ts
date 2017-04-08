@@ -7,15 +7,15 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 
 
 @Component({
-  selector: 'uses-chart',
+  selector: 'utility-expenses-per-sqft',
   template: `
-       <div #chart id="usesChartContainer" style="width:100%; height:100%;"></div>
+       <div #chart id="utility-expenses-per-sqft-container" style="width:100%; height:50%;"></div>
        <ul>
     
   </ul> 
     `
 })
-export class UsesChartComponent {
+export class UtilityExpensesPerSqftComponent {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 
@@ -34,7 +34,7 @@ export class UsesChartComponent {
           thousandsSep: ','
         }
       });
-      Highcharts.chart('usesChartContainer', {
+      Highcharts.chart('utility-expenses-per-sqft-container', {
         chart: {
           plotBackgroundColor: null,
           plotBorderWidth: null,
@@ -44,16 +44,16 @@ export class UsesChartComponent {
 
         },
         title: {
-          align: 'center',
-          text: 'Cash Uses'
+          text: 'Utility Expenses Per Sqft'
         },
         tooltip: {
-          pointFormat: '<b>${point.y}</b> Share: <b>{point.percentage:.1f}%</b>'
+          pointFormat: '<b>${point.y}</b>'
         },
         plotOptions: {
           pie: {
             allowPointSelect: true,
             cursor: 'pointer',
+             showInLegend: true,
             dataLabels: {
               enabled: false,
               style: {
@@ -61,7 +61,6 @@ export class UsesChartComponent {
                 color: '#0F1A36'
               }
             },
-            showInLegend: true
           }
         },
         navigation: {
@@ -81,18 +80,21 @@ export class UsesChartComponent {
           }
         },
         series: [{
-          innerSize: '80%',
-          name: 'Uses',
+          name: 'Brands',
           colorByPoint: true,
+          innerSize: '80%',
           data: [{
-            name: 'Distributions',
-            y: 203924
+            name: 'Electricity',
+            y: 130.71
           }, {
-            name: 'Consolidated Cash Reserves',
-            y: 129997,
+            name: 'Water',
+            y: 4192.3,
             sliced: true,
             selected: true
-          }]
+          }, {
+            name: 'Garbage and Recycling',
+            y: 3930.36
+          },]
         }]
       });
     }

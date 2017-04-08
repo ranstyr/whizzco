@@ -6,15 +6,15 @@ import { Component, OnInit, Input } from '@angular/core';
 
 
 @Component({
-  selector: 'investor-level-distributions-chart',
+  selector: 'debt-service-chart',
   template: `
-       <div id="investor-level-distributions-chart-container" style="width:100%; height:50%;"></div>
+       <div id="debt-service-chart-container" style="width:100%; height:50%;"></div>
        <ul>
     
   </ul> 
     `
 })
-export class InvestorLevelDistributionsChartComponent {
+export class DebtServiceChartComponent {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 
@@ -28,17 +28,18 @@ export class InvestorLevelDistributionsChartComponent {
   public renderChart( data ) {
     Highcharts.setOptions({
       lang: {
-        thousandsSep: ','
+        thousandsSep: ',',
+
       }
     });
-    Highcharts.chart('investor-level-distributions-chart-container', {
+    Highcharts.chart('debt-service-chart-container', {
       chart: {
         zoomType: 'xy',
         backgroundColor: null
 
       },
       title: {
-        text: 'Investor Level Distributions'
+        text: 'Debt Service'
       },
       subtitle: {
         text: ''
@@ -81,7 +82,7 @@ export class InvestorLevelDistributionsChartComponent {
       navigation: {
         buttonOptions: {
           theme: {
-            fill: "#71B0D9",
+            fill: "#5B8DB5",
             states: {
               hover: {
                 fill: '#5585C0'
@@ -95,26 +96,26 @@ export class InvestorLevelDistributionsChartComponent {
         }
       },
       series: [{
-        name: 'Distributions',
+        name: 'Revenue',
         type: 'column',
-        data: [12178,0,0,50651,0,107355,0,33740,0,0,0,0],
+        data: [17807,17807,17825,17855,17855,17837,17837,17837,17837,17837,17837,17837],
         tooltip: {
           valuePrefix: '$'
         }
 
       }, {
-        name: 'Accummulated ditsributions',
+        name: 'Operating expenses',
         type: 'column',
-        data: [12178,12178,12178,62830,62830,170184,170184,203924,203924,203924,203924,203924],
+        data: [2208,1798,2197,11966,2237,1769,2804,11131,2191,1961,1449,1623],
         tooltip: {
           valuePrefix: '$'
         }
 
       }, {
-        name: 'CoC',
+        name: 'Operating expenses ratio',
         type: 'spline',
         yAxis: 1,
-        data: [1,1,1,5,5,14,14,17,17,17,17,17],
+        data: [12,10,12,67,13,10,16,62,12,11,8,9],
         tooltip: {
           valueSuffix: '%'
         }

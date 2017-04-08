@@ -8,6 +8,8 @@ import { OperationDashboard } from "./pages/operation/operation.component";
 import { CashDashboard } from "./pages/cash/cash.component";
 
 
+
+
 // noinspection TypeScriptValidateTypes
 export const routes: Routes = [
   {

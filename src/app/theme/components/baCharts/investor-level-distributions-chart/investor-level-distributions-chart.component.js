@@ -2,14 +2,17 @@
  * Created by ran.styr on 17/11/2016.
  */
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var angularfire2_1 = require("angularfire2");
-var investorLevelDistributionsChartComponent = (function () {
-    function investorLevelDistributionsChartComponent(_af) {
-        this._af = _af;
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var core_1 = require('@angular/core');
+var InvestorLevelDistributionsChartComponent = (function () {
+    function InvestorLevelDistributionsChartComponent() {
     }
-    investorLevelDistributionsChartComponent.prototype.renderChart = function (data) {
+    InvestorLevelDistributionsChartComponent.prototype.renderChart = function (data) {
         Highcharts.setOptions({
             lang: {
                 thousandsSep: ','
@@ -17,7 +20,8 @@ var investorLevelDistributionsChartComponent = (function () {
         });
         Highcharts.chart('investor-level-distributions-chart-container', {
             chart: {
-                zoomType: 'xy'
+                zoomType: 'xy',
+                backgroundColor: null
             },
             title: {
                 text: 'Investor Level Distributions'
@@ -60,6 +64,22 @@ var investorLevelDistributionsChartComponent = (function () {
             tooltip: {
                 shared: true
             },
+            navigation: {
+                buttonOptions: {
+                    theme: {
+                        fill: "#71B0D9",
+                        states: {
+                            hover: {
+                                fill: '#5585C0'
+                            },
+                            select: {
+                                stroke: '#039',
+                                fill: '#5585C0'
+                            }
+                        }
+                    }
+                }
+            },
             series: [{
                     name: 'Distributions',
                     type: 'column',
@@ -85,18 +105,15 @@ var investorLevelDistributionsChartComponent = (function () {
                 }]
         });
     };
-    return investorLevelDistributionsChartComponent;
+    __decorate([
+        core_1.Input()
+    ], InvestorLevelDistributionsChartComponent.prototype, "_data", void 0);
+    InvestorLevelDistributionsChartComponent = __decorate([
+        core_1.Component({
+            selector: 'investor-level-distributions-chart',
+            template: "\n       <div id=\"investor-level-distributions-chart-container\" style=\"width:100%; height:50%;\"></div>\n       <ul>\n    \n  </ul> \n    "
+        })
+    ], InvestorLevelDistributionsChartComponent);
+    return InvestorLevelDistributionsChartComponent;
 }());
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Object)
-], investorLevelDistributionsChartComponent.prototype, "_data", void 0);
-investorLevelDistributionsChartComponent = __decorate([
-    core_1.Component({
-        selector: 'investor-level-distributions-chart',
-        template: "\n       <div id=\"investor-level-distributions-chart-container\" style=\"width:100%; height:50%;\"></div>\n       <ul>\n    \n  </ul> \n    "
-    }),
-    __metadata("design:paramtypes", [angularfire2_1.AngularFire])
-], investorLevelDistributionsChartComponent);
-exports.investorLevelDistributionsChartComponent = investorLevelDistributionsChartComponent;
-//# sourceMappingURL=investor-level-distributions-chart.component.js.map
+exports.InvestorLevelDistributionsChartComponent = InvestorLevelDistributionsChartComponent;

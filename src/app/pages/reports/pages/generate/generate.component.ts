@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl } from "@angular/forms";
 import { Daterangepicker } from 'ng2-daterangepicker';
 import { DaterangepickerConfig } from 'ng2-daterangepicker';
-import { BaPropertiesModel } from "../../../../theme/services/model/BaPropertiesModel";
+import { BaPropertiesModel } from "../../../../theme/services/baModel/BaPropertiesModel";
 import { FirebaseObjectObservable } from "angularfire2";
 import { ModalDirective } from 'ng2-bootstrap';
 

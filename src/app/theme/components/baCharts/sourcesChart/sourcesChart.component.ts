@@ -15,7 +15,7 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
   </ul> 
     `
 })
-export class sourcesChartComponent {
+export class SourcesChartComponent {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 
@@ -45,7 +45,7 @@ export class sourcesChartComponent {
         },
         title: {
           align: 'center',
-          text: 'T-12 Cash Sources'
+          text: 'Cash Sources'
         },
         tooltip: {
           pointFormat: '<b>${point.y}</b> Share: <b>{point.percentage:.1f}%</b>'

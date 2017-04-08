@@ -1,11 +1,18 @@
 import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+
+import { IncomeAnaylsisChartComponent } from "../../../../theme/components/baCharts/income-anaylsis-chart/income-anaylsis-chart.component";
+import { NoiNetIncomeChartComponent } from "../../../../theme/components/baCharts/noi-net-income-chart/noi-net-income-chart.component";
+import { OperationalExpenseAnalysisChartComponent } from "../../../../theme/components/baCharts/operational-expense-analysis-chart/operational-expense-analysis-chart.component";
+import { DebtServiceChartComponent } from "../../../../theme/components/baCharts/debt-service/debt-service-chart.component";
+
+import { BaPropertiesDataModel } from "../../../../theme/services/baModel/BaPropertiesDataModel";
+import { FilterService } from "../../filters.service";
 import { FinancialService } from './financial.service';
 
+import { PageDashboard } from "../page";
+
+
 import 'style-loader!./financial.scss';
-import { IncomeAnaylsisChartComponent } from "../../../../theme/components/baCharts/income-anaylsis-chart/income-anaylsis-chart.component";
-import { noiNetIncomeChartComponent } from "../../../../theme/components/baCharts/noi-net-income-chart/noi-net-income-chart.component";
-import { operationalExpenseAnalysisChartComponent } from "../../../../theme/components/baCharts/operational-expense-analysis-chart/operational-expense-analysis-chart.component";
-import { operatingExpenseRatioChartComponent } from "../../../../theme/components/baCharts/operating-expense-ratio-chart/operating-expense-ratio-chart.component";
 
 @Component({
   selector: 'financial-component',
@@ -14,22 +21,22 @@ import { operatingExpenseRatioChartComponent } from "../../../../theme/component
 
 })
 
-export class FinancialDashboard {
-   @ViewChild(IncomeAnaylsisChartComponent) IncomeAnaylsisChartComponent: IncomeAnaylsisChartComponent;
-   @ViewChild(noiNetIncomeChartComponent) noiNetIncomeChartComponent: noiNetIncomeChartComponent;
-   @ViewChild(operationalExpenseAnalysisChartComponent) operationalExpenseAnalysisChartComponent: operationalExpenseAnalysisChartComponent;
-  @ViewChild(operatingExpenseRatioChartComponent) operatingExpenseRatioChartComponent: operatingExpenseRatioChartComponent;
+export class FinancialDashboard extends PageDashboard{
 
-  constructor(private financialService : FinancialService) {
+
+  @ViewChild(IncomeAnaylsisChartComponent) incomeAnaylsisChartComponent: IncomeAnaylsisChartComponent;
+   @ViewChild(NoiNetIncomeChartComponent) noiNetIncomeChartComponent: NoiNetIncomeChartComponent;
+   @ViewChild(OperationalExpenseAnalysisChartComponent) operationalExpenseAnalysisChartComponent: OperationalExpenseAnalysisChartComponent;
+   @ViewChild(DebtServiceChartComponent) debtServiceChartComponent: DebtServiceChartComponent;
+
+  constructor( private filtersService: FilterService, private baPropertiesDataModel: BaPropertiesDataModel ) {
+    super(filtersService , baPropertiesDataModel);
   }
 
-  ngOnInit() {
-
-  }
 
   ngAfterViewInit() {
-    if(this.IncomeAnaylsisChartComponent){
-      this.IncomeAnaylsisChartComponent.renderChart(null);
+    if(this.incomeAnaylsisChartComponent){
+      this.incomeAnaylsisChartComponent.renderChart(null);
     }
     if(this.noiNetIncomeChartComponent){
       this.noiNetIncomeChartComponent.renderChart(null);
@@ -37,8 +44,8 @@ export class FinancialDashboard {
     if(this.operationalExpenseAnalysisChartComponent){
       this.operationalExpenseAnalysisChartComponent.renderChart(null);
     }
-    if(this.operatingExpenseRatioChartComponent){
-      this.operatingExpenseRatioChartComponent.renderChart(null);
+    if(this.debtServiceChartComponent){
+      this.debtServiceChartComponent.renderChart(null);
     }
 
   }
