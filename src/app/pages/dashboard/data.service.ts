@@ -456,6 +456,7 @@ export class DataService {
 
   }
 
+  //sum all values of array to one value
   public objectValeuSum( metricTypeObj ) {
     // if metricTypeObj is null return 0
     if (!metricTypeObj) {
@@ -477,6 +478,7 @@ export class DataService {
      }, 0) : 0;*/
   };
 
+  //divide array by diffrent Array (i.e. divide values by index)
   public divideArrayElementsByArrayElements( arrA, arrB ) {
     //check both inputs are Array
     if (!(Object.prototype.toString.call(arrA) === '[object Array]')) return [];
@@ -491,11 +493,26 @@ export class DataService {
     });
   }
 
+  //add array to diffrent Array (i.e. sum values by index)
   public addArrayElementsByArrayElements( arrA, arrB ) {
     return arrA.map(function ( n, i ) {
       return n + arrB[ i ];
     });
   }
+
+  // filter properties Array to selected properties
+  public getFilterDataByProperties( propertiesArray: Object , selectedProperties : Array<string> ): Array <string> {
+
+    if (_.isEmpty(propertiesArray)) return [];
+
+    // than filter it
+    let tempArr = _.filter(propertiesArray, ( o: any ) => {
+      return _.indexOf(selectedProperties, o.PropertyID) > -1;
+    });
+
+    return tempArr;
+  }
+
 
 
   /////////////////other//////////////

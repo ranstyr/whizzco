@@ -26,7 +26,6 @@ import { FirebaseObjectObservable } from "angularfire2";
 })
 
 export class OperationDashboard extends PageDashboard {
-  _propertiesModelObservable: FirebaseObjectObservable<any>;
   _propertiesData : Object;
 
   @ViewChild(MaintenanceExpensesPerUnit) maintenanceExpensesPerUnit: MaintenanceExpensesPerUnit;
@@ -36,9 +35,27 @@ export class OperationDashboard extends PageDashboard {
   @ViewChild(OperatingExpenseRatioChartComponent) operatingExpenseRatioChartComponent: OperatingExpenseRatioChartComponent;
 
   constructor( private filtersService: FilterService, private _baPropertiesDataModel: BaPropertiesDataModel,
-               private _dataService: DataService, private _baPropertiesModel: BaPropertiesModel ) {
+               private _dataService: DataService, private _BaPropertiesModel: BaPropertiesModel ) {
     super(filtersService, _baPropertiesDataModel);
   }
+
+  ngOnInit() {
+
+
+    // properties data
+
+    this._BaPropertiesModel.getDataObservable()
+      .subscribe(( value: any ) => {
+        if (value.$exists()) {
+          let propertiesTemp = this._BaPropertiesModel.getData(value);
+          this._propertiesData = propertiesTemp.map(( a ) => {
+            return a.PropertyName;
+          });
+        }
+      });
+
+  }
+
 
   ngAfterViewInit() {
     this._dataService.setCurrentTab('operation');

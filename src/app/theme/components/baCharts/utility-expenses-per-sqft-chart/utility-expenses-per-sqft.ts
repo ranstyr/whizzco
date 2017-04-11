@@ -20,6 +20,8 @@ export class UtilityExpensesPerSqftComponent {
   _modelRef: any;
 
   @Input('dataUpdated') dataUpdated: EventEmitter<any>;
+  @Input('propertiesData') propertiesData: Object;
+
   @ViewChild('chart') el: ElementRef;
 
 

@@ -20,6 +20,8 @@ export class MaintenanceExpensesPerSqft {
   _modelRef: any;
 
   @Input('dataUpdated') dataUpdated: EventEmitter<any>;
+  @Input('propertiesData') propertiesData: Object;
+
   @ViewChild('chart') el: ElementRef;
 
   constructor( private _dataService: DataService ) {

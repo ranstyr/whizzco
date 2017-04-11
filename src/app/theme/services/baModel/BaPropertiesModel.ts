@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import * as _ from 'lodash';
 import { AngularFire, FirebaseObjectObservable } from "angularfire2";
+
+import * as _ from 'lodash';
+
 
 @Injectable()
 export class BaPropertiesModel {
@@ -14,7 +16,7 @@ export class BaPropertiesModel {
     this._ref = this._af.database.object(localStorage.getItem('company') + `/properties`);
     this._ref.subscribe(
       value => console.log("properties reterived from firebase : ", (value ? Object.keys(value) : null)),
-      err => console.error("error at BaPropertiesModel - _ref.subscribe" , err + err ? err.message : err)
+      err => console.error("error at BaPropertiesModel - _ref.subscribe", err + err ? err.message : err)
     );
     return this._ref;
   }
@@ -28,9 +30,11 @@ export class BaPropertiesModel {
   public getData( value: any ) {
     let _Data = [];
     let tempArr = value;
-    if (tempArr) {
+    if (!(_.isEmpty(tempArr))) {
       for (let key in tempArr) {
-        _Data.push(tempArr[ key ]);
+        if (!(_.isEmpty(tempArr[ key ]))) {
+          _Data.push(tempArr[ key ]);
+        }
       }
       this._propertiesData = _Data;
       return _Data;

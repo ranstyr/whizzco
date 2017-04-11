@@ -2,8 +2,9 @@
  * Created by ran.styr on 17/11/2016.
  */
 
-import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild, EventEmitter } from '@angular/core';
 import { DataService } from "../../../../pages/dashboard/data.service";
+import * as _ from 'lodash';
 
 declare let math;
 
@@ -21,13 +22,28 @@ export class MaintenanceExpensesPerUnit {
   _modelRef: any;
 
   @Input('dataUpdated') dataUpdated: EventEmitter<any>;
+  //@Input('propertiesData') propertiesData: Object;
+
   @ViewChild('chart') el: ElementRef;
 
 
   constructor( private _dataService: DataService ) {
 
   }
-
+  /*ngAfterViewInit() {
+    this.dataUpdated.subscribe(
+      ( res ) => {
+        if (_.isEmpty(this.propertiesData)){
+          this.renderChart([],[]);
+        }
+        else if (res.data.propertiesFilterdData) {
+          this._selectedProperties = this._filterService.getSelectedProperties();
+          this._filterPropertiesData = this._dataService.getFilterDataByProperties(this.propertiesData ,this._selectedProperties );
+          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate);
+        }
+      });
+  }
+*/
   ngAfterViewInit() {
     this.dataUpdated.subscribe(
       ( res ) => {
