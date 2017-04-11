@@ -2,8 +2,10 @@
  * Created by ran.styr on 17/11/2016.
  */
 
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { DataService } from "../../../../pages/dashboard/data.service";
 
+declare let math;
 
 @Component({
   selector: 'noi-net-income-chart',
@@ -18,16 +20,93 @@ export class NoiNetIncomeChartComponent {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 
-  @Input() _data: Object;
-  @ViewChild('chart') el:ElementRef;
+  @Input('dataUpdated') dataUpdated: EventEmitter<any>;
+  @ViewChild('chart') el: ElementRef;
 
 
-  constructor(  ) {
+  constructor( private _dataService: DataService ) {
 
   }
 
-  public renderChart(data) {
-    if (this.el.nativeElement){
+  ngAfterViewInit() {
+    this.dataUpdated.subscribe(
+      ( res ) => {
+        if (res.data.propertiesFilterdData) {
+          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate);
+        }
+      });
+  }
+
+  private calculateData( propertiesFilterdData , xAxisDate) {
+    /*  series: [{
+     name: 'NOI',
+     data: [15599, 16009, 15628, 5890, 15618, 16068, 15033, 6705, 15646, 15876, 16387, 16214]
+     }, {
+     name: 'Net Income',
+     data: [6608, 7018, 4333, -2807, 15618, 6520, 5484, -3428, 6098, 6327, 6839, 6666]
+     }]
+
+     categories: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ]
+     */
+
+    let revenue = this._dataService.getRevenuesMetricsForSelectedDates(propertiesFilterdData);
+    revenue = this._dataService.transformObjectToArray(revenue);
+
+    let operatingExpenses = this._dataService.getOperatingExpensesMetricsForSelectedDates(propertiesFilterdData);
+    operatingExpenses = this._dataService.transformObjectToArray(operatingExpenses);
+
+    let debtService = this._dataService.getDebtServiceMetricsForSelectedDates(propertiesFilterdData);
+    debtService = this._dataService.transformObjectToArray(debtService);
+    debtService = math.matrix(debtService);
+    //the below line manage empty matrix
+
+    debtService = (debtService._data &&  debtService._data.length > 0 ) ? math.matrix(debtService) : math.zeros(xAxisDate.length);
+
+    let managementExpenses = this._dataService.getManagementExpensesMetricsForSelectedDates(propertiesFilterdData);
+    managementExpenses = this._dataService.transformObjectToArray(managementExpenses);
+    managementExpenses = math.matrix(managementExpenses);
+    //the below line manage empty matrix
+
+    managementExpenses = (managementExpenses._data &&  managementExpenses._data.length > 0 ) ? math.matrix(managementExpenses) : math.zeros(xAxisDate.length);
+
+    let leaseTIM = this._dataService.getLeaseTIMetricsForSelectedDates(propertiesFilterdData);
+    leaseTIM = this._dataService.transformObjectToArray(leaseTIM);
+    leaseTIM = math.matrix(leaseTIM);
+    //the below line manage empty matrix
+
+    leaseTIM = (leaseTIM._data &&  leaseTIM._data.length > 0 ) ? math.matrix(leaseTIM) : math.zeros(xAxisDate.length);
+
+    let CAPEX = this._dataService.getCAPEXMetricsForSelectedDates(propertiesFilterdData);
+    CAPEX = this._dataService.transformObjectToArray(CAPEX);
+    CAPEX = math.matrix(CAPEX);
+    //the below line manage empty matrix
+
+    CAPEX = (CAPEX._data &&  CAPEX._data.length > 0 ) ? math.matrix(CAPEX) : math.zeros(xAxisDate.length);
+
+    revenue = (revenue) ? math.matrix(revenue) : math.zeros(xAxisDate.length);
+    operatingExpenses = (operatingExpenses) ? math.matrix(operatingExpenses) : math.zeros(xAxisDate.length);
+
+    let NOI = (revenue._data && operatingExpenses._data) ? math.subtract(revenue, operatingExpenses) : math.zeros(xAxisDate.length);
+
+    let temptoSubtract = math.add(math.add(math.add(debtService, managementExpenses) ,  leaseTIM), CAPEX);
+
+    let netCashIncome = (NOI._data&& temptoSubtract._data) ? math.subtract(NOI, temptoSubtract) : math.zeros(xAxisDate.length);
+
+    let data = [ {
+      name: 'NOI',
+      data: NOI._data
+    }, {
+      name: 'Net Income',
+      data: netCashIncome._data
+    } ];
+
+    return data;
+  }
+
+  public renderChart( propertiesFilterdData, xAxisDate ) {
+    if (this.el.nativeElement && this._dataService.getCurrentTab()==='financial') {
+      let data = this.calculateData(propertiesFilterdData , xAxisDate);
+
       Highcharts.setOptions({
         lang: {
           thousandsSep: ',',
@@ -43,7 +122,7 @@ export class NoiNetIncomeChartComponent {
           text: 'NOI / Net Income'
         },
         xAxis: {
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+          categories: xAxisDate
         },
         credits: {
           enabled: false
@@ -64,14 +143,9 @@ export class NoiNetIncomeChartComponent {
             }
           }
         },
-        series: [{
-          name: 'NOI',
-          data: [15599, 16009, 15628, 5890, 15618, 16068, 15033, 6705, 15646, 15876, 16387, 16214]
-        }, {
-          name: 'Net Income',
-          data: [6608, 7018, 4333, -2807, 15618, 6520, 5484, -3428, 6098, 6327, 6839, 6666]
-        }]
-      });    }
+        series: data
+      });
+    }
 
   }
 

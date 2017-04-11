@@ -11,45 +11,63 @@ import { FinancialService } from './financial.service';
 
 import { PageDashboard } from "../page";
 
+import * as _ from 'lodash';
+
 
 import 'style-loader!./financial.scss';
+import { DataService } from "../../data.service";
 
 @Component({
   selector: 'financial-component',
   templateUrl: 'financial.html',
-  providers: [FinancialService]
+  providers: [ FinancialService ]
 
 })
 
-export class FinancialDashboard extends PageDashboard{
+export class FinancialDashboard extends PageDashboard {
 
 
   @ViewChild(IncomeAnaylsisChartComponent) incomeAnaylsisChartComponent: IncomeAnaylsisChartComponent;
-   @ViewChild(NoiNetIncomeChartComponent) noiNetIncomeChartComponent: NoiNetIncomeChartComponent;
-   @ViewChild(OperationalExpenseAnalysisChartComponent) operationalExpenseAnalysisChartComponent: OperationalExpenseAnalysisChartComponent;
-   @ViewChild(DebtServiceChartComponent) debtServiceChartComponent: DebtServiceChartComponent;
+  @ViewChild(NoiNetIncomeChartComponent) noiNetIncomeChartComponent: NoiNetIncomeChartComponent;
+  @ViewChild(OperationalExpenseAnalysisChartComponent) operationalExpenseAnalysisChartComponent: OperationalExpenseAnalysisChartComponent;
+  @ViewChild(DebtServiceChartComponent) debtServiceChartComponent: DebtServiceChartComponent;
 
-  constructor( private filtersService: FilterService, private baPropertiesDataModel: BaPropertiesDataModel ) {
-    super(filtersService , baPropertiesDataModel);
+  constructor( private filtersService: FilterService, private baPropertiesDataModel: BaPropertiesDataModel , private _dataService : DataService ) {
+    super(filtersService, baPropertiesDataModel);
   }
 
 
   ngAfterViewInit() {
-    if(this.incomeAnaylsisChartComponent){
-      this.incomeAnaylsisChartComponent.renderChart(null);
-    }
-    if(this.noiNetIncomeChartComponent){
-      this.noiNetIncomeChartComponent.renderChart(null);
-    }
-    if(this.operationalExpenseAnalysisChartComponent){
-      this.operationalExpenseAnalysisChartComponent.renderChart(null);
-    }
-    if(this.debtServiceChartComponent){
-      this.debtServiceChartComponent.renderChart(null);
-    }
+    this._dataService.setCurrentTab('financial');
 
+    let propertiesFilterdData = this.filtersService.getPropertiesFilterdData();
+    let xAxisDate = this.filtersService.getXAxisDate();
+    if (!(_.isEmpty(propertiesFilterdData) && _.isEmpty(xAxisDate))) {
+        if (this.incomeAnaylsisChartComponent) {
+          this.incomeAnaylsisChartComponent.renderChart(propertiesFilterdData, xAxisDate);
+        }
+        if (this.noiNetIncomeChartComponent) {
+          this.noiNetIncomeChartComponent.renderChart(propertiesFilterdData, xAxisDate);
+        }
+        if (this.operationalExpenseAnalysisChartComponent) {
+          this.operationalExpenseAnalysisChartComponent.renderChart(propertiesFilterdData, xAxisDate);
+        }
+        if (this.debtServiceChartComponent) {
+          this.debtServiceChartComponent.renderChart(propertiesFilterdData, xAxisDate);
+        }
+      }else{
+      if (this.incomeAnaylsisChartComponent) {
+        this.incomeAnaylsisChartComponent.renderChart([], []);
+      }
+      if (this.noiNetIncomeChartComponent) {
+        this.noiNetIncomeChartComponent.renderChart([], []);
+      }
+      if (this.operationalExpenseAnalysisChartComponent) {
+        this.operationalExpenseAnalysisChartComponent.renderChart([], []);
+      }
+      if (this.debtServiceChartComponent) {
+        this.debtServiceChartComponent.renderChart([], []);
+      }
+    }
   }
-
-
-
 }

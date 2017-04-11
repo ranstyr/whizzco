@@ -18,7 +18,7 @@ export class BaPropertiesDataModel {
     this._propertiesRef = this._af.database.object(localStorage.getItem('company') + '/propertiesData');
     this._propertiesRef.subscribe(
       value => {
-        console.log("properties data reterived from firebase : ", (value ? value.data : null));
+        console.log("properties data reterived from firebase : ", (value ? Object.keys(value) : null));
         this._propertiesData = value;
       },
       err => console.error("error at BaPropertiesModel - _ref.subscribe" + err + err ? err.message : err)

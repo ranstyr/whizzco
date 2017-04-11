@@ -13,11 +13,8 @@ export class BaPropertiesModel {
   public getDataObservable(): FirebaseObjectObservable<any> {
     this._ref = this._af.database.object(localStorage.getItem('company') + `/properties`);
     this._ref.subscribe(
-      value => {
-        console.log("properties data reterived from firebase : ");
-        console.log(value ? value.data : null);
-      },
-      err => console.error("error at BaPropertiesModel - _ref.subscribe" + err + err ? err.message : err)
+      value => console.log("properties reterived from firebase : ", (value ? Object.keys(value) : null)),
+      err => console.error("error at BaPropertiesModel - _ref.subscribe" , err + err ? err.message : err)
     );
     return this._ref;
   }

@@ -2,8 +2,8 @@
  * Created by ran.styr on 17/11/2016.
  */
 
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
-
+import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { DataService } from "../../../../pages/dashboard/data.service";
 
 
 @Component({
@@ -19,16 +19,66 @@ export class UtilityExpensesPerSqftComponent {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 
-  @Input() _data: Object;
+  @Input('dataUpdated') dataUpdated: EventEmitter<any>;
   @ViewChild('chart') el: ElementRef;
 
 
-  constructor(  ) {
+  constructor( private _dataService: DataService ) {
 
   }
 
-  public renderChart( data ) {
-    if (this.el.nativeElement) {
+
+  ngAfterViewInit() {
+    this.dataUpdated.subscribe(
+      ( res ) => {
+        if (res.data.propertiesFilterdData) {
+          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate);
+        }
+      });
+  }
+
+  private calculateData( propertiesFilterdData, xAxisDate ) {
+    /*  series:   [{
+     name: 'Electricity',
+     y: 130.71
+     }, {
+     name: 'Water',
+     y: 4192.3,
+     sliced: true,
+     selected: true
+     }, {
+     name: 'Garbage and Recycling',
+     y: 3930.36
+     }]
+     */
+
+    let electricity = this._dataService.getElectricityMetrixForSelectedDates(propertiesFilterdData);
+    electricity = this._dataService.objectValeuSum(electricity);
+
+    let water = this._dataService.getWaterMetrixForSelectedDates(propertiesFilterdData);
+    water = this._dataService.objectValeuSum(water);
+
+    let garbageandRecycling = this._dataService.getGarbageandRecyclingMetrixForSelectedDates(propertiesFilterdData);
+    garbageandRecycling = this._dataService.objectValeuSum(garbageandRecycling);
+
+    return [ {
+      name: 'Electricity',
+      y: electricity
+    }, {
+      name: 'Water',
+      y: water,
+      sliced: true,
+      selected: true
+    }, {
+      name: 'Garbage and Recycling',
+      y: garbageandRecycling
+    } ];
+  }
+
+  public renderChart( propertiesFilterdData, xAxisDate ) {
+    if (this.el.nativeElement && this._dataService.getCurrentTab()==='operation') {
+      let data = this.calculateData(propertiesFilterdData, xAxisDate);
+
       Highcharts.setOptions({
         lang: {
           thousandsSep: ','
@@ -53,7 +103,7 @@ export class UtilityExpensesPerSqftComponent {
           pie: {
             allowPointSelect: true,
             cursor: 'pointer',
-             showInLegend: true,
+            showInLegend: true,
             dataLabels: {
               enabled: false,
               style: {
@@ -79,23 +129,12 @@ export class UtilityExpensesPerSqftComponent {
             }
           }
         },
-        series: [{
+        series: [ {
           name: 'Brands',
           colorByPoint: true,
           innerSize: '80%',
-          data: [{
-            name: 'Electricity',
-            y: 130.71
-          }, {
-            name: 'Water',
-            y: 4192.3,
-            sliced: true,
-            selected: true
-          }, {
-            name: 'Garbage and Recycling',
-            y: 3930.36
-          },]
-        }]
+          data: data
+        } ]
       });
     }
 

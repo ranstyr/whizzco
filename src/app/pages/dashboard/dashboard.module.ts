@@ -29,6 +29,7 @@ import { TodoService } from './todo/todo.service';
 import { TrafficChartService } from './trafficChart/trafficChart.service';
 import { UsersMapService } from './usersMap/usersMap.service';
 import { FilterService } from "./filters.service";
+import { DataService } from "./data.service";
 
 import { SelectModule } from 'angular2-select';
 import { Daterangepicker } from 'ng2-daterangepicker';
@@ -65,7 +66,8 @@ import { Daterangepicker } from 'ng2-daterangepicker';
     TodoService,
     TrafficChartService,
     UsersMapService,
-    FilterService
+    FilterService,
+    DataService
   ]
 })
 export class DashboardModule {}

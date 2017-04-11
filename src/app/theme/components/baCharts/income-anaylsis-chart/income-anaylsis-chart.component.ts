@@ -2,8 +2,10 @@
  * Created by ran.styr on 17/11/2016.
  */
 
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { DataService } from "../../../../pages/dashboard/data.service";
 
+declare let math;
 
 @Component({
   selector: 'income-anaylsis-chart',
@@ -18,18 +20,77 @@ export class IncomeAnaylsisChartComponent {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 
-  @Input() _data: Object;
+  @Input('dataUpdated') dataUpdated: EventEmitter<any>;
   @ViewChild('chart') el: ElementRef;
 
 
-  constructor(  ) {
+  constructor( private _dataService: DataService ) {
 
+  }
+
+  ngAfterViewInit() {
+    this.dataUpdated.subscribe(
+      ( res ) => {
+        if (res.data.propertiesFilterdData) {
+          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate);
+        }
+      });
+  }
+
+  private calculateData( propertiesFilterdData , xAxisDate) {
+    /*  series: [{
+     name: 'CAM',
+     data: [189, 189, 189, 189, 189, 189, 189, 189, 189, 189, 189, 189]
+     }, {
+     name: 'Other',
+     data: [0, 0, 19, 19, 19, 0, 0, 0, 0, 0, 0, 0]
+     }, {
+     name: 'Commercial Rental',
+     data: [2900, 2900, 2900, 2900, 2900, 2900, 2900, 2900, 2900, 2900, 2900, 2900]
+     }, {
+     name: 'Residential Rental',
+     data: [14718, 14718, 14718, 14748, 14748, 14748, 14748, 14748, 14748, 14748, 14748, 14748]
+     }]
+     categories: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ]
+     */
+
+    let CAM =  (propertiesFilterdData[ 'CAM' ]);
+    CAM = this._dataService.transformObjectToArray(CAM);
+
+    let other =  (propertiesFilterdData[ 'Other' ]);
+    other = this._dataService.transformObjectToArray(other);
+
+    let residentialRental =  (propertiesFilterdData[ 'Residential Rental' ]);
+    residentialRental = this._dataService.transformObjectToArray(residentialRental);
+
+    let commercialRental =  (propertiesFilterdData[ 'Commercial Rental' ]);
+    commercialRental = this._dataService.transformObjectToArray(commercialRental);
+
+
+    let data = [{
+      name: 'CAM',
+      data: CAM
+    }, {
+      name: 'Other',
+      data: other
+    }, {
+      name: 'Commercial Rental',
+      data: commercialRental
+    }, {
+      name: 'Residential Rental',
+      data: residentialRental
+    }]
+
+    return data;
   }
 
 
 
-  public renderChart( data ) {
-    if (this.el && this.el.nativeElement) {
+  public renderChart( propertiesFilterdData, xAxisDate  ) {
+    if (this.el.nativeElement && this._dataService.getCurrentTab()==='financial') {
+      let data : any;
+      data = this.calculateData(propertiesFilterdData , xAxisDate);
+
       Highcharts.setOptions({
         lang: {
           thousandsSep: ','
@@ -45,10 +106,10 @@ export class IncomeAnaylsisChartComponent {
           text: 'Income Analysis'
         },
         xAxis: {
-          categories: [ 'Jan-16', 'Feb-16', 'Mar-16', 'Apr-16', 'May-16', 'Jun-16', 'Jul-16', 'Aug-16', 'Sep-16', 'Oct-16', 'Nov-16', 'Dec-16' ]
+          categories: xAxisDate
         },
         yAxis: {
-          min: 16000 /*Math.max.apply(null, data._EffectiveRent) * 0.8*/,
+          min: 0 /*Math.max.apply(null, data.residentialRental[0]) * 0.8*/,
           tickInterval: 10000,
           stackLabels: {
             formatter: function () {
@@ -89,39 +150,7 @@ export class IncomeAnaylsisChartComponent {
             stacking: 'normal',
           }
         },
-        series: [{
-          name: 'CAM',
-          data: [189, 189, 189, 189, 189, 189, 189, 189, 189, 189, 189, 189]
-        }, {
-          name: 'Other',
-          data: [0, 0, 19, 19, 19, 0, 0, 0, 0, 0, 0, 0]
-        }, {
-          name: 'Commercial Rental',
-          data: [2900, 2900, 2900, 2900, 2900, 2900, 2900, 2900, 2900, 2900, 2900, 2900]
-        }, {
-          name: 'Residential Rental',
-          data: [14718, 14718, 14718, 14748, 14748, 14748, 14748, 14748, 14748, 14748, 14748, 14748]
-        }]
-/*
-        series: [
-          {
-            name: 'Loss To Lease',
-            data: data._LossToLease
-          }, {
-            name: 'Vacancy Loss',
-            data: data._VacancyLoss
-          },
-          {
-            name: 'Rent Concession',
-            data: data._RentConcession
-          }, {
-            name: 'Collection Loss',
-            data: data._CollectionLoss
-          }, {
-            name: 'Effective Rent',
-            data: data._EffectiveRent
-          } ]
-*/
+        series: data
       });
 
 

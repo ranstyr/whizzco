@@ -2,7 +2,8 @@
  * Created by ran.styr on 17/11/2016.
  */
 
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { DataService } from "../../../../pages/dashboard/data.service";
 
 
 
@@ -19,16 +20,42 @@ export class UsesChartComponent {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 
-  @Input() _data: Object;
+  @Input('dataUpdated') dataUpdated: EventEmitter<any>;
   @ViewChild('chart') el: ElementRef;
 
 
-  constructor(  ) {
+  constructor( private _dataService: DataService ) {
+
+  }
+  ngAfterViewInit() {
+    this.dataUpdated.subscribe(
+      ( res ) => {
+        if (res.data.propertiesFilterdData) {
+          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate);
+        }
+      });
+  }
+
+  private calculateData( propertiesFilterdData ) {
+    let consolidatedCashReserves = this._dataService.getSumBankAccountsMetrics(propertiesFilterdData);
+    let accumulatedDistributions = this._dataService.getSumAccumulatedDistributionsMetrics(propertiesFilterdData);
+
+    let data = [ {
+      name: 'Consolidated cash reserves',
+      y: consolidatedCashReserves
+    }, {
+      name: 'Distributions',
+      y: accumulatedDistributions
+    } ];
+
+    return data;
 
   }
 
-  public renderChart( data ) {
-    if (this.el.nativeElement) {
+  public renderChart( propertiesFilterdData, xAxisDate  ) {
+    if (this.el.nativeElement && this._dataService.getCurrentTab()==='cash') {
+      let data = this.calculateData(propertiesFilterdData);
+
       Highcharts.setOptions({
         lang: {
           thousandsSep: ','
@@ -84,15 +111,7 @@ export class UsesChartComponent {
           innerSize: '80%',
           name: 'Uses',
           colorByPoint: true,
-          data: [{
-            name: 'Distributions',
-            y: 203924
-          }, {
-            name: 'Consolidated Cash Reserves',
-            y: 129997,
-            sliced: true,
-            selected: true
-          }]
+          data: data
         }]
       });
     }

@@ -11,7 +11,11 @@ import { BaPropertiesDataModel } from "../../../../theme/services/baModel/BaProp
 
 import { PageDashboard } from "../page";
 
+import * as _ from 'lodash';
+
+
 import 'style-loader!./cash.scss';
+import { DataService } from "../../data.service";
 
 @Component({
   selector: 'cash-component',
@@ -19,7 +23,10 @@ import 'style-loader!./cash.scss';
 
 })
 
-export class CashDashboard extends PageDashboard{
+export class CashDashboard extends PageDashboard {
+
+  character: string;
+  dataUpdated: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(SourcesChartComponent) sourcesChartComponent: SourcesChartComponent;
   @ViewChild(UsesChartComponent) usesChartComponent: UsesChartComponent;
@@ -27,28 +34,49 @@ export class CashDashboard extends PageDashboard{
   @ViewChild(CashReservesChartComponent) cashReservesChartComponent: CashReservesChartComponent;
   @ViewChild(MortgageBalanceChartComponent) mortgageBalanceChartComponent: MortgageBalanceChartComponent;
 
-  constructor( private filtersService: FilterService, private baPropertiesDataModel: BaPropertiesDataModel ) {
-    super(filtersService , baPropertiesDataModel);
+  constructor( private filtersService: FilterService, private baPropertiesDataModel: BaPropertiesDataModel , private _dataService : DataService ) {
+    super(filtersService, baPropertiesDataModel);
   }
 
   ngAfterViewInit() {
+    this._dataService.setCurrentTab('cash');
 
-    if (this.sourcesChartComponent) {
-      this.sourcesChartComponent.renderChart(null);
+    let propertiesFilterdData = this.filtersService.getPropertiesFilterdData();
+    let xAxisDate = this.filtersService.getXAxisDate();
+    if (!(_.isEmpty(propertiesFilterdData) && _.isEmpty(xAxisDate))) {
+      if (this.sourcesChartComponent) {
+        this.sourcesChartComponent.renderChart(propertiesFilterdData, xAxisDate);
+      }
+      if (this.usesChartComponent) {
+        this.usesChartComponent.renderChart(propertiesFilterdData, xAxisDate);
+      }
+      if (this.investorLevelDistributionsChartComponent) {
+        this.investorLevelDistributionsChartComponent.renderChart(propertiesFilterdData, xAxisDate);
+      }
+      if (this.cashReservesChartComponent) {
+        this.cashReservesChartComponent.renderChart(propertiesFilterdData, xAxisDate);
+      }
+      if (this.mortgageBalanceChartComponent) {
+        this.mortgageBalanceChartComponent.renderChart(propertiesFilterdData, xAxisDate);
+      }
     }
-    if (this.usesChartComponent) {
-      this.usesChartComponent.renderChart(null);
+    else{
+      if (this.sourcesChartComponent) {
+        this.sourcesChartComponent.renderChart([], []);
+      }
+      if (this.usesChartComponent) {
+        this.usesChartComponent.renderChart([], []);
+      }
+      if (this.investorLevelDistributionsChartComponent) {
+        this.investorLevelDistributionsChartComponent.renderChart([], []);
+      }
+      if (this.cashReservesChartComponent) {
+        this.cashReservesChartComponent.renderChart([], []);
+      }
+      if (this.mortgageBalanceChartComponent) {
+        this.mortgageBalanceChartComponent.renderChart([], []);
+      }
     }
-    if (this.investorLevelDistributionsChartComponent) {
-      this.investorLevelDistributionsChartComponent.renderChart(null);
-    }
-    if (this.cashReservesChartComponent) {
-      this.cashReservesChartComponent.renderChart(null);
-    }
-    if (this.mortgageBalanceChartComponent) {
-      this.mortgageBalanceChartComponent.renderChart(null);
-    }
-
   }
 
 

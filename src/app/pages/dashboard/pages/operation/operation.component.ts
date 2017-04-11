@@ -11,7 +11,13 @@ import { FilterService } from "../../filters.service";
 
 import { PageDashboard } from "../page";
 
+import * as _ from 'lodash';
+
+
 import 'style-loader!./operation.scss';
+import { DataService } from "../../data.service";
+import { BaPropertiesModel } from "../../../../theme/services/baModel/BaPropertiesModel";
+import { FirebaseObjectObservable } from "angularfire2";
 
 @Component({
   selector: 'operation-component',
@@ -20,8 +26,8 @@ import 'style-loader!./operation.scss';
 })
 
 export class OperationDashboard extends PageDashboard {
-  filters : Object;
-
+  _propertiesModelObservable: FirebaseObjectObservable<any>;
+  _propertiesData : Object;
 
   @ViewChild(MaintenanceExpensesPerUnit) maintenanceExpensesPerUnit: MaintenanceExpensesPerUnit;
   @ViewChild(UtilityExpensesPerUnitComponent) utilityExpensesPerUnitComponent: UtilityExpensesPerUnitComponent;
@@ -29,29 +35,50 @@ export class OperationDashboard extends PageDashboard {
   @ViewChild(UtilityExpensesPerSqftComponent) utilityExpensesPerSqftComponent: UtilityExpensesPerSqftComponent;
   @ViewChild(OperatingExpenseRatioChartComponent) operatingExpenseRatioChartComponent: OperatingExpenseRatioChartComponent;
 
-  constructor( private filtersService: FilterService, private baPropertiesDataModel: BaPropertiesDataModel ) {
-    super(filtersService , baPropertiesDataModel);
+  constructor( private filtersService: FilterService, private _baPropertiesDataModel: BaPropertiesDataModel,
+               private _dataService: DataService, private _baPropertiesModel: BaPropertiesModel ) {
+    super(filtersService, _baPropertiesDataModel);
   }
 
   ngAfterViewInit() {
-    if(this.maintenanceExpensesPerUnit){
-      this.maintenanceExpensesPerUnit.renderChart(null);
-    }
-    if(this.utilityExpensesPerUnitComponent){
-      this.utilityExpensesPerUnitComponent.renderChart(null);
-    }
-    if(this.maintenanceExpensesPerSqft){
-      this.maintenanceExpensesPerSqft.renderChart(null);
-    }
-    if(this.utilityExpensesPerSqftComponent){
-      this.utilityExpensesPerSqftComponent.renderChart(null);
-    }
-    if(this.operatingExpenseRatioChartComponent){
-      this.operatingExpenseRatioChartComponent.renderChart(null);
-    }
+    this._dataService.setCurrentTab('operation');
 
+    let propertiesFilterdData = this.filtersService.getPropertiesFilterdData();
+    let xAxisDate = this.filtersService.getXAxisDate();
+    if (!(_.isEmpty(propertiesFilterdData) && _.isEmpty(xAxisDate))) {
+      if (this.maintenanceExpensesPerUnit) {
+        this.maintenanceExpensesPerUnit.renderChart(propertiesFilterdData, xAxisDate);
+      }
+      if (this.utilityExpensesPerUnitComponent) {
+        this.utilityExpensesPerUnitComponent.renderChart(propertiesFilterdData, xAxisDate);
+      }
+      if (this.maintenanceExpensesPerSqft) {
+        this.maintenanceExpensesPerSqft.renderChart(propertiesFilterdData, xAxisDate);
+      }
+      if (this.utilityExpensesPerSqftComponent) {
+        this.utilityExpensesPerSqftComponent.renderChart(propertiesFilterdData, xAxisDate);
+      }
+      if (this.operatingExpenseRatioChartComponent) {
+        this.operatingExpenseRatioChartComponent.renderChart(propertiesFilterdData, xAxisDate);
+      }
+    } else {
+      //render empty chart
+      if (this.maintenanceExpensesPerUnit) {
+        this.maintenanceExpensesPerUnit.renderChart([], []);
+      }
+      if (this.utilityExpensesPerUnitComponent) {
+        this.utilityExpensesPerUnitComponent.renderChart([], []);
+      }
+      if (this.maintenanceExpensesPerSqft) {
+        this.maintenanceExpensesPerSqft.renderChart([], []);
+      }
+      if (this.utilityExpensesPerSqftComponent) {
+        this.utilityExpensesPerSqftComponent.renderChart([], []);
+      }
+      if (this.operatingExpenseRatioChartComponent) {
+        this.operatingExpenseRatioChartComponent.renderChart([], []);
+      }
+    }
   }
-
-
 
 }

@@ -4,7 +4,8 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 import { BaPropertiesModel } from "../../theme/services/baModel/BaPropertiesModel";
 import * as _ from 'lodash';
 
-declare var moment: any;
+declare let moment: any;
+declare let alasql: any;
 
 @Injectable()
 export class FilterService {
@@ -12,33 +13,35 @@ export class FilterService {
   selectedProperties = [];
   startDate: Date;
   endDate: Date;
+  xAxisDate: Array<string>;
   filterUpdated: EventEmitter<any> = new EventEmitter();
+  _propertiesFilterdData: Object;
 
 
   constructor( private _af: AngularFire, private _BaPropertiesModel: BaPropertiesModel ) {
-    // default property filter
-    /*this._BaPropertiesModel.getDataObservable()
-     .subscribe((value : any)=>{
-     //LocalDataSource load the Properties data
-     //_BaPropertiesModel.getData returns the data in the right format
-     //this.listData.load asynch load for ng2-smart-table
-     if(value.$exists()){
-     this.selectedProperties.push(Object.keys(value)[0]);
-     }
-     });*/
   }
 
   public filterData( propertiesObject: Object ) {
     let filterData;
     let concatArray;
+    this.xAxisDate = [];
     // filter will alwasy be excuted by the below order
     // 1 -  concat all the properties lines/data to one array
     // 2 - Filter by properties
     // 3 - Filter by dates
 
+    //check if there are dates in the filter - we need both dates to run filter
+    if (!this.endDate || !this.startDate) return [];
+
     concatArray = this.concatPropertiesArray(propertiesObject);
+
+    //check if there are properties in the filter
+    if (concatArray.length < 1) return [];
+
     filterData = this.getFilterDataByProperties(concatArray);
     filterData = this.filterDataByDates(filterData);
+    filterData = this.getAggregateArray(filterData);
+    this._propertiesFilterdData = filterData;
     return filterData;
   }
 
@@ -58,7 +61,7 @@ export class FilterService {
     if (!this.endDate || !this.startDate) return [];
 
     // than filter it
-    let tempArr =  _.filter(propertiesArray, ( o: any ) => {
+    let tempArr = _.filter(propertiesArray, ( o: any ) => {
       return _.indexOf(this.selectedProperties, o.PropertyID) > -1;
     });
 
@@ -66,6 +69,43 @@ export class FilterService {
 
 
   }
+
+
+  // filter the data by the properties filter
+  public getAggregateArray( propertiesArray: Array<string> ): Object {
+    //check if there are properties in the filter
+    if (propertiesArray.length < 1) return [];
+    //check if there are dates in the filter - we need both dates to run filter
+    if (!this.endDate || !this.startDate) return [];
+
+    // than filter it
+    let tempObj = _.groupBy(propertiesArray, "MetricName");
+    let resultObj = {};
+    for (let metricNameKey in tempObj) {
+      resultObj[ metricNameKey ] = {};
+      let metricNameArr = tempObj[ metricNameKey ];
+      for (let index = 0; index < metricNameArr.length; index++) {
+        let obj: Object;
+        obj = metricNameArr[ index ];
+        for (let dateKey in obj) {
+          if (dateKey !== 'MetricName') {
+            let date = moment(dateKey, 'MM-DD-YYYY');
+            if (date.isValid()) {
+              //convert null to 0;
+              let currentValue = resultObj[ metricNameKey ][ dateKey ] ? resultObj[ metricNameKey ][ dateKey ] : 0;
+              let newValue = tempObj[ metricNameKey ][ index ][ dateKey ];
+              resultObj[ metricNameKey ][ dateKey ] = currentValue + newValue;
+            }
+            else if (index === 0 && !date.isValid() && dateKey !== 'PropertyID') {
+              resultObj[ metricNameKey ][ dateKey ] = tempObj[ metricNameKey ][ index ][ dateKey ];
+            };
+          }
+        }
+      }
+    }
+    return resultObj;
+  }
+
 
   //filter the data by the filter dates
   public filterDataByDates( propertiesArray: Array<string> ) {
@@ -75,22 +115,23 @@ export class FilterService {
     if (propertiesArray.length < 1) return [];
 
 
-    let validFilterDates = [];
     let obj: any;
     obj = propertiesArray[ 0 ];
 
 
     //todo ran - improve performance
 
-    propertiesArray = _.forEach (propertiesArray , (value : any, k) => {
+    propertiesArray = _.forEach(propertiesArray, ( value: any, index ) => {
       let startDate = moment(this.startDate, 'MM-DD-YYYY');
       let endDate = moment(this.endDate, 'MM-DD-YYYY');
       for (let key in value) {
         if (value.hasOwnProperty(key) && this.isValidDate(key)) {
-          let date = moment(key);
+          let date = moment(key, 'MM-DD-YYYY');
           //  valid date is  if startDate <= Date < endDate
-          if (!(date.isSameOrAfter(startDate , 'day') && (date.isBefore(endDate , 'day')))) {
-            delete value[key];
+          if (!(date.isSameOrAfter(startDate, 'day') && (date.isBefore(endDate, 'day')))) {
+            delete value[ key ];
+          } else if (index === 0) {
+            this.xAxisDate.push(key);
           }
         }
       }
@@ -162,7 +203,7 @@ export class FilterService {
   }
 
   public getDates() {
-    return {startDate: this.startDate, endDate: this.endDate}
+    return {startDate: this.startDate, endDate: this.endDate};
   }
 
   public getStartDate() {
@@ -174,6 +215,9 @@ export class FilterService {
   }
 
   public getSelectedProperties() {
+    if (this.selectedProperties) {
+      console.log("After filtering the selectedProperties are - " + this.selectedProperties.toString());
+    }
     return this.selectedProperties;
   }
 
@@ -184,5 +228,17 @@ export class FilterService {
       selectedProperties: this.selectedProperties
     };
   }
+
+  public getXAxisDate() {
+    if (this.xAxisDate) {
+      console.log("After filtering the X Axis Dats are - " + this.xAxisDate.toString());
+    }
+    return this.xAxisDate;
+  }
+
+  public getPropertiesFilterdData (){
+    return (this._propertiesFilterdData) ? this._propertiesFilterdData : {};
+  }
+
 }
 

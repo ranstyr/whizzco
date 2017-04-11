@@ -2,8 +2,8 @@
  * Created by ran.styr on 17/11/2016.
  */
 
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
-
+import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { DataService } from "../../../../pages/dashboard/data.service";
 
 
 @Component({
@@ -19,16 +19,46 @@ export class SourcesChartComponent {
   options: Highcharts.ChartOptions;
   _modelRef: any;
 
-  @Input() _data: Object;
+
+  @Input('dataUpdated') dataUpdated: EventEmitter<any>;
   @ViewChild('chart') el: ElementRef;
 
-
-  constructor(  ) {
+  constructor( private _dataService: DataService ) {
 
   }
 
-  public renderChart( data ) {
-    if (this.el.nativeElement) {
+  ngAfterViewInit() {
+    this.dataUpdated.subscribe(
+      ( res ) => {
+        if (res.data.propertiesFilterdData) {
+          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate);
+        }
+      });
+  }
+
+  private calculateData( propertiesFilterdData ) {
+    let consolidatedCashReserves = this._dataService.getSumBankAccountsMetrics(propertiesFilterdData);
+    let netCashIncome = this._dataService.getSumNetCashIncomeMetrics(propertiesFilterdData);
+    let cashInfusion = this._dataService.getSumCashInfusionMetrics(propertiesFilterdData);
+
+    let data = [ {
+      name: 'Cash Reserves',
+      y: consolidatedCashReserves
+    }, {
+      name: 'Property Net Income',
+      y: netCashIncome
+    }, {
+      name: 'Refinancing',
+      y: cashInfusion
+    } ];
+
+    return data;
+
+  }
+
+  public renderChart( propertiesFilterdData, xAxisDate ) {
+    if (this.el.nativeElement && this._dataService.getCurrentTab()==='cash') {
+      let data = this.calculateData(propertiesFilterdData);
       Highcharts.setOptions({
         lang: {
           thousandsSep: ','
@@ -41,11 +71,15 @@ export class SourcesChartComponent {
           plotShadow: false,
           type: 'pie',
           backgroundColor: null
-
         },
         title: {
           align: 'center',
           text: 'Cash Sources'
+        },
+        labels: {
+          formatter: function() {
+            return '$' + Highcharts.numberFormat(this.value,0);
+          }
         },
         tooltip: {
           pointFormat: '<b>${point.y}</b> Share: <b>{point.percentage:.1f}%</b>'
@@ -84,23 +118,10 @@ export class SourcesChartComponent {
           innerSize: '80%',
           name: 'Source',
           colorByPoint: true,
-          data: [{
-            name: 'Property net income',
-            y: 44275
-          }, {
-            name: 'Cash reserve',
-            y: 12040,
-            sliced: true,
-            selected: true
-          }, {
-            name: 'Refinancing',
-            y: 277370
-          }]
+          data: data
         } ]
       });
     }
-
-
   }
 
 }

@@ -22,11 +22,9 @@ export class Dashboard {
   selectedProperties: Array<string>;
   startDate: Date;
   endDate: Date;
-  filtersUpdated: EventEmitter<any> = new EventEmitter();
 
 
   // properties
-  propertiesRef: FirebaseObjectObservable<any>;
   properties: Array<string>;
 
 
@@ -35,6 +33,9 @@ export class Dashboard {
   optionsProperties: Array<any> = [];
   logMultipleString: string = '';
   form: FormGroup;
+
+  filters: any;
+
 
   public eventLog = '';
 
@@ -93,6 +94,7 @@ export class Dashboard {
           });
         }
       });
+
   }
 
   ngOnDestroy() {
@@ -101,7 +103,6 @@ export class Dashboard {
 
   // datePicker////////////////////////
   public calendarEventsHandler( e: any ) {
-    console.log(e);
     this.eventLog += '\nEvent Fired: ' + e.event.type;
 
   }
