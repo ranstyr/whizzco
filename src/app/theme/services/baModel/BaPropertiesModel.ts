@@ -32,7 +32,7 @@ export class BaPropertiesModel {
     let tempArr = value;
     if (!(_.isEmpty(tempArr))) {
       for (let key in tempArr) {
-        if (!(_.isEmpty(tempArr[ key ]))) {
+        if (!(_.isEmpty(tempArr[ key ].PropertyID))) {
           _Data.push(tempArr[ key ]);
         }
       }
