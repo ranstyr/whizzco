@@ -35,14 +35,6 @@
 
           </div>
         </div>
-        <!--Granularity-->
-        <div class="form-group row">
-          <label for="granularity" class="col-sm-2 form-control-label">Granularity</label>
-          <div class="col-sm-10">
-            <select (change)="selectorGranularityOnChange($event.target.value)" class="form-control" id="granularity">
-              <option [value]="i" *ngFor="let i of granularity">{{i}}</option>
-            </select></div>
-        </div>
         <!--Pick Dates-->
         <div class="form-group row">
           <label for="inputEmail3" class="col-sm-2 form-control-label">Dates</label>
@@ -64,6 +56,14 @@
               </div>
             </form>
           </div>
+        </div>
+        <!--Granularity-->
+        <div *ngIf="startDate" class="form-group row">
+          <label for="granularity" class="col-sm-2 form-control-label">Granularity</label>
+          <div class="col-sm-10">
+            <select (change)="selectorGranularityOnChange($event.target.value)" class="form-control" id="granularity">
+              <option [value]="i" *ngFor="let i of granularity">{{i}}</option>
+            </select></div>
         </div>
         <!--Send To:-->
         <div class="form-group row">

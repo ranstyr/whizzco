@@ -26,6 +26,9 @@ export class GenerateReport {
 
   //datepicker
 
+  startDate: Date;
+  endDate: Date;
+
   public mainInput = {
     start: moment().subtract(3, 'month'),
     end: moment().subtract(0, 'month')
@@ -131,14 +134,17 @@ export class GenerateReport {
 
   //datePicker////////////////////////
   private selectedDate( value: any, dateInput: any ) {
-    dateInput.start = value.start;
-    dateInput.end = value.end;
+
+
+    this.startDate = dateInput.start = value.start;
+    this.endDate = dateInput.end = value.end;
   }
 
 
   private applyDate( value: any, dateInput: any ) {
-    dateInput.start = value.start;
-    dateInput.end = value.end;
+
+    this.startDate = dateInput.start = value.start;
+    this.endDate = dateInput.end = value.end;
   }
 
   public calendarEventsHandler( e: any ) {

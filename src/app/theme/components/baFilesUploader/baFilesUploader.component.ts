@@ -29,13 +29,14 @@ export class BaFilesUploader {
 
   uploadModal: any;
   company: string;
+  uploadFile:any;
   fileWasUploadModal: any;
   data = [];
   storageRef: any;
   databaseRef: any;
   filesToUpload: Array<File>;
   uploadTasks: any;
-  FilesResult: any;
+  filesResult: any;
   resultArr: any;
   progress: string;
   child: any;
@@ -49,7 +50,7 @@ export class BaFilesUploader {
     this.storageRef = firebase.storage().ref();
     this.databaseRef = firebase.database().ref().child('queue/tasks');
     this.uploadTasks = [];
-    this.FilesResult = {};
+    this.filesResult = {};
     this.resultArr = [];
     this.progress = '0';
     this.fileName = '';
@@ -60,16 +61,19 @@ export class BaFilesUploader {
 
     this.uploadModal = $('#importFile');
     this.fileWasUploadModal = $('#fileWasUpload');
+    this.uploadFile = $('#uploadFile');
+
 
     let source = Observable.fromEvent(this.uploadModal, 'hidden.bs.modal');
     source.subscribe(( e ) => {
       let self = this;
       self.uploadTasks = [];
-      self.FilesResult = {};
+      self.filesResult = {};
       self.resultArr = [];
       self.progress = '0';
       self.fileName = '';
       self.filesToUpload = [];
+      self.uploadFile[0].value = '';
     });
 
 
@@ -119,12 +123,12 @@ export class BaFilesUploader {
     //upload to our DB
     //this.uploadTask = this.storageRef.child(this.company + '/files/' + file.name)
     return new Promise(function ( resolve, reject ) {
-      let self_temp = self;
-      self_temp.storageRef.child(file.name)
+      let selfTemp = self;
+      selfTemp.storageRef.child(file.name)
         .put(file, metadata)
         .then(( res ) => {
           let md = metadata;
-          let self = self_temp;
+          let self = selfTemp;
           self.databaseRef.push({'metadata': md})
             .then(() => {
               resolve();

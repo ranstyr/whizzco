@@ -45,7 +45,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Properties',
-            icon: 'ion-android-funnel',
+            icon: 'ion-android-home',
             selected: false,
             expanded: false,
             order: 0
