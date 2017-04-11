@@ -4,6 +4,7 @@
 
 import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter } from '@angular/core';
 import { DataService } from "../../../../pages/dashboard/data.service";
+import * as _ from 'lodash';
 
 
 @Component({
@@ -32,13 +33,15 @@ export class UtilityExpensesPerUnitComponent {
   ngAfterViewInit() {
     this.dataUpdated.subscribe(
       ( res ) => {
-        if (res.data.propertiesFilterdData) {
-          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate);
+        if (!(_.isEmpty(res.data.propertiesFilterdData)&&
+              _.isEmpty(res.data.xAxisDate) &&
+              _.isEmpty(res.data.filterPropertiesArray))) {
+          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate , res.data.filterPropertiesArray);
         }
       });
   }
 
-  private calculateData( propertiesFilterdData, xAxisDate ) {
+  private calculateData( propertiesFilterdData, xAxisDate , filterPropertiesArray ) {
     /*  series: [ {
      type: 'pie',
      name: 'Expense amount',
@@ -57,6 +60,9 @@ export class UtilityExpensesPerUnitComponent {
      }]
      } ]
      */
+    let avgUnits = this._dataService.calculateAverageAttributeforArray(filterPropertiesArray , 'Units');
+
+    let avgSqft = this._dataService.calculateAverageAttributeforArray(filterPropertiesArray , 'Sqft');
 
     let electricity = this._dataService.getElectricityMetrixForSelectedDates(propertiesFilterdData);
     electricity = this._dataService.objectValeuSum(electricity);
@@ -81,9 +87,9 @@ export class UtilityExpensesPerUnitComponent {
     }];
   }
 
-  public renderChart( propertiesFilterdData, xAxisDate ) {
+  public renderChart( propertiesFilterdData, xAxisDate , filterPropertiesArray ) {
     if (this.el.nativeElement && this._dataService.getCurrentTab()==='operation') {
-      let data = this.calculateData(propertiesFilterdData, xAxisDate);
+      let data = this.calculateData(propertiesFilterdData, xAxisDate , filterPropertiesArray);
 
       Highcharts.setOptions({
         lang: {

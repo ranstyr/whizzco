@@ -26,7 +26,7 @@ import { FirebaseObjectObservable } from "angularfire2";
 })
 
 export class OperationDashboard extends PageDashboard {
-  _propertiesData : Object;
+  _propertiesData: Object;
 
   @ViewChild(MaintenanceExpensesPerUnit) maintenanceExpensesPerUnit: MaintenanceExpensesPerUnit;
   @ViewChild(UtilityExpensesPerUnitComponent) utilityExpensesPerUnitComponent: UtilityExpensesPerUnitComponent;
@@ -34,31 +34,18 @@ export class OperationDashboard extends PageDashboard {
   @ViewChild(UtilityExpensesPerSqftComponent) utilityExpensesPerSqftComponent: UtilityExpensesPerSqftComponent;
   @ViewChild(OperatingExpenseRatioChartComponent) operatingExpenseRatioChartComponent: OperatingExpenseRatioChartComponent;
 
-  constructor( private filtersService: FilterService, private _baPropertiesDataModel: BaPropertiesDataModel,
-               private _dataService: DataService, private _BaPropertiesModel: BaPropertiesModel ) {
-    super(filtersService, _baPropertiesDataModel);
-  }
+  constructor( private filtersService: FilterService,
+               private _baPropertiesDataModel: BaPropertiesDataModel,
+               private _dataServiceOperation: DataService,
+               private _BaPropertiesOperationModel: BaPropertiesModel ) {
 
-  ngOnInit() {
-
-
-    // properties data
-
-    this._BaPropertiesModel.getDataObservable()
-      .subscribe(( value: any ) => {
-        if (value.$exists()) {
-          let propertiesTemp = this._BaPropertiesModel.getData(value);
-          this._propertiesData = propertiesTemp.map(( a ) => {
-            return a.PropertyName;
-          });
-        }
-      });
-
+    super(filtersService, _baPropertiesDataModel , _dataServiceOperation , _BaPropertiesOperationModel);
   }
 
 
   ngAfterViewInit() {
-    this._dataService.setCurrentTab('operation');
+
+    this._dataServiceOperation.setCurrentTab('operation');
 
     let propertiesFilterdData = this.filtersService.getPropertiesFilterdData();
     let xAxisDate = this.filtersService.getXAxisDate();
@@ -67,7 +54,7 @@ export class OperationDashboard extends PageDashboard {
         this.maintenanceExpensesPerUnit.renderChart(propertiesFilterdData, xAxisDate);
       }
       if (this.utilityExpensesPerUnitComponent) {
-        this.utilityExpensesPerUnitComponent.renderChart(propertiesFilterdData, xAxisDate);
+        this.utilityExpensesPerUnitComponent.renderChart(propertiesFilterdData, xAxisDate , this.filtersService.getPropertiesDataFilterdData());
       }
       if (this.maintenanceExpensesPerSqft) {
         this.maintenanceExpensesPerSqft.renderChart(propertiesFilterdData, xAxisDate);
@@ -84,7 +71,7 @@ export class OperationDashboard extends PageDashboard {
         this.maintenanceExpensesPerUnit.renderChart([], []);
       }
       if (this.utilityExpensesPerUnitComponent) {
-        this.utilityExpensesPerUnitComponent.renderChart([], []);
+        this.utilityExpensesPerUnitComponent.renderChart([], [] , []);
       }
       if (this.maintenanceExpensesPerSqft) {
         this.maintenanceExpensesPerSqft.renderChart([], []);

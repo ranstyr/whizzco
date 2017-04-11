@@ -16,6 +16,8 @@ export class FilterService {
   xAxisDate: Array<string>;
   filterUpdated: EventEmitter<any> = new EventEmitter();
   _propertiesFilterdData: Object;
+  _propertiesDataFilterdData: Object;
+
 
 
   constructor( private _af: AngularFire, private _BaPropertiesModel: BaPropertiesModel ) {
@@ -56,7 +58,7 @@ export class FilterService {
   // filter the data by the properties filter
   public getFilterDataByProperties( propertiesArray: Array<string> ): Array <string> {
     //check if there are properties in the filter
-    if (propertiesArray.length < 1) return [];
+    if (propertiesArray.length < 1 || _.isEmpty(propertiesArray[0])) return [];
     //check if there are dates in the filter - we need both dates to run filter
     if (!this.endDate || !this.startDate) return [];
 
@@ -74,7 +76,7 @@ export class FilterService {
   // filter the data by the properties filter
   public getAggregateArray( propertiesArray: Array<string> ): Object {
     //check if there are properties in the filter
-    if (propertiesArray.length < 1) return [];
+    if (propertiesArray.length < 1 || _.isEmpty(propertiesArray[0])) return [];
     //check if there are dates in the filter - we need both dates to run filter
     if (!this.endDate || !this.startDate) return [];
 
@@ -112,7 +114,7 @@ export class FilterService {
     //check if there are dates in the filter - we need both dates to run filter
     if (!this.endDate || !this.startDate) return [];
     //check if there are properties in the filter
-    if (propertiesArray.length < 1) return [];
+    if (propertiesArray.length < 1 || _.isEmpty(propertiesArray[0])) return [];
 
 
     let obj: any;
@@ -239,6 +241,29 @@ export class FilterService {
   public getPropertiesFilterdData (){
     return (this._propertiesFilterdData) ? this._propertiesFilterdData : {};
   }
+
+  // filter properties Array to selected properties
+  public getFilterProperties( propertiesArray: Object , selectedProperties : Array<string> ): Array <string> {
+
+    if (_.isEmpty(propertiesArray)) return [];
+
+    // than filter it
+    let tempArr = _.filter(propertiesArray, ( o: any ) => {
+      return _.indexOf(selectedProperties, o.PropertyName) > -1;
+    });
+
+    this._propertiesDataFilterdData = tempArr;
+    return tempArr;
+  }
+
+  public getPropertiesDataFilterdData(){
+
+    if (_.isEmpty(this._propertiesDataFilterdData)) return [];
+
+    return this._propertiesDataFilterdData;
+
+  }
+
 
 }
 

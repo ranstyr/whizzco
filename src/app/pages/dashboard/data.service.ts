@@ -500,19 +500,15 @@ export class DataService {
     });
   }
 
-  // filter properties Array to selected properties
-  public getFilterDataByProperties( propertiesArray: Object , selectedProperties : Array<string> ): Array <string> {
+  public calculateAverageAttributeforArray( arr , attribute ) {
+    // arr is null or empty
+    if (_.isEmpty(arr) || arr.length === 0) return [];
 
-    if (_.isEmpty(propertiesArray)) return [];
+    return _.reduce(arr, function(avg, n : any) {
+      return avg + n[attribute]/(arr.length);
+    }, 0);
 
-    // than filter it
-    let tempArr = _.filter(propertiesArray, ( o: any ) => {
-      return _.indexOf(selectedProperties, o.PropertyID) > -1;
-    });
-
-    return tempArr;
   }
-
 
 
   /////////////////other//////////////

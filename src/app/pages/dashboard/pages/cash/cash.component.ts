@@ -16,6 +16,7 @@ import * as _ from 'lodash';
 
 import 'style-loader!./cash.scss';
 import { DataService } from "../../data.service";
+import { BaPropertiesModel } from "../../../../theme/services/baModel/BaPropertiesModel";
 
 @Component({
   selector: 'cash-component',
@@ -34,12 +35,15 @@ export class CashDashboard extends PageDashboard {
   @ViewChild(CashReservesChartComponent) cashReservesChartComponent: CashReservesChartComponent;
   @ViewChild(MortgageBalanceChartComponent) mortgageBalanceChartComponent: MortgageBalanceChartComponent;
 
-  constructor( private filtersService: FilterService, private baPropertiesDataModel: BaPropertiesDataModel , private _dataService : DataService ) {
-    super(filtersService, baPropertiesDataModel);
+  constructor( private filtersService: FilterService,
+               private baPropertiesDataModel: BaPropertiesDataModel,
+               private _dataCashService: DataService,
+               private _BaPropertiesCashModel: BaPropertiesModel ) {
+    super(filtersService, baPropertiesDataModel , _dataCashService , _BaPropertiesCashModel);
   }
 
   ngAfterViewInit() {
-    this._dataService.setCurrentTab('cash');
+    this._dataCashService.setCurrentTab('cash');
 
     let propertiesFilterdData = this.filtersService.getPropertiesFilterdData();
     let xAxisDate = this.filtersService.getXAxisDate();
