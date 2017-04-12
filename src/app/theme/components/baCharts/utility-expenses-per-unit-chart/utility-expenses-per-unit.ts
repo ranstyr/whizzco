@@ -60,18 +60,23 @@ export class UtilityExpensesPerUnitComponent {
      }]
      } ]
      */
-    let avgUnits = this._dataService.calculateAverageAttributeforArray(filterPropertiesArray , 'Units');
+    let sumUnits = this._dataService.calculateSumAttributeforArray(filterPropertiesArray , 'Units');
 
-    let avgSqft = this._dataService.calculateAverageAttributeforArray(filterPropertiesArray , 'Sqft');
 
     let electricity = this._dataService.getElectricityMetrixForSelectedDates(propertiesFilterdData);
     electricity = this._dataService.objectValeuSum(electricity);
+    electricity = electricity / sumUnits;
+
 
     let water = this._dataService.getWaterMetrixForSelectedDates(propertiesFilterdData);
     water = this._dataService.objectValeuSum(water);
+    water = water / sumUnits;
+
 
     let garbageandRecycling = this._dataService.getGarbageandRecyclingMetrixForSelectedDates(propertiesFilterdData);
     garbageandRecycling = this._dataService.objectValeuSum(garbageandRecycling);
+    garbageandRecycling = garbageandRecycling / sumUnits;
+
 
     return [{
       name: 'Electricity',
@@ -109,7 +114,7 @@ export class UtilityExpensesPerUnitComponent {
           text: 'Utility Expenses Per Unit'
         },
         tooltip: {
-          pointFormat: '<b>${point.y}</b>'
+          pointFormat: '<b>${point.y:.2f}</b>'
         },
         plotOptions: {
           pie: {

@@ -39,7 +39,7 @@ export class OperationDashboard extends PageDashboard {
                private _dataServiceOperation: DataService,
                private _BaPropertiesOperationModel: BaPropertiesModel ) {
 
-    super(filtersService, _baPropertiesDataModel , _dataServiceOperation , _BaPropertiesOperationModel);
+    super(filtersService, _baPropertiesDataModel, _dataServiceOperation, _BaPropertiesOperationModel);
   }
 
 
@@ -51,16 +51,16 @@ export class OperationDashboard extends PageDashboard {
     let xAxisDate = this.filtersService.getXAxisDate();
     if (!(_.isEmpty(propertiesFilterdData) && _.isEmpty(xAxisDate))) {
       if (this.maintenanceExpensesPerUnit) {
-        this.maintenanceExpensesPerUnit.renderChart(propertiesFilterdData, xAxisDate);
+        this.maintenanceExpensesPerUnit.renderChart(propertiesFilterdData, xAxisDate, this.filtersService.getPropertiesDataFilterdData());
       }
       if (this.utilityExpensesPerUnitComponent) {
-        this.utilityExpensesPerUnitComponent.renderChart(propertiesFilterdData, xAxisDate , this.filtersService.getPropertiesDataFilterdData());
+        this.utilityExpensesPerUnitComponent.renderChart(propertiesFilterdData, xAxisDate, this.filtersService.getPropertiesDataFilterdData());
       }
       if (this.maintenanceExpensesPerSqft) {
-        this.maintenanceExpensesPerSqft.renderChart(propertiesFilterdData, xAxisDate);
+        this.maintenanceExpensesPerSqft.renderChart(propertiesFilterdData, xAxisDate, this.filtersService.getPropertiesDataFilterdData());
       }
       if (this.utilityExpensesPerSqftComponent) {
-        this.utilityExpensesPerSqftComponent.renderChart(propertiesFilterdData, xAxisDate);
+        this.utilityExpensesPerSqftComponent.renderChart(propertiesFilterdData, xAxisDate, this.filtersService.getPropertiesDataFilterdData());
       }
       if (this.operatingExpenseRatioChartComponent) {
         this.operatingExpenseRatioChartComponent.renderChart(propertiesFilterdData, xAxisDate);
@@ -68,16 +68,16 @@ export class OperationDashboard extends PageDashboard {
     } else {
       //render empty chart
       if (this.maintenanceExpensesPerUnit) {
-        this.maintenanceExpensesPerUnit.renderChart([], []);
+        this.maintenanceExpensesPerUnit.renderChart([], [], []);
       }
       if (this.utilityExpensesPerUnitComponent) {
-        this.utilityExpensesPerUnitComponent.renderChart([], [] , []);
+        this.utilityExpensesPerUnitComponent.renderChart([], [], []);
       }
       if (this.maintenanceExpensesPerSqft) {
-        this.maintenanceExpensesPerSqft.renderChart([], []);
+        this.maintenanceExpensesPerSqft.renderChart([], [], []);
       }
       if (this.utilityExpensesPerSqftComponent) {
-        this.utilityExpensesPerSqftComponent.renderChart([], []);
+        this.utilityExpensesPerSqftComponent.renderChart([], [], []);
       }
       if (this.operatingExpenseRatioChartComponent) {
         this.operatingExpenseRatioChartComponent.renderChart([], []);

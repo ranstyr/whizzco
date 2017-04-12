@@ -81,7 +81,7 @@ export class OperatingExpenseRatioChartComponent {
       type: 'column',
       data: revenue,
       tooltip: {
-        valuePrefix: '$'
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y:.2f}</b> ({point.percentage:.0f}%)<br/>',
       }
 
     }, {
@@ -89,7 +89,7 @@ export class OperatingExpenseRatioChartComponent {
       type: 'column',
       data: operatingExpenses,
       tooltip: {
-        valuePrefix: '$'
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y:.2f}</b> ({point.percentage:.0f}%)<br/>',
       }
 
     }, {
@@ -98,7 +98,7 @@ export class OperatingExpenseRatioChartComponent {
       yAxis: 1,
       data: operatingExpensesRatio,
       tooltip: {
-        valueSuffix: '%'
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y:.2f}</b> ({point.percentage:.0f}%)<br/>',
       }
     } ];
 
@@ -132,7 +132,7 @@ export class OperatingExpenseRatioChartComponent {
         } ],
         yAxis: [ { // Primary yAxis
           labels: {
-            format: '${value}',
+            format: '{value}',
             style: {
               color: Highcharts.getOptions().colors[ 1 ]
             }

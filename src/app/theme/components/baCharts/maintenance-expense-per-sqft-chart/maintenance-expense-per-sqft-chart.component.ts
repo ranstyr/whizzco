@@ -2,8 +2,9 @@
  * Created by ran.styr on 17/11/2016.
  */
 
-import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild, EventEmitter } from '@angular/core';
 import { DataService } from "../../../../pages/dashboard/data.service";
+import * as _ from 'lodash';
 
 
 @Component({
@@ -31,13 +32,15 @@ export class MaintenanceExpensesPerSqft {
   ngAfterViewInit() {
     this.dataUpdated.subscribe(
       ( res ) => {
-        if (res.data.propertiesFilterdData) {
-          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate);
+        if (!(_.isEmpty(res.data.propertiesFilterdData)&&
+          _.isEmpty(res.data.xAxisDate) &&
+          _.isEmpty(res.data.filterPropertiesArray))) {
+          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate , res.data.filterPropertiesArray);
         }
       });
   }
 
-  private calculateData( propertiesFilterdData, xAxisDate ) {
+  private calculateData( propertiesFilterdData, xAxisDate , filterPropertiesArray ) {
     /*  series: [ {
      name: 'Janitorial Expense',
      data: [ 200, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 0 ]
@@ -62,26 +65,43 @@ export class MaintenanceExpensesPerSqft {
      } ]
      */
 
+
+    let sumSqft = this._dataService.calculateSumAttributeforArray(filterPropertiesArray , 'Sqft');
+
     let janitorial = this._dataService.getJanitorialMetrixForSelectedDates(propertiesFilterdData);
     janitorial = this._dataService.transformObjectToArray(janitorial);
+    janitorial = this._dataService.divideArrayElementsByConstant(janitorial , sumSqft);
+
 
     let pestControl = this._dataService.getPestControlmetrixForSelectedDates(propertiesFilterdData);
     pestControl = this._dataService.transformObjectToArray(pestControl);
+    pestControl = this._dataService.divideArrayElementsByConstant(pestControl , sumSqft);
+
 
     let painting = this._dataService.getPaintingMetrixForSelectedDates(propertiesFilterdData);
     painting = this._dataService.transformObjectToArray(painting);
+    painting = this._dataService.divideArrayElementsByConstant(painting , sumSqft);
+
 
     let plumbing = this._dataService.getPlumbingMetrixForSelectedDates(propertiesFilterdData);
     plumbing = this._dataService.transformObjectToArray(plumbing);
+    plumbing = this._dataService.divideArrayElementsByConstant(plumbing , sumSqft);
+
 
     let roofRepair = this._dataService.getRoofRepairMetrixForSelectedDates(propertiesFilterdData);
     roofRepair = this._dataService.transformObjectToArray(roofRepair);
+    roofRepair = this._dataService.divideArrayElementsByConstant(roofRepair , sumSqft);
+
 
     let generalRepairs = this._dataService.getGeneralRepairsMetrixForSelectedDates(propertiesFilterdData);
     generalRepairs = this._dataService.transformObjectToArray(generalRepairs);
+    generalRepairs = this._dataService.divideArrayElementsByConstant(generalRepairs , sumSqft);
+
 
     let supplies = this._dataService.getSuppliesMetrixForSelectedDates(propertiesFilterdData);
     supplies = this._dataService.transformObjectToArray(supplies);
+    supplies = this._dataService.divideArrayElementsByConstant(supplies , sumSqft);
+
 
 
     return [ {
@@ -108,9 +128,9 @@ export class MaintenanceExpensesPerSqft {
     } ];
   }
 
-  public renderChart( propertiesFilterdData, xAxisDate ) {
+  public renderChart( propertiesFilterdData, xAxisDate , filterPropertiesArray ) {
     if (this.el.nativeElement && this._dataService.getCurrentTab()==='operation') {
-      let data = this.calculateData(propertiesFilterdData, xAxisDate);
+      let data = this.calculateData(propertiesFilterdData, xAxisDate , filterPropertiesArray);
       Highcharts.setOptions({
         lang: {
           thousandsSep: ',',
@@ -151,7 +171,7 @@ export class MaintenanceExpensesPerSqft {
           }
         },
         tooltip: {
-          pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y}</b> ({point.percentage:.0f}%)<br/>',
+          pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y:.2f}</b> ({point.percentage:.0f}%)<br/>',
           shared: true
         },
         navigation: {

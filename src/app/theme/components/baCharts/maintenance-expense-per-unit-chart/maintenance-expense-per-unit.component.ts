@@ -30,30 +30,19 @@ export class MaintenanceExpensesPerUnit {
   constructor( private _dataService: DataService ) {
 
   }
-  /*ngAfterViewInit() {
-    this.dataUpdated.subscribe(
-      ( res ) => {
-        if (_.isEmpty(this.propertiesData)){
-          this.renderChart([],[]);
-        }
-        else if (res.data.propertiesFilterdData) {
-          this._selectedProperties = this._filterService.getSelectedProperties();
-          this._filterPropertiesData = this._dataService.getFilterDataByProperties(this.propertiesData ,this._selectedProperties );
-          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate);
-        }
-      });
-  }
-*/
+
   ngAfterViewInit() {
     this.dataUpdated.subscribe(
       ( res ) => {
-        if (res.data.propertiesFilterdData) {
-          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate);
+        if (!(_.isEmpty(res.data.propertiesFilterdData)&&
+          _.isEmpty(res.data.xAxisDate) &&
+          _.isEmpty(res.data.filterPropertiesArray))) {
+          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate , res.data.filterPropertiesArray);
         }
       });
   }
 
-  private calculateData( propertiesFilterdData, xAxisDate ) {
+  private calculateData( propertiesFilterdData, xAxisDate , filterPropertiesArray ) {
     /*  series: [ {
      type: 'pie',
      name: 'Expense amount',
@@ -87,26 +76,42 @@ export class MaintenanceExpensesPerUnit {
      categories: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ]
      */
 
+    let sumUnits = this._dataService.calculateSumAttributeforArray(filterPropertiesArray , 'Units');
+
     let janitorial = this._dataService.getJanitorialMetrixForSelectedDates(propertiesFilterdData);
     janitorial = this._dataService.objectValeuSum(janitorial);
+    janitorial = janitorial / sumUnits;
+
 
     let pestControl = this._dataService.getPestControlmetrixForSelectedDates(propertiesFilterdData);
-    pestControl = this._dataService.objectValeuSum(pestControl);
+    pestControl = this._dataService.objectValeuSum(pestControl);    janitorial = janitorial / sumUnits;
+    janitorial = janitorial / sumUnits;
+
 
     let painting = this._dataService.getPaintingMetrixForSelectedDates(propertiesFilterdData);
     painting = this._dataService.objectValeuSum(painting);
+    painting = painting / sumUnits;
+
 
     let plumbing = this._dataService.getPlumbingMetrixForSelectedDates(propertiesFilterdData);
     plumbing = this._dataService.objectValeuSum(plumbing);
+    plumbing = plumbing / sumUnits;
+
 
     let roofRepair = this._dataService.getRoofRepairMetrixForSelectedDates(propertiesFilterdData);
     roofRepair = this._dataService.objectValeuSum(roofRepair);
+    roofRepair = roofRepair / sumUnits;
+
 
     let generalRepairs = this._dataService.getGeneralRepairsMetrixForSelectedDates(propertiesFilterdData);
     generalRepairs = this._dataService.objectValeuSum(generalRepairs);
+    generalRepairs = generalRepairs / sumUnits;
+
 
     let supplies = this._dataService.getSuppliesMetrixForSelectedDates(propertiesFilterdData);
     supplies = this._dataService.objectValeuSum(supplies);
+    supplies = supplies / sumUnits;
+
 
 
     return [ {
@@ -135,9 +140,9 @@ export class MaintenanceExpensesPerUnit {
     } ];
   }
 
-  public renderChart( propertiesFilterdData, xAxisDate ) {
+  public renderChart( propertiesFilterdData, xAxisDate , filterPropertiesArray ) {
     if (this.el.nativeElement && this._dataService.getCurrentTab()==='operation') {
-      let data = this.calculateData(propertiesFilterdData, xAxisDate);
+      let data = this.calculateData(propertiesFilterdData, xAxisDate , filterPropertiesArray);
 
       Highcharts.setOptions({
         lang: {
@@ -158,7 +163,7 @@ export class MaintenanceExpensesPerUnit {
           align: 'center',
         },
         tooltip: {
-          pointFormat: '<b>${point.y}</b>'
+          pointFormat: '<b>${point.y:.2f}</b>'
         },
         plotOptions: {
           pie: {

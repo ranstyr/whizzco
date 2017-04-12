@@ -92,15 +92,20 @@ export class NoiNetIncomeChartComponent {
 
     let netCashIncome = (NOI._data&& temptoSubtract._data) ? math.subtract(NOI, temptoSubtract) : math.zeros(xAxisDate.length);
 
-    let data = [ {
+    return [ {
       name: 'NOI',
-      data: NOI._data
+      data: NOI._data,
+      tooltip: {
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y:.2f}</b>',
+      }
     }, {
       name: 'Net Income',
-      data: netCashIncome._data
+      data: netCashIncome._data,
+      tooltip: {
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y:.2f}</b>',
+      }
     } ];
 
-    return data;
   }
 
   public renderChart( propertiesFilterdData, xAxisDate ) {

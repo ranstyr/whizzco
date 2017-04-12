@@ -114,7 +114,7 @@ export class CashReservesChartComponent {
           }
         },
         tooltip: {
-          pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y}</b> ({point.percentage:.0f}%)<br/>',
+          pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y:.2f}</b> ({point.percentage:.0f}%)<br/>',
           shared: true
         },
         navigation: {

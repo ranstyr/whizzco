@@ -75,7 +75,7 @@ export class UsesChartComponent {
           text: 'Cash Uses'
         },
         tooltip: {
-          pointFormat: '<b>${point.y}</b> Share: <b>{point.percentage:.1f}%</b>'
+          pointFormat: '<b>${point.y:.2f}</b> Share: <b>{point.percentage:.1f}%</b>'
         },
         plotOptions: {
           pie: {

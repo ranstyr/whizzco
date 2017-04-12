@@ -24,7 +24,7 @@ export class DataService {
   }
 
   public getJanitorialMetrixForSelectedDates( propertiesFilterdData ) {
-    return propertiesFilterdData[ 'Janitorial' ];
+    return propertiesFilterdData[ 'Janitorial Expense' ];
   }
 
   public getPestControlmetrixForSelectedDates( propertiesFilterdData ) {
@@ -508,6 +508,31 @@ export class DataService {
       return avg + n[attribute]/(arr.length);
     }, 0);
 
+  }
+
+  public calculateSumAttributeforArray( arr , attribute ) {
+    // arr is null or empty
+    if (_.isEmpty(arr) || arr.length === 0) return [];
+
+    return _.reduce(arr, function(sum, n : any) {
+      return sum + n[attribute];
+    }, 0);
+
+  }
+
+
+  //divide array by diffrent Array (i.e. divide values by index)
+  public divideArrayElementsByConstant( arrA, constant ) {
+    //check both inputs are Array
+    if (!(Object.prototype.toString.call(arrA) === '[object Array]')) return [];
+
+    return arrA.map(function ( n, i ) {
+      let result = n / constant;
+      if (result === Infinity) {
+        result = 9007199254740992;
+      }
+      return result;
+    });
   }
 
 

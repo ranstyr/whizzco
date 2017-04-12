@@ -67,7 +67,7 @@ export class IncomeAnaylsisChartComponent {
     commercialRental = this._dataService.transformObjectToArray(commercialRental);
 
 
-    let data = [{
+    return [{
       name: 'CAM',
       data: CAM
     }, {
@@ -79,9 +79,8 @@ export class IncomeAnaylsisChartComponent {
     }, {
       name: 'Residential Rental',
       data: residentialRental
-    }]
+    }];
 
-    return data;
   }
 
 
@@ -126,7 +125,7 @@ export class IncomeAnaylsisChartComponent {
           }
         },
         tooltip: {
-          pointFormat: '<span style="color:{series.color}">{series.name}</span>: $<b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+          pointFormat: '<span style="color:{series.color}">{series.name}</span>: $<b>{point.y:.2f}</b> ({point.percentage:.0f}%)<br/>',
           shared: true
         },
         navigation: {

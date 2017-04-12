@@ -4,6 +4,7 @@
 
 import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter } from '@angular/core';
 import { DataService } from "../../../../pages/dashboard/data.service";
+import * as _ from 'lodash';
 
 
 @Component({
@@ -33,13 +34,15 @@ export class UtilityExpensesPerSqftComponent {
   ngAfterViewInit() {
     this.dataUpdated.subscribe(
       ( res ) => {
-        if (res.data.propertiesFilterdData) {
-          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate);
+        if (!(_.isEmpty(res.data.propertiesFilterdData)&&
+          _.isEmpty(res.data.xAxisDate) &&
+          _.isEmpty(res.data.filterPropertiesArray))) {
+          this.renderChart(res.data.propertiesFilterdData, res.data.xAxisDate , res.data.filterPropertiesArray);
         }
       });
   }
 
-  private calculateData( propertiesFilterdData, xAxisDate ) {
+  private calculateData( propertiesFilterdData, xAxisDate , filterPropertiesArray ) {
     /*  series:   [{
      name: 'Electricity',
      y: 130.71
@@ -54,14 +57,19 @@ export class UtilityExpensesPerSqftComponent {
      }]
      */
 
+    let sumSqft = this._dataService.calculateSumAttributeforArray(filterPropertiesArray , 'Sqft');
+
     let electricity = this._dataService.getElectricityMetrixForSelectedDates(propertiesFilterdData);
     electricity = this._dataService.objectValeuSum(electricity);
+    electricity = electricity / sumSqft;
 
     let water = this._dataService.getWaterMetrixForSelectedDates(propertiesFilterdData);
     water = this._dataService.objectValeuSum(water);
+    water = water / sumSqft;
 
     let garbageandRecycling = this._dataService.getGarbageandRecyclingMetrixForSelectedDates(propertiesFilterdData);
     garbageandRecycling = this._dataService.objectValeuSum(garbageandRecycling);
+    garbageandRecycling = garbageandRecycling / sumSqft;
 
     return [ {
       name: 'Electricity',
@@ -77,9 +85,9 @@ export class UtilityExpensesPerSqftComponent {
     } ];
   }
 
-  public renderChart( propertiesFilterdData, xAxisDate ) {
+  public renderChart( propertiesFilterdData, xAxisDate , filterPropertiesArray ) {
     if (this.el.nativeElement && this._dataService.getCurrentTab()==='operation') {
-      let data = this.calculateData(propertiesFilterdData, xAxisDate);
+      let data = this.calculateData(propertiesFilterdData, xAxisDate , filterPropertiesArray);
 
       Highcharts.setOptions({
         lang: {
@@ -99,7 +107,7 @@ export class UtilityExpensesPerSqftComponent {
           text: 'Utility Expenses Per Sqft'
         },
         tooltip: {
-          pointFormat: '<b>${point.y}</b>'
+          pointFormat: '<b>${point.y:.2f}</b>'
         },
         plotOptions: {
           pie: {

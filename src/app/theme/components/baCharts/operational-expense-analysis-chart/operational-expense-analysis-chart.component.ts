@@ -105,7 +105,7 @@ export class OperationalExpenseAnalysisChartComponent {
           min: 0,
           stackLabels: {
             formatter: function () {
-              return '$' + Highcharts.numberFormat(this.total, 0)
+              return '$' + Highcharts.numberFormat(this.total, 0);
             },
             enabled: true,
             style: {
@@ -127,7 +127,7 @@ export class OperationalExpenseAnalysisChartComponent {
           categories: xAxisDate
         },
         tooltip: {
-          pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y}</b> ({point.percentage:.0f}%)<br/>',
+          pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y:.2f}</b> ({point.percentage:.0f}%)<br/>',
           shared: true
         },
         navigation: {

@@ -46,18 +46,19 @@ export class MortgageBalanceChartComponent {
     if (propertiesFilterdData && Object.keys(propertiesFilterdData).length < 1) {
       return [];
     }
-    let arr = []
+    let arr = [];
     for (let key in propertiesFilterdData) {
-      arr.push(propertiesFilterdData[ key ]);
+      if (propertiesFilterdData.hasOwnProperty(key)){
+        arr.push(propertiesFilterdData[ key ]);
+      }
     }
 
 
-    let data = [ {
+    return [ {
       name: 'Mortgage',
       data: arr
     } ];
 
-    return data;
   }
 
   public renderChart( propertiesFilterdData, xAxisDate ) {
@@ -105,7 +106,7 @@ export class MortgageBalanceChartComponent {
         },
         tooltip: {
           headerFormat: '<b>{point.x}</b><br/>',
-          pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+          pointFormat: '{series.name}: {point.y:.2f}<br/>Total: {point.stackTotal}'
         },
         navigation: {
           buttonOptions: {

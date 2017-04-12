@@ -79,7 +79,7 @@ export class InvestorLevelDistributionsChartComponent {
       type: 'column',
       data: distributions,
       tooltip: {
-        valuePrefix: '$'
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y:.2f}</b><br>',
       }
 
     }, {
@@ -87,7 +87,7 @@ export class InvestorLevelDistributionsChartComponent {
       type: 'column',
       data: consolidatedCashReserves,
       tooltip: {
-        valuePrefix: '$'
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y:.2f}</b><br>',
       }
 
     }, {
@@ -96,7 +96,7 @@ export class InvestorLevelDistributionsChartComponent {
       yAxis: 1,
       data: [ 1, 1, 1, 5, 5, 14, 14, 17, 17, 17, 17, 17 ],
       tooltip: {
-        valueSuffix: '%'
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.2f}%</b><br>',
       }
     } ];
 

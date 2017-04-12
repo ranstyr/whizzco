@@ -98,11 +98,11 @@ export class DebtServiceChartComponent {
 
 
     return [ {
-      name: 'InterestPayments',
+      name: 'Interest Payments',
       type: 'column',
       data: interestPayments,
       tooltip: {
-        valuePrefix: '$'
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y:.2f}</b> ({point.percentage:.0f}%)<br/>',
       }
 
     }, {
@@ -110,7 +110,7 @@ export class DebtServiceChartComponent {
       type: 'column',
       data: amortization,
       tooltip: {
-        valuePrefix: '$'
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y:.2f}</b> ({point.percentage:.0f}%)<br/>',
       }
 
     }, {
@@ -119,7 +119,7 @@ export class DebtServiceChartComponent {
       yAxis: 1,
       data: DCR,
       tooltip: {
-        valueSuffix: '%'
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y:.2f}</b> ({point.percentage:.0f}%)<br/>',
       }
     } ];
 
