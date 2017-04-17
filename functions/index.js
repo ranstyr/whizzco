@@ -62,14 +62,12 @@ exports.parseExcelFiles = functions.storage.object().onChange(event => {
 
   const bucket = gcs.bucket(object.bucket);
   const metadata = bucket.metadata;
-  const file = bucket.file(object.name);
 
+  const objectName = object.name;
 
-  const fileName = object.name;
-
-  const fileName = filePath.split('/').pop();
+  const fileName = objectName.split('/').pop();
   const tempLocalFile = `/tmp/${fileName}`;
-  const messageId = filePath.split('/')[1];
+  const messageId = objectName.split('/')[1];
 
   // Download file from bucket.
   return bucket.file(fileName).download({destination: tempLocalFile})
