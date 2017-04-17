@@ -115,6 +115,7 @@ export class BaFilesUploader {
         .then(( res ) => {
           let md = metadata;
           let self = selfTemp;
+          resolve();
           //as we move to google function we dont need to use firebase-queue
 /*          self.databaseRef.push({'metadata': md})
             .then(() => {
@@ -131,6 +132,7 @@ export class BaFilesUploader {
         .catch(( err ) => {
           console.log("error at saveToStorage storageRef.child " + err);
           console.error("error at saveToStorage storageRef.child" + err);
+          reject();
         });
     });
 
