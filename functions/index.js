@@ -26,7 +26,7 @@ const gcs = require('@google-cloud/storage')();
 const exec = require('child-process-promise').exec;
 
 // Import and initialize debug-agent - stack driver debug tool
-const debugAgent = require('@google-cloud/debug-agent').start({allowExpressions: true});
+const debugAgent = require('@google-cloud/debug-agent').start();
 
 // Import lodash
 const _ = require('lodash');
@@ -69,8 +69,8 @@ exports.parseExcelFiles = functions.storage.object().onChange(event => {
   console.log("bucket id" + bucket.id);
   console.log("file Name" + file.name);
 
-  const fileName = file.name;
-
+  const filePath = bucket.id + '/' + file.name;
+  console.log('filePath - ' + filePath);
 
   //const filePath = file.metadata.path.replace('/', "");
   //console.log('filePath - ' + filePath);
@@ -78,6 +78,7 @@ exports.parseExcelFiles = functions.storage.object().onChange(event => {
 
   try {
     //let fileData = XLSX.readFile(fileName);
+    let fileData = XLSX.readFile(filePath);
 
 /*    console.log('__dirname - ' + __dirname);
 
@@ -96,6 +97,7 @@ exports.parseExcelFiles = functions.storage.object().onChange(event => {
 
 
   } catch (error) {
+    console.log("error!!! __dirname is - " + __dirname);
     handleError(error);
   }
 
