@@ -76,13 +76,12 @@ exports.parseExcelFiles = functions.storage.object().onChange(event => {
       console.log('File has been downloaded to', tempLocalFile);
       let fileData = XLSX.readFile(tempLocalFile);
       console.log('File was parsed : ', fileData);
-      let sheets = fileObject.Sheets;
+      let sheets = fileData.Sheets;
       for (let key in sheets) {
         let sheetJSON = XLSX.utils.sheet_to_json(sheets[key], {raw: true});
         console.log(key + ' data is : ', sheetJSON);
         resultJSON[key] = sheetJSON
       }
-
       return resultJSON;
     }).then((data) => {
       console.log("result before database update is " + data.toString());
@@ -90,7 +89,8 @@ exports.parseExcelFiles = functions.storage.object().onChange(event => {
       return admin.database().ref().update(data);
     }).then((data) => {
       console.log('Marked the image as moderated in the database.');
-
+    }).catch((err) => {
+      handleError(err);
     });
 
 
