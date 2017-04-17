@@ -77,7 +77,7 @@ exports.parseExcelFiles = functions.storage.object().onChange(event => {
 
 
   try {
-
+    //let fileData = XLSX.readFile(fileName);
 
 /*    console.log('__dirname - ' + __dirname);
 
