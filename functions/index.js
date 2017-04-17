@@ -72,24 +72,39 @@ exports.parseExcelFiles = functions.storage.object().onChange(event => {
   // Download file from bucket.
   return bucket.file(fileName).download({destination: tempLocalFile})
     .then(() => {
+      let resultJSON = {};
       console.log('File has been downloaded to', tempLocalFile);
       let fileData = XLSX.readFile(tempLocalFile);
       console.log('File was parsed : ', fileData);
+      let sheets = fileObject.Sheets;
+      for (let key in sheets) {
+        let sheetJSON = XLSX.utils.sheet_to_json(sheets[key], {raw: true});
+        console.log(key + ' data is : ', sheetJSON);
+        resultJSON[key] = sheetJSON
+      }
+
+      return resultJSON;
+    }).then((data) => {
+      console.log("result before database update is " + data.toString());
+      // Indicate that the message has been moderated.
+      return admin.database().ref().update(data);
+    }).then((data) => {
+      console.log('Marked the image as moderated in the database.');
 
     });
 
 
-/*    .then(() => {
-      console.log('Image has been blurred');
-      // Uploading the Blurred image back into the bucket.
-      return bucket.upload(tempLocalFile, {destination: filePath});
-    }).then(() => {
-      console.log('Blurred image has been uploaded to', filePath);
-      // Indicate that the message has been moderated.
-      return admin.database().ref(`/messages/${messageId}`).update({moderated: true});
-    }).then(() => {
-      console.log('Marked the image as moderated in the database.');
-    });*/
+  /*    .then(() => {
+   console.log('Image has been blurred');
+   // Uploading the Blurred image back into the bucket.
+   return bucket.upload(tempLocalFile, {destination: filePath});
+   }).then(() => {
+   console.log('Blurred image has been uploaded to', filePath);
+   // Indicate that the message has been moderated.
+   return admin.database().ref(`/messages/${messageId}`).update({moderated: true});
+   }).then(() => {
+   console.log('Marked the image as moderated in the database.');
+   });*/
 
 });
 
