@@ -15,14 +15,6 @@ export const PAGES_MENU = [
         },
         children: [
           {
-            path: 'generate',
-            data: {
-              menu: {
-                title: 'Generate Reports',
-              }
-            }
-          },
-          {
             path: 'upload',
             data: {
               menu: {
