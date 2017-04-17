@@ -69,18 +69,18 @@ exports.parseExcelFiles = functions.storage.object().onChange(event => {
   console.log("bucket id" + bucket.id);
   console.log("file Name" + file.name);
 
-  const filePath = file.metadata.path.replace('/', "");
-  console.log('filePath - ' + filePath);
+  //const filePath = file.metadata.path.replace('/', "");
+  //console.log('filePath - ' + filePath);
 
 
   try {
-    console.log('__dirname - ' + __dirname);
+/*    console.log('__dirname - ' + __dirname);
 
     let localFilename = __dirname + filePath;
     console.log('localFilename - ' + localFilename);
 
     let fileData = XLSX.readFile(filePath);
-    console.log('fileData');
+    console.log('fileData');*/
     /*
     console.log('fileObject' + fileObject);
     let sheets = fileObject.Sheets;
