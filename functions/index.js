@@ -76,14 +76,14 @@ exports.parseExcelFiles = functions.storage.object().onChange(event => {
     console.log('filePath - ' + filePath);
 
     let fileData = XLSX.readFile(filePath);
-    console.log('fileData');
+/*    console.log('fileData');
 
     console.log('fileObject' + fileObject);
     let sheets = fileObject.Sheets;
 
     for (let key in sheets) {
       let sheetJSON = XLSX.utils.sheet_to_json(sheetData,{raw: true});
-    }
+    }*/
 
 
   } catch (error) {
