@@ -65,41 +65,33 @@ exports.parseExcelFiles = functions.storage.object().onChange(event => {
   const file = bucket.file(object.name);
 
 
-  console.log("metadata" + metadata);
-  console.log("bucket id" + bucket.id);
-  console.log("file Name" + file.name);
+  const fileName = object.name;
 
-  const filePath = bucket.id + '/' + file.name;
-  console.log('filePath - ' + filePath);
+  const fileName = filePath.split('/').pop();
+  const tempLocalFile = `/tmp/${fileName}`;
+  const messageId = filePath.split('/')[1];
 
-  //const filePath = file.metadata.path.replace('/', "");
-  //console.log('filePath - ' + filePath);
+  // Download file from bucket.
+  return bucket.file(fileName).download({destination: tempLocalFile})
+    .then(() => {
+      console.log('File has been downloaded to', tempLocalFile);
+      let fileData = XLSX.readFile(tempLocalFile);
+      console.log('File was parsed : ', fileData);
 
-
-  try {
-    //let fileData = XLSX.readFile(fileName);
-    let fileData = XLSX.readFile(filePath);
-
-/*    console.log('__dirname - ' + __dirname);
-
-    let localFilename = __dirname + filePath;
-    console.log('localFilename - ' + localFilename);
-
-    let fileData = XLSX.readFile(filePath);
-    console.log('fileData');*/
-    /*
-    console.log('fileObject' + fileObject);
-    let sheets = fileObject.Sheets;
-
-    for (let key in sheets) {
-      let sheetJSON = XLSX.utils.sheet_to_json(sheetData,{raw: true});
-    }*/
+    });
 
 
-  } catch (error) {
-    console.log("error!!! __dirname is - " + __dirname);
-    handleError(error);
-  }
+/*    .then(() => {
+      console.log('Image has been blurred');
+      // Uploading the Blurred image back into the bucket.
+      return bucket.upload(tempLocalFile, {destination: filePath});
+    }).then(() => {
+      console.log('Blurred image has been uploaded to', filePath);
+      // Indicate that the message has been moderated.
+      return admin.database().ref(`/messages/${messageId}`).update({moderated: true});
+    }).then(() => {
+      console.log('Marked the image as moderated in the database.');
+    });*/
 
 });
 
