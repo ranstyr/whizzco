@@ -10,8 +10,6 @@ import { NgUploaderOptions } from "ngx-uploader";
 import { BaFilesUploader } from "../../../../theme/components/baFilesUploader/baFilesUploader.component";
 
 
-
-
 @Component({
   selector: 'upload-component',
   templateUrl: 'upload.html',
@@ -19,8 +17,8 @@ import { BaFilesUploader } from "../../../../theme/components/baFilesUploader/ba
 
 export class UploadReport {
 
-  reports = 'Properties,General Ledger,Budget,Rent Roll,Bank statements,Landlord expenses,Partnership expenses,Corporate Expense'.split(',');
-  selectedReport = 'Properties';
+  reports = 'DataBase'.split(',');
+  selectedReport = 'DataBase';
 
   //properties multi select
   propertiesRef: FirebaseObjectObservable<any>;
@@ -35,7 +33,6 @@ export class UploadReport {
   @ViewChild(BaFilesUploader) BaFilesUploader: BaFilesUploader;
 
 
-
   constructor( private _BaPropertiesModel: BaPropertiesModel ) {
 
   }
@@ -46,25 +43,6 @@ export class UploadReport {
     this.form.addControl('selectSingle', new FormControl(''));
     this.form.addControl('selectMultiple', new FormControl(''));
 
-    //properties data
-
-    this.propertiesRef = this._BaPropertiesModel.getDataObservable();
-    this._BaPropertiesModel.getDataObservable()
-      .subscribe(( value: any ) => {
-
-        if(value.$exists()){
-          let propertiesTemp = this._BaPropertiesModel.getData(value);
-          this.properties = propertiesTemp.map(( a ) => {
-            return a.PropertyName;
-          });
-          this.optionsProperties = propertiesTemp.map(( a ) => {
-            return {
-              value: a.PropertyName.toString(),
-              label: a.PropertyName.toString()
-            }
-          });
-        }
-      });
   }
 
   ngAfterViewInit() {
@@ -91,8 +69,6 @@ export class UploadReport {
     this.selectedProperty = newValue;
     // ... do other stuff here ...
   }
-
-
 
 
   //properties multi selcet  /////////////////////////////////////////////////////////////

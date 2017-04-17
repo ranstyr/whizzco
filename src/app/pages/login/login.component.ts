@@ -57,7 +57,7 @@ export class Login {
       this._auth.login({email: this.email.value, password: this.password.value})
         .then(( val ) => {
           this._auth.setComapny(this.company.value);
-          this.router.navigate([ '/pages/dashboard' ]);
+          this.router.navigate([ '/pages/reports' ]);
         }).fail(( err ) => {
         let temp: any = {};
         if (typeof err === 'string') {

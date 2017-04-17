@@ -20,6 +20,7 @@ import { PagesModule } from './pages/pages.module';
 
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
+declare let firebase : any;
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -33,12 +34,13 @@ export type StoreType = {
   disposeOldHosts: () => void
 };
 
-export const FirebaseConfig = {
-  apiKey: "AIzaSyBjD_n5SfImCqK1n8RKdHnVvbNIoWIiTEU",
-  authDomain: "syndi-finance.firebaseapp.com",
-  databaseURL: "https://syndi-finance.firebaseio.com",
-  storageBucket: "syndi-finance.appspot.com",
-  messagingSenderId: "564436814559"
+const FirebaseConfig = {
+  apiKey: "AIzaSyDuXj0K7ctFEFYwKZ_M9YQfylCQexu34yU",
+  authDomain: "freightticket.firebaseapp.com",
+  databaseURL: "https://freightticket.firebaseio.com",
+  projectId: "freightticket",
+  storageBucket: "freightticket.appspot.com",
+  messagingSenderId: "509483330671"
 };
 
 //todo ran we can delete firebase init or angularfire init

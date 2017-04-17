@@ -1,9 +1,9 @@
 {
-  "name": "Syndi",
+  "name": "freighticket_admin",
   "version": "0.9.0",
-  "description": "Syndi.",
+  "description": "freighticket Update DB",
   "author": "Ran Styr",
-  "homepage": "http://gosyndi.com",
+  "homepage": "",
   "license": "MIT",
   "dependencies": {
     "@angular/common": "2.4.9",

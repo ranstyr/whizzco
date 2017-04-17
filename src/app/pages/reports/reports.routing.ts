@@ -10,9 +10,8 @@ const routes: Routes = [
     path: '',
     component: Reports,
     children: [
-      { path: 'generate', component: GenerateReport },
-      { path: 'upload', component: UploadReport }
-
+      { path: 'upload', component: UploadReport },
+      { path: '', component: UploadReport },
     ]
   }
 ];

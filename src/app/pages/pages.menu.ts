@@ -3,66 +3,6 @@ export const PAGES_MENU = [
     path: 'pages',
     children: [
       {
-        path: 'dashboard',
-        data: {
-          menu: {
-            title: 'Dashboard',
-            icon: 'ion-stats-bars',
-            selected: false,
-            expanded: false,
-            order: 0
-          }
-        },
-        children: [
-          {
-            path: 'financial',
-            data: {
-              menu: {
-                title: 'Financial',
-              }
-            }
-          },
-          {
-            path: 'operation',
-            data: {
-              menu: {
-                title: 'Operation',
-              }
-            }
-          },
-          {
-            path: 'cash',
-            data: {
-              menu: {
-                title: 'Cash Analysis',
-              }
-            }
-          }
-        ]
-      },
-      {
-        path: 'properties',
-        data: {
-          menu: {
-            title: 'Properties',
-            icon: 'ion-android-home',
-            selected: false,
-            expanded: false,
-            order: 0
-          }
-        },
-        children: [
-          {
-            path: 'list',
-            data: {
-              menu: {
-                title: 'Properties List',
-              }
-            }
-          }
-        ]
-      },
-      {
         path: 'reports',
         data: {
           menu: {
@@ -391,18 +331,6 @@ export const PAGES_MENU = [
           }
         ]
       },*/
-      {
-        path: '',
-        data: {
-          menu: {
-            title: 'External Link',
-            url: 'https://gosyndi.com',
-            icon: 'ion-android-exit',
-            order: 800,
-            target: '_blank'
-          }
-        }
-      }
     ]
   }
 ];

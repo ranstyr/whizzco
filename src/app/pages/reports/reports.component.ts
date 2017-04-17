@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 
+import { BaThemeSpinner } from "../../theme/services/baThemeSpinner/baThemeSpinner.service";
+
 import 'style-loader!./reports.scss';
-import { BaPropertiesModel } from "../../theme/services/baModel/BaPropertiesModel";
 
 
 @Component({
@@ -9,7 +10,11 @@ import { BaPropertiesModel } from "../../theme/services/baModel/BaPropertiesMode
   templateUrl: './reports.html',
 })
 export class Reports {
-  constructor(private _BaPropertiesModel : BaPropertiesModel) {
+  constructor(private _spinner: BaThemeSpinner) {
 
+  }
+
+  ngOnInit() {
+    this._spinner.hide();
   }
 }

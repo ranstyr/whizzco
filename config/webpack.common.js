@@ -25,8 +25,8 @@ const ngcWebpack = require('ngc-webpack');
 const HMR = helpers.hasProcessFlag('hot');
 const AOT = helpers.hasNpmFlag('aot');
 const METADATA = {
-  title: 'Syndi',
-  description: 'Syndi',
+  title: 'Freighticket Admin',
+  description: 'Freighticket Admin',
   baseUrl: '/',
   isDevServer: helpers.isWebpackDevServer()
 };

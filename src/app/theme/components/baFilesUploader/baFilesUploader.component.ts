@@ -13,20 +13,6 @@ export class BaFilesUploader {
   @Input() selectedProperty:any;
 
 
-
-  /*  @Input() defaultPicture:string = '';
-   @Input() picture:string = '';
-
-   @Input() uploaderOptions:NgUploaderOptions = { url: '' };
-   @Input() canDelete:boolean = true;
-
-   @Output() onUpload = new EventEmitter<any>();
-   @Output() onUploadCompleted = new EventEmitter<any>();
-
-   @ViewChild('fileUpload') public _fileUpload:ElementRef;
-
-   public uploadInProgress:boolean;*/
-
   uploadModal: any;
   company: string;
   uploadFile:any;
@@ -129,7 +115,8 @@ export class BaFilesUploader {
         .then(( res ) => {
           let md = metadata;
           let self = selfTemp;
-          self.databaseRef.push({'metadata': md})
+          //as we move to google function we dont need to use firebase-queue
+/*          self.databaseRef.push({'metadata': md})
             .then(() => {
               resolve();
             })
@@ -137,7 +124,7 @@ export class BaFilesUploader {
               console.log("error at saveToStorage databaseRef.push({'metadata': md}) " + err);
               console.error("error at saveToStorage databaseRef.push({'metadata': md})" + err);
               reject();
-            });
+            });*/
 
 
         })

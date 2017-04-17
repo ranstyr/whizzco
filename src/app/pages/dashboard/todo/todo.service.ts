@@ -5,7 +5,7 @@ export class TodoService {
 
   private _todoList = [
     { text: 'Check me out' },
-    { text: 'Get in touch with Syndi team' },
+    { text: 'Get in touch with Freighticket Admin team' },
     { text: 'Lorem ipsum dolor sit amet, possit denique oportere at his, etiam corpora deseruisse te pro' },
     { text: 'Ex has semper alterum, expetenda dignissim' },
     { text: 'Vim an eius ocurreret abhorreant, id nam aeque persius ornatus.' },
