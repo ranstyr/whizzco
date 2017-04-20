@@ -151,7 +151,8 @@ exports.sendgridEmail = function sendgridEmail(req, res) {
           const error = new Error('Only POST requests are accepted');
           error.code = 405;
           throw error;
-        }     // Get a SendGrid client 
+        }   
+        // Get a SendGrid client 
         const client = getClient(req.query.sg_key);
         console.log(`client - ` + client);
 
