@@ -33,7 +33,7 @@ const bigquery = require('@google-cloud/bigquery')();
  * @param {string} key Your SendGrid API key.
  * @returns {object} SendGrid client.
  */
-function getClient (key) {
+function getClient(key) {
   console.log('getClient , key is ' + key);
   if (!key) {
     const error = new Error('SendGrid API key not provided. Make sure you have a "sg_key" property in your request querystring');
@@ -57,7 +57,7 @@ function getClient (key) {
  * @param {string} data.body Body of the email subject line.
  * @returns {object} Payload object.
  */
-function getPayload (requestBody) {
+function getPayload(requestBody) {
   if (!requestBody.to) {
     const error = new Error('To email address not provided. Make sure you have a "to" property in your request');
     error.code = 400;
@@ -120,54 +120,81 @@ function getPayload (requestBody) {
  * @param {string} req.body.body Body of the email subject line.
  * @param {object} res Cloud Function response context.
  */
-exports.sendgridEmail = function sendgridEmail (req, res) {
+exports.sendgridEmail = function sendgridEmail(req, res) {
   return Promise.resolve()
     .then(() => {
-      console.log(`sendgridEmail`);
-      if (req.method !== 'POST') {
-        const error = new Error('Only POST requests are accepted');
-        error.code = 405;
-        throw error;
-      }
+      if (req.method === 'OPTIONS') {
+        console.log(' OPTIONS');
 
-
-      console.log(`sendgridEmail, req.query.sg_key is ` + req.query.sg_key);
-
-      // Get a SendGrid client
-      const client = getClient(req.query.sg_key);
-
-      // Build the SendGrid request to send email
-      const request = client.emptyRequest({
-        method: 'POST',
-        path: '/v3/mail/send',
-        body: getPayload(req.body)
-      });
-
-      // Make the request to SendGrid's API
-      console.log(`Sending email to: ${req.body.to}`);
-      return client.API(request);
-    })
-    .then((response) => {
-      if (response.statusCode < 200 || response.statusCode >= 400) {
-        const error = Error(response.body);
-        error.code = response.statusCode;
-        throw error;
-      }
-
-      console.log(`Email sent to: ${req.body.to}`);
-
-      // Forward the response back to the requester
-      res.status(response.statusCode);
-      if (response.headers['content-type']) {
-        res.set('content-type', response.headers['content-type']);
-      }
-      if (response.headers['content-length']) {
-        res.set('content-length', response.headers['content-length']);
-      }
-      if (response.body) {
-        res.send(response.body);
-      } else {
+        let headers = {};
+        // IE8 does not allow domains to be specified, just the *
+        // headers["Access-Control-Allow-Origin"] = req.headers.origin;
+        headers["Access-Control-Allow-Origin"] = "*";
+        headers["Access-Control-Allow-Methods"] = "POST, GET, PUT, DELETE, OPTIONS";
+        headers["Access-Control-Allow-Credentials"] = false;
+        headers["Access-Control-Max-Age"] = '86400'; // 24 hours
+        headers["Access-Control-Allow-Headers"] = "access-control-allow-origin,content-type";
+        res.writeHead(200, headers);
         res.end();
+        console.log(' Return OPTIONS');
+        return {};
+      }
+      else {
+        console.log('POST');
+
+        console.log(`sendgridEmail`);
+        console.log(`sendgridEmail, req ` + Object.keys(req));
+        console.log(`sendgridEmail, req.query ` + Object.keys(req.query));
+        console.log(`sendgridEmail, req.method ` + req.method + '  ' + Object.keys(req.method));
+        console.log(`sendgridEmail, req.body ` + Object.keys(req.body));
+        if (!((req.method === 'POST' ) || (req.method === 'OPTIONS' ))) {
+          const error = new Error('Only POST requests are accepted');
+          error.code = 405;
+          throw error;
+        }     // Get a SendGrid client 
+        const client = getClient(req.query.sg_key);
+        console.log(`client - ` + client);
+
+        // Build the SendGrid request to send email 
+        const request = client.emptyRequest({method: 'POST', path: '/v3/mail/send', body: getPayload(req.body)});
+        console.log(`request - ` + request);
+
+        // Make the request to SendGrid's API 
+        console.log(`Sending email to: ${req.body.to}`);
+        return client.API(request)
+          .then((response) => {
+            console.log(``);
+            if (response.statusCode < 200 || response.statusCode >= 400) {
+              const error = Error(response.body);
+              error.code = response.statusCode;
+              throw error;
+            }
+
+            console.log(`Email sent to: ${req.body.to}`);
+            // Forward the response back to the requester 
+            res.status(response.statusCode);
+            if (response.headers['content-type']) {
+              res.set('content-type', response.headers['content-type']);
+            }
+            if (response.headers['content-length']) {
+              res.set('content-length', response.headers['content-length']);
+            }
+            if (response.headers['Access-Control-Allow-Origin']) {
+              res.set('Access-Control-Allow-Origin', response.headers['Access-Control-Allow-Origin']);
+            }
+            if (response.headers['Access-Control-Allow-Methods']) {
+              res.set('Access-Control-Allow-Methods', response.headers['Access-Control-Allow-Methods']);
+            }
+            if (response.headers['Access-Control-Allow-Headers']) {
+              res.set('Access-Control-Allow-Headers', response.headers['Access-Control-Allow-Headers']);
+            }
+            if (response.body) {
+              res.send(response.body);
+            } else {
+              res.end();
+              console.log(' Return POST');
+            }
+          });
       }
     })
     .catch((err) => {
@@ -185,7 +212,7 @@ exports.sendgridEmail = function sendgridEmail (req, res) {
  *
  * @param {string} authorization The authorization header of the request, e.g. "Basic ZmdvOhJhcg=="
  */
-function verifyWebhook (authorization) {
+function verifyWebhook(authorization) {
   const basicAuth = new Buffer(authorization.replace('Basic ', ''), 'base64').toString();
   const parts = basicAuth.split(':');
   if (parts[0] !== config.USERNAME || parts[1] !== config.PASSWORD) {
@@ -202,7 +229,7 @@ function verifyWebhook (authorization) {
  *
  * @param {*} obj Value to examine.
  */
-function fixNames (obj) {
+function fixNames(obj) {
   if (Array.isArray(obj)) {
     obj.forEach(fixNames);
   } else if (obj && typeof obj === 'object') {
@@ -228,7 +255,7 @@ function fixNames (obj) {
  * @param {object} req Cloud Function request context.
  * @param {object} res Cloud Function response context.
  */
-exports.sendgridWebhook = function sendgridWebhook (req, res) {
+exports.sendgridWebhook = function sendgridWebhook(req, res) {
   return Promise.resolve()
     .then(() => {
       if (req.method !== 'POST') {
@@ -276,11 +303,11 @@ exports.sendgridWebhook = function sendgridWebhook (req, res) {
  * Helper method to get a handle on a BigQuery table. Automatically creates the
  * dataset and table if necessary.
  */
-function getTable () {
+function getTable() {
   const dataset = bigquery.dataset(config.DATASET);
 
-  return dataset.get({ autoCreate: true })
-    .then(([dataset]) => dataset.table(config.TABLE).get({ autoCreate: true }));
+  return dataset.get({autoCreate: true})
+    .then(([dataset]) => dataset.table(config.TABLE).get({autoCreate: true}));
 }
 // [END functions_sendgrid_get_table]
 
@@ -295,7 +322,7 @@ function getTable () {
  * @param {string} [event.data.timeDeleted] Time the file was deleted if this is a deletion event.
  * @see https://cloud.google.com/storage/docs/json_api/v1/objects#resource
  */
-exports.sendgridLoad = function sendgridLoad (event) {
+exports.sendgridLoad = function sendgridLoad(event) {
   const file = event.data;
 
   if (file.resourceState === 'not_exists') {
