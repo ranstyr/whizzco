@@ -14,6 +14,13 @@
  * limitations under the License.
  */
 
+
+// [START functions_sendgrid_setup]
+const sendgrid = require('sendgrid');
+const config = require('./config.json');
+const uuid = require('uuid');
+
+
 // Import the Firebase SDK for Google Cloud Functions.
 const functions = require('firebase-functions');
 
