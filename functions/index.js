@@ -41,6 +41,9 @@ const _ = require('lodash');
 // Import xlsx wrapper
 let XLSX = require('xlsx');
 
+console.log('init excel file function');
+
+
 
 // Adds a message that welcomes new users into the chat.
 /*exports.addWelcomeMessages = functions.auth.user().onCreate(event => {
@@ -75,6 +78,9 @@ exports.parseExcelFiles = functions.storage.object().onChange(event => {
   const fileName = objectName.split('/').pop();
   const tempLocalFile = `/tmp/${fileName}`;
   const messageId = objectName.split('/')[1];
+
+  console.log('before download file');
+
 
   // Download file from bucket.
   return bucket.file(fileName).download({destination: tempLocalFile})
