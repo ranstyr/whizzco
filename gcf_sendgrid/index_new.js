@@ -20,6 +20,8 @@ const sendgrid = require('sendgrid');
 const config = require('./config.json');
 const uuid = require('uuid');
 
+const helper = sendgrid.mail;
+
 // Get a reference to the Cloud Storage component
 const storage = require('@google-cloud/storage')();
 // Get a reference to the BigQuery component
@@ -57,7 +59,7 @@ function getClient(key) {
  * @param {string} data.body Body of the email subject line.
  * @returns {object} Payload object.
  */
-function getPayload(requestBody) {
+function payloadValidtion(requestBody) {
   if (!requestBody.to) {
     const error = new Error('To email address not provided. Make sure you have a "to" property in your request');
     error.code = 400;
@@ -84,22 +86,22 @@ function getPayload(requestBody) {
             email: requestBody.to
           }
         ],
-        subject: requestBody.subject,
-        "substitutions": {
-          "to": requestBody.to
-        },
+        subject: requestBody.subject
       }
     ],
     from: {
       email: requestBody.from
     },
+    to: {
+      email: requestBody.to
+    },
     content: [
       {
-        "type": "text/html",
+        type: 'text/plain',
         value: requestBody.body
       }
     ],
-    template_id: 'dab97644-42cf-4514-b449-d38d4716cd51'
+    template_id: 'dab97644-42cf-4514-b449-d38d4716cd51',
   };
 }
 // [END functions_get_payload]
@@ -160,25 +162,54 @@ exports.sendgridEmail = function sendgridEmail(req, res) {
         console.log(`client - ` + client);
 
 
+        payloadValidtion(req.body);
+
+        const from_email = req.body.for;
+        const to_email = req.body.to;
+        const subject = req.body.subject;
+        const content = new helper.Content("text/plain", req.body.body);
+
+
+
+        let mail = new helper.Mail();
+        let email = new helper.Email(from_email, "from_user_name");
+        mail.setFrom(email);
+
+        mail.setSubject(subject);
+
+        let personalization = new helper.Personalization();
+        email = new helper.Email(to_email, "from_user_name");
+        personalization.addTo(email);
+        email = new helper.Email("ran.styr@facebook.com", "Example User");
+        let substitution = new helper.Substitution("%name%", "Example User");
+        personalization.addSubstitution(substitution);
+        mail.addPersonalization(personalization);
+
+
+        let mailContent = new helper.Content("text/plain", content);
+        mail.addContent(mailContent);
+
+        mail.setTemplateId("dab97644-42cf-4514-b449-d38d4716cd51");
+
+        console.log("body - " + mail.toJSON());
+
+
         // Build the SendGrid request to send email 
-        const request = client.emptyRequest({method: 'POST', path: '/v3/mail/send', body: getPayload(req.body)});
+        const request = client.emptyRequest({method: 'POST', path: '/v3/mail/send', body: mail.toJSON()});
         console.log(`request - ` + request);
 
         // Make the request to SendGrid's API 
         console.log(`Sending email to: ${req.body.to}`);
         return client.API(request)
           .then((response) => {
-            console.log("Response received from send grid");
-            console.log(response.statusCode);
-            console.log(response.body);
-            console.log(response.headers);
+            console.log(``);
             if (response.statusCode < 200 || response.statusCode >= 400) {
               const error = Error(response.body);
               error.code = response.statusCode;
               throw error;
             }
 
-            console.log(`Email sent to: ${response.toString()}`);
+            console.log(`Email sent to: ${req.body.to}`);
             // Forward the response back to the requester 
             res.status(response.statusCode);
             if (response.headers['content-type']) {
@@ -202,10 +233,6 @@ exports.sendgridEmail = function sendgridEmail(req, res) {
               res.end();
               console.log(' Return POST');
             }
-          })
-          .catch((err) => {
-            console.error(err);
-            const code = err.code || (err.response ? err.response.statusCode : 500) || 500;
           });
       }
     })
