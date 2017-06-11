@@ -76,6 +76,14 @@ function getPayload(requestBody) {
     throw error;
   }
 
+  console.log("requestBody" + requestBody.toString());
+  console.log("requestBody" + JSON.stringify(requestBody));
+  console.log("countryPhoneCode" + JSON.stringify(requestBody.countryPhoneCode));
+
+  let days_1 = Number(requestBody.Days) + 1;
+  days_1 = days_1 ? days_1.toString() : '';
+  console.log("days_1" + days_1);
+
   return {
     personalizations: [
       {
@@ -86,12 +94,33 @@ function getPayload(requestBody) {
         ],
         subject: requestBody.subject,
         "substitutions": {
-          "to": requestBody.to
+          "To": requestBody.to,
+          "From": requestBody.from,
+          "routeFrom": requestBody.routeFrom,
+          "routeTo": requestBody.routeTo,
+          "carrierName": requestBody.CarrierName,
+          "Days": requestBody.Days,
+          "DaysPlus": days_1,
+          "userName": requestBody.userName,
+          "confirmationID": requestBody.confirmationID,
+          "xLarge": requestBody.xlarge,
+          "large": requestBody.large,
+          "medium": requestBody.medium,
+          "small": requestBody.small,
+          "phoneNumber" : requestBody.phoneNumber,
+          "countryPhoneCode" : requestBody.countryPhoneCode,
+          "userEmail": requestBody.userEmail,
         },
       }
     ],
     from: {
       email: requestBody.from
+    },
+    mail_settings: {
+      "bcc": {
+        "email": "ran.styr@gmail.com",
+        "enable": false
+      },
     },
     content: [
       {
@@ -99,7 +128,7 @@ function getPayload(requestBody) {
         value: requestBody.body
       }
     ],
-    template_id: 'dab97644-42cf-4514-b449-d38d4716cd51'
+    template_id: requestBody.templateID
   };
 }
 // [END functions_get_payload]
@@ -162,7 +191,7 @@ exports.sendgridEmail = function sendgridEmail(req, res) {
 
         // Build the SendGrid request to send email 
         const request = client.emptyRequest({method: 'POST', path: '/v3/mail/send', body: getPayload(req.body)});
-        console.log(`request - ` + request);
+        console.log(`request - ` + JSON.stringify(request));
 
         // Make the request to SendGrid's API 
         console.log(`Sending email to: ${req.body.to}`);
@@ -204,6 +233,7 @@ exports.sendgridEmail = function sendgridEmail(req, res) {
             }
           })
           .catch((err) => {
+            console.log(JSON.stringify(err));
             console.error(err);
             const code = err.code || (err.response ? err.response.statusCode : 500) || 500;
           });

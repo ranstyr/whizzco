@@ -74,10 +74,19 @@ exports.parseExcelFiles = functions.storage.object().onChange(event => {
   const metadata = bucket.metadata;
 
   const objectName = object.name;
+  console.log('objectName - ' + objectName);
+
 
   const fileName = objectName.split('/').pop();
+  console.log('fileName - ' + fileName);
+
+
   const tempLocalFile = `/tmp/${fileName}`;
+  console.log('tempLocalFile - ' + tempLocalFile);
+
   const messageId = objectName.split('/')[1];
+  console.log('messageId - ' + messageId);
+
 
   console.log('before download file');
 
