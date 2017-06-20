@@ -1,5 +1,9 @@
 // Polyfills
 
+import 'ie-shim'; // Internet Explorer 9 support
+import 'reflect-metadata';
+
+import {enableProdMode} from '@angular/core';
 // import 'ie-shim'; // Internet Explorer 9 support
 
 
