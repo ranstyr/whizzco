@@ -39,15 +39,6 @@ export class BaAuth {
       .then(( result ) => {
         // success
         self.setUserUid(result.uid);
-
-        if (!self.getComapny()) {
-          self.af.database.object('users' + '/' + self.getUserUid()).subscribe(( response ) => {
-            self.setComapny(response.company);
-            deferred.resolve(result);
-          })
-        }
-        else deferred.resolve(result);
-
       })
       .catch(( err ) => {
         console.log(err);
