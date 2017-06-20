@@ -15,6 +15,7 @@ import { PAGES_MENU } from './pages.menu';
         <router-outlet></router-outlet>
       </div>
     </div>
+<!--
     <footer class="al-footer clearfix">
       <div class="al-footer-right">Created with <i class="ion-heart"></i></div>
       <div class="al-footer-main clearfix">
@@ -27,6 +28,7 @@ import { PAGES_MENU } from './pages.menu';
         </ul>
       </div>
     </footer>
+-->
     <ba-back-top position="200"></ba-back-top>
     `
 })
