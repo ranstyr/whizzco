@@ -5,30 +5,25 @@
   <div class="card-body">
     <div class="upload">
       <div class="row">
-        <div class="col-md-6">
-          <form class="form-horizontal" (submit)="submitForm()">
-            <!--Report Type-->
-            <div class="form-group row">
-              <label for="report-type" class="col-sm-3 form-control-label">File Type</label>
-              <div class="col-sm-9">
-                <select (change)="selectorReportOnChange($event.target.value)" class="form-control" id="report-type">
-                  <option [value]="i" *ngFor="let i of reports">{{i}}</option>
-                </select></div>
+          <div class="col-lg-12 col-md-12">
+            <div class="horizontal-scroll">
+              <table class="table table-hover">
+                <thead>
+                <tr class="black-muted-bg">
+                  <th class="align-left">Websites</th>
+                  <th class="align-left">Impressions</th>
+                  <th class="align-left">Clicks</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of _data" class="no-top-border">
+                  <td (click)="onClick(item.title , item.campaign)" class="align-left">{{item.title}}</td>
+                  <td (click)="onClick(item.title , item.campaign)" class="align-left">{{item.impressions}}</td>
+                  <td (click)="onClick(item.title , item.campaign)" class="align-left">{{item.clicks}}</td>
+                </tr>
+                </tbody>
+              </table>
             </div>
-            <!--Upload-->
-            <div class="form-group row">
-              <div class="offset-sm-3 col-sm-9">
-                <button type="submit" class="btn btn-warning">Upload
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="col-md-6">
-          <ba-card title="Files Uploader" baCardClass="with-scroll">
-            <ba-files-uploader [selectedReport]="selectedReport" [selectedProperty]="selectedProperty"
-            ></ba-files-uploader>
-          </ba-card>
         </div>
       </div>
     </div>

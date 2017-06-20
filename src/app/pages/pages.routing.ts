@@ -18,12 +18,12 @@ export const routes: Routes = [
     path: 'pages',
     component: Pages,
     children: [
-      { path: '', redirectTo: 'reports', pathMatch: 'full' },
-/*      { path: 'dashboard', loadChildren: 'app/pages/dashboard/dashboard.module#DashboardModule' },
-      { path: 'properties', loadChildren: 'app/pages/properties/properties.module#PropertiesModule' },*/
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', loadChildren: 'app/pages/dashboard/dashboard.module#DashboardModule' },
+      { path: 'properties', loadChildren: 'app/pages/properties/properties.module#PropertiesModule' },
       { path: 'reports', loadChildren: 'app/pages/reports/reports.module#ReportsModule' },
-/*      { path: 'editors', loadChildren: 'app/pages/editors/editors.module#EditorsModule' },
-      { path: 'components', loadChildren: 'app/pages/components/components.module#ComponentsModule' },
+      { path: 'editors', loadChildren: 'app/pages/editors/editors.module#EditorsModule' }
+/*      { path: 'components', loadChildren: 'app/pages/components/components.module#ComponentsModule' },
       { path: 'charts', loadChildren: 'app/pages/charts/charts.module#ChartsModule' },
       { path: 'ui', loadChildren: 'app/pages/ui/ui.module#UiModule' },
       { path: 'forms', loadChildren: 'app/pages/forms/forms.module#FormsModule' },

@@ -136,50 +136,28 @@ export class DebtServiceChartComponent {
       });
       Highcharts.chart('debt-service-chart-container', {
         chart: {
-          zoomType: 'xy',
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie',
           backgroundColor: null
 
         },
         title: {
-          text: 'Debt Service'
+          text: 'Browser market shares'
         },
-        subtitle: {
-          text: ''
-        },
-        xAxis: [ {
-          categories: xAxisDate,
-          crosshair: true
-        } ],
-        yAxis: [ { // Primary yAxis
-          labels: {
-            format: '${value}',
-            style: {
-              color: Highcharts.getOptions().colors[ 1 ]
-            }
-          },
-          title: {
-            text: '',
-            style: {
-              color: Highcharts.getOptions().colors[ 1 ]
-            }
-          }
-        }, { // Secondary yAxis
-          title: {
-            text: '',
-            style: {
-              color: Highcharts.getOptions().colors[ 0 ]
-            }
-          },
-          labels: {
-            format: '{value}',
-            style: {
-              color: Highcharts.getOptions().colors[ 0 ]
-            }
-          },
-          opposite: true
-        } ],
         tooltip: {
-          shared: true
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: false
+            },
+            showInLegend: true
+          }
         },
         navigation: {
           buttonOptions: {
@@ -197,7 +175,31 @@ export class DebtServiceChartComponent {
             }
           }
         },
-        series: data
+        series: [{
+          name: 'Brands',
+          colorByPoint: true,
+          data: [{
+            name: 'Microsoft Internet Explorer',
+            y: 56.33
+          }, {
+            name: 'Chrome',
+            y: 24.03,
+            sliced: true,
+            selected: true
+          }, {
+            name: 'Firefox',
+            y: 10.38
+          }, {
+            name: 'Safari',
+            y: 4.77
+          }, {
+            name: 'Opera',
+            y: 0.91
+          }, {
+            name: 'Proprietary or Undetectable',
+            y: 0.2
+          }]
+        }]
       });
     }
 

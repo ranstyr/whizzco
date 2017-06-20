@@ -7,10 +7,26 @@ import { Subject } from "rxjs";
 export class BaPropertiesDataModel {
   _ref: FirebaseObjectObservable<any>;
   _propertiesData: any;
-
+  _webSiteData : any;
   _propertiesRef: FirebaseObjectObservable<any>;
 
   constructor( private _af: AngularFire ) {
+  }
+
+  getWebSitesObservable() {
+
+    let observable = this._af.database.list('/websites')
+    observable.subscribe(
+      value => {
+        this._webSiteData = value;
+      },
+      err => console.error("error at BaPropertiesModel - _ref.subscribe" + err + err ? err.message : err)
+    );
+    return observable;
+  }
+
+  getWebSitesData(){
+    return this._webSiteData;
   }
 
 

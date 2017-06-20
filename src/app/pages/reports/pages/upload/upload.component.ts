@@ -8,6 +8,8 @@ import { FirebaseObjectObservable } from "angularfire2";
 import { ModalDirective } from 'ng2-bootstrap';
 import { NgUploaderOptions } from "ngx-uploader";
 import { BaFilesUploader } from "../../../../theme/components/baFilesUploader/baFilesUploader.component";
+import { BaPropertiesDataModel } from "../../../../theme/services/baModel/BaPropertiesDataModel";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -19,6 +21,8 @@ export class UploadReport {
 
   reports = 'DataBase'.split(',');
   selectedReport = 'DataBase';
+
+  _data : any;
 
   //properties multi select
   propertiesRef: FirebaseObjectObservable<any>;
@@ -33,8 +37,15 @@ export class UploadReport {
   @ViewChild(BaFilesUploader) BaFilesUploader: BaFilesUploader;
 
 
-  constructor( private _BaPropertiesModel: BaPropertiesModel ) {
-
+  constructor( private _BaPropertiesModel: BaPropertiesDataModel , private router : Router ) {
+    this._BaPropertiesModel.getWebSitesObservable()
+      .subscribe(
+      value => {
+        console.log("websites data reterived from firebase : ", (value ? Object.keys(value) : null));
+        this._data = value;
+      },
+      err => console.error("error at BaPropertiesModel - _ref.subscribe" + err + err ? err.message : err)
+    );
   }
 
   ngOnInit() {
@@ -55,6 +66,13 @@ export class UploadReport {
     this.BaFilesUploader.handleFileSelect();
   }
 
+  onClick(id){
+/*
+    this.router.navigateByUrl( 'pages/properties');
+*/
+    this.router.navigate([ '/pages/properties' ], {queryParams: {id: id}});
+
+  }
 
   //selecor event
 

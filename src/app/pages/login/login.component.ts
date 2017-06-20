@@ -28,9 +28,7 @@ export class Login {
                private _spinner: BaThemeSpinner) {
     this.form = fb.group({
       'email': [ '', Validators.compose([ Validators.required ]) ],
-      'password': [ '', Validators.compose([ Validators.required ]) ],
-      'company': [ '', Validators.compose([ Validators.required ]) ]
-    });
+      'password': [ '', Validators.compose([ Validators.required ]) ]});
 
     this.email = this.form.controls[ 'email' ];
     this.password = this.form.controls[ 'password' ];
@@ -51,13 +49,11 @@ export class Login {
   }
 
   private login() {
-    if (this.company.value && this.email.value && this.password.value) {
+    if ( this.email.value && this.password.value) {
       this._spinner.show();
-      this._auth.setComapny(this.company.value);
       this._auth.login({email: this.email.value, password: this.password.value})
         .then(( val ) => {
-          this._auth.setComapny(this.company.value);
-          this.router.navigate([ '/pages/reports' ]);
+          this.router.navigate([ '/pages/dashboard' ]);
         }).fail(( err ) => {
         let temp: any = {};
         if (typeof err === 'string') {

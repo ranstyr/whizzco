@@ -1,8 +1,49 @@
 <div class="properties">
   <div class="row text-left">
-    <ba-card class="with-scroll text-left col-xlg-12 col-xl-12 col-lg-12 col-sm-12 col-xs-12">
-      <router-outlet></router-outlet>
-    </ba-card>
+    <div class="card-body">
+      <div class="upload">
+        <div class="row">
+          <div class="col-lg-12 col-md-12">
+            <h5 class="id"><u>{{this._id}}</u></h5>
+            <div class="horizontal-scroll">
+              <table class="table table-hover">
+                <thead>
+                <tr class="black-muted-bg">
+                  <th class="align-left">Websites</th>
+                  <th class="align-left">Impressions</th>
+                  <th class="align-left">Clicks</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="no-top-border">
+                  <td class="align-left">{{'coca cola'}}</td>
+                  <td class="align-left">{{_obj['coca cola'].impressions}}</td>
+                  <td class="align-left">{{_obj['coca cola'].clicks}}</td>
+                </tr>
+                <tr class="no-top-border">
+                  <td class="align-left">{{'lotto'}}</td>
+                  <td class="align-left">{{_obj['lotto'].impressions}}</td>
+                  <td class="align-left">{{_obj['lotto'].clicks}}</td>
+                </tr>
+                <tr class="no-top-border">
+                  <td class="align-left">{{'nike'}}</td>
+                  <td class="align-left">{{_obj['nike'].impressions}}</td>
+                  <td class="align-left">{{_obj['nike'].clicks}}</td>
+                </tr>
+                <tr class="no-top-border">
+                  <td class="align-left">{{'wix'}}</td>
+                  <td class="align-left">{{_obj['wix'].impressions}}</td>
+                  <td class="align-left">{{_obj['wix'].clicks}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ba-modals></ba-modals>
+    </div>
+
   </div>
 </div>
 

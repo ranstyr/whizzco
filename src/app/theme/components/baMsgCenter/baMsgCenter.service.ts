@@ -6,7 +6,7 @@ export class BaMsgCenterService {
   private _notifications = [
     {
       name: 'Vlad',
-      text: 'Freighticket Admin posted a new article.',
+      text: 'whizzco Admin posted a new article.',
       time: '1 min ago'
     },
     {

@@ -1,57 +1,47 @@
 <div class="dashboard">
   <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <kpi-container></kpi-container>
+      <div class="row pie-charts text-center">
+        <ba-card class="pie-chart-item-container col-12 col-md-3">
+          <div class="pie-chart-item">
+            <div class="description">
+              <div>Impressions</div>
+              <div class="description-stats">10,987</div>
+            </div>
+          </div>
+        </ba-card>
+        <ba-card class="pie-chart-item-container col-12 col-md-3">
+          <div class="pie-chart-item">
+            <div class="description">
+              <div>Clicks</div>
+              <div class="description-stats">1,236</div>
+            </div>
+          </div>
+        </ba-card>
+        <ba-card class="pie-chart-item-container col-12 col-md-3">
+          <div class="pie-chart-item">
+            <div class="description">
+              <div>CTR</div>
+              <div class="description-stats">11.2%</div>
+            </div>
+          </div>
+        </ba-card>
+        <ba-card class="pie-chart-item-container col-12 col-md-3">
+          <div class="pie-chart-item">
+            <div class="description">
+              <div>ePCM</div>
+              <div class="description-stats">4.5%</div>
+            </div>
+          </div>
+        </ba-card>
+      </div>
     </div>
+
   </div>
 
   <div class="row">
-    <ba-card  class="col-xlg-10 col-xl-10 col-lg-10 col-sm-12 col-xs-12">
+    <ba-card  class="col-xlg-12 col-xl-12 col-lg-12 col-sm-12 col-xs-12">
       <router-outlet></router-outlet>
-    </ba-card>
-    <ba-card class="filter-Data col-xlg-2 col-xl-2 col-lg-2 col-sm-12 col-xs-12 no-padding"
-             title="Filter Data">
-      <!--Properties-->
-      <div class="form-group row">
-        <label class="col-sm-12 form-control-label">Properties</label>
-        <div class="col-sm-12">
-          <form [formGroup]="form" class="text-center">
-            <ng-select
-              [options]="optionsProperties"
-              [multiple]="multiple1"
-              placeholder="Select Properties"
-              formControlName="selectMultiple"
-              (opened)="onMultipleOpened()"
-              (closed)="onMultipleClosed()"
-              (selected)="onMultipleSelected($event)"
-              (deselected)="onMultipleDeselected($event)">
-            </ng-select>
-            <!--
-            <pre #preMultiple>{{logMultipleString}}</pre>
-            -->
-          </form>
-        </div>
-      </div>
-      <!--Pick Dates-->
-      <div class="form-group row">
-        <label class="col-sm-12 form-control-label">Dates</label>
-        <div class="col-sm-12">
-
-          <form [formGroup]="form">
-            <div class="input-group text-center" daterangepicker
-                 (selected)="selectedDate($event, mainInput)"
-                 (cancelDaterangepicker)="calendarEventsHandler($event)"
-                 (applyDaterangepicker)="calendarEventsHandler($event)"
-                 (hideDaterangepicker)="calendarEventsHandler($event)"
-                 (showDaterangepicker)="calendarEventsHandler($event)"
-            >
-                    <span class="form-control uneditable-input" name="daterange">
-                        {{ mainInput.start | date:'MM/dd/y' }} - {{ mainInput.end| date:'MM/dd/y' }}
-                    </span>
-            </div>
-          </form>
-        </div>
-      </div>
     </ba-card>
   </div>
 </div>

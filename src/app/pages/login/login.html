@@ -1,7 +1,7 @@
 <div class="auth-main">
   <div class="auth-block">
-    <h1>Sign in to Freighticket Admin</h1>
-    <a routerLink="/register" class="auth-link">New to Freighticket Admin? Sign up!</a>
+    <h1>Sign in to whizzco Admin</h1>
+    <a routerLink="/register" class="auth-link">New to Whizzco Admin? Sign up!</a>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
       <div class="form-group row" [ngClass]="{'has-error': (!email.valid && email.touched), 'has-success': (email.valid && email.touched)}">
@@ -18,6 +18,7 @@
           <input [formControl]="password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
         </div>
       </div>
+<!--
       <div class="form-group row" [ngClass]="{'has-error': (!company.valid && company.touched), 'has-success': (company.valid && company.touched)}">
         <label for="company" class="col-sm-2 control-label">Company</label>
 
@@ -25,13 +26,14 @@
           <input [formControl]="company" type="company" class="form-control" id="company" placeholder="Company">
         </div>
       </div>
+
       <div class="form-group row" [ngClass]="{'has-error': (loginErrorMessage)}">
         <label for="company" class="col-sm-12 help-block sub-little-text error-label">{{loginErrorMessage}}</label>
       </div>
-
+-->
       <div class="form-group row">
         <div class="offset-sm-2 col-sm-10">
-          <button [disabled]="!form.valid" type="submit" class="btn btn-default btn-auth">Sign in</button>
+          <button  type="submit" class="btn btn-default btn-auth">Sign in</button>
           <a routerLink="/login" class="forgot-pass">Forgot password?</a>
         </div>
       </div>

@@ -12,13 +12,17 @@ export class KpiContainerService {
     return [
       {
         color: pieColor,
-        description: 'T-12 NOI',
-        stats: '57,820',
+        description: 'Impressions',
+        stats: '10,987',
+      }, {
+        color: pieColor,
+        description: 'Clicks',
+        stats: '1,236',
         icon: 'money',
       }, {
         color: pieColor,
-        description: 'T-12 Net Income',
-        stats: '89,745',
+        description: 'T-12 DCR',
+        stats: '11.2%',
         icon: 'money',
       }, {
         color: pieColor,

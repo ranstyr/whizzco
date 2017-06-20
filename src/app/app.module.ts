@@ -35,12 +35,12 @@ export type StoreType = {
 };
 
 const FirebaseConfig = {
-  apiKey: "AIzaSyDuXj0K7ctFEFYwKZ_M9YQfylCQexu34yU",
-  authDomain: "freightticket.firebaseapp.com",
-  databaseURL: "https://freightticket.firebaseio.com",
-  projectId: "freightticket",
-  storageBucket: "freightticket.appspot.com",
-  messagingSenderId: "509483330671"
+  apiKey: "AIzaSyCGs7OqmX77ug-FLfugKseztBM-U0CR4Rc",
+  authDomain: "whizzco-b5091.firebaseapp.com",
+  databaseURL: "https://whizzco-b5091.firebaseio.com",
+  projectId: "whizzco-b5091",
+  storageBucket: "whizzco-b5091.appspot.com",
+  messagingSenderId: "435286122220"
 };
 
 //todo ran we can delete firebase init or angularfire init

@@ -86,9 +86,7 @@ export class IncomeAnaylsisChartComponent {
 
 
   public renderChart( propertiesFilterdData, xAxisDate  ) {
-    if (this.el.nativeElement && this._dataService.getCurrentTab()==='financial') {
-      let data : any;
-      data = this.calculateData(propertiesFilterdData , xAxisDate);
+
 
       Highcharts.setOptions({
         lang: {
@@ -97,41 +95,33 @@ export class IncomeAnaylsisChartComponent {
       });
       Highcharts.chart('incomeAnaylsisChartContainer', {
         chart: {
-          type: 'column',
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie',
           backgroundColor: null
 
         },
         title: {
-          text: 'Income Analysis'
-        },
-        xAxis: {
-          categories: xAxisDate
-        },
-        yAxis: {
-          min: 0 /*Math.max.apply(null, data.residentialRental[0]) * 0.8*/,
-          tickInterval: 10000,
-          stackLabels: {
-            formatter: function () {
-              return Highcharts.numberFormat(this.total, 2);
-            },
-            enabled: false,
-            style: {
-              fontWeight: 'bold',
-              color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
-            }
-          },
-          title: {
-            text: ''
-          }
+          text: 'Browser market shares'
         },
         tooltip: {
-          pointFormat: '<span style="color:{series.color}">{series.name}</span>: $<b>{point.y:.2f}</b> ({point.percentage:.0f}%)<br/>',
-          shared: true
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: false
+            },
+            showInLegend: true
+          }
         },
         navigation: {
           buttonOptions: {
             theme: {
-              fill: "#71B0D9",
+              fill: "#5B8DB5",
               states: {
                 hover: {
                   fill: '#5585C0'
@@ -144,15 +134,32 @@ export class IncomeAnaylsisChartComponent {
             }
           }
         },
-        plotOptions: {
-          column: {
-            stacking: 'normal',
-          }
-        },
-        series: data
+        series: [{
+          name: 'Brands',
+          colorByPoint: true,
+          data: [{
+            name: 'Microsoft Internet Explorer',
+            y: 56.33
+          }, {
+            name: 'Chrome',
+            y: 24.03,
+            sliced: true,
+            selected: true
+          }, {
+            name: 'Firefox',
+            y: 10.38
+          }, {
+            name: 'Safari',
+            y: 4.77
+          }, {
+            name: 'Opera',
+            y: 0.91
+          }, {
+            name: 'Proprietary or Undetectable',
+            y: 0.2
+          }]
+        }]
       });
-
-
     }
   }
-}
+

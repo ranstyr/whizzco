@@ -3,49 +3,30 @@ export const PAGES_MENU = [
     path: 'pages',
     children: [
       {
-        path: 'reports',
+        path: 'dashboard',
         data: {
           menu: {
-            title: 'Reports',
-            icon: 'ion-document',
+            title: 'Dashboard',
+            icon: 'ion-home',
             selected: false,
             expanded: false,
             order: 0
           }
-        },
-        children: [
-          {
-            path: 'upload',
-            data: {
-              menu: {
-                title: 'Upload Reports',
-              }
-            }
-          }
-        ]
+        }
       },
-/*      {
-        path: 'editors',
+     {
+        path: 'reports',
         data: {
           menu: {
-            title: 'Editors',
+            title: 'Websites',
             icon: 'ion-edit',
             selected: false,
             expanded: false,
-            order: 100,
+            order: 1,
           }
-        },
-        children: [
-          {
-            path: 'ckeditor',
-            data: {
-              menu: {
-                title: 'CKEditor',
-              }
-            }
-          }
-        ]
-      },
+        }
+     },
+      /*
       {
         path: 'components',
         data: {
