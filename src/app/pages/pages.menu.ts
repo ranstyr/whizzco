@@ -19,7 +19,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Websites',
-            icon: 'ion-edit',
+            icon: 'ion-android-laptop',
             selected: false,
             expanded: false,
             order: 1,

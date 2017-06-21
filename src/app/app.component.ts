@@ -10,9 +10,6 @@ import 'style-loader!./theme/initial.scss';
 
 import {enableProdMode} from '@angular/core';
 
-
-enableProdMode();
-
 /*
  * App Component
  * Top Level Component

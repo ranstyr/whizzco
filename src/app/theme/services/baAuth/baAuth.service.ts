@@ -39,6 +39,7 @@ export class BaAuth {
       .then(( result ) => {
         // success
         self.setUserUid(result.uid);
+        deferred.resolve(result);
       })
       .catch(( err ) => {
         console.log(err);

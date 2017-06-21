@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from "angularfire2";
 import { Subject } from "rxjs";
+import { BaThemeSpinner } from "../baThemeSpinner/baThemeSpinner.service";
 
 @Injectable()
 export class BaPropertiesDataModel {
@@ -10,15 +11,16 @@ export class BaPropertiesDataModel {
   _webSiteData : any;
   _propertiesRef: FirebaseObjectObservable<any>;
 
-  constructor( private _af: AngularFire ) {
+  constructor( private _af: AngularFire , private _spinner: BaThemeSpinner) {
   }
 
   getWebSitesObservable() {
 
-    let observable = this._af.database.list('/websites')
+    let observable = this._af.database.list('/websites');
     observable.subscribe(
       value => {
         this._webSiteData = value;
+        this._spinner.hide();
       },
       err => console.error("error at BaPropertiesModel - _ref.subscribe" + err + err ? err.message : err)
     );
