@@ -10,16 +10,16 @@
               <table class="table table-hover">
                 <thead>
                 <tr class="black-muted-bg">
-                  <th class="align-left">Websites</th>
-                  <th class="align-left">Impressions</th>
-                  <th class="align-left">Clicks</th>
+                  <th class="align-importnad">Websites</th>
+                  <th class="align-importnad">Impressions</th>
+                  <th class="align-importnad">Clicks</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let item of _data" class="no-top-border">
-                  <td (click)="onClick(item.title , item.campaign)" class="align-left">{{item.title}}</td>
-                  <td (click)="onClick(item.title , item.campaign)" class="align-left">{{item.impressions}}</td>
-                  <td (click)="onClick(item.title , item.campaign)" class="align-left">{{item.clicks}}</td>
+                  <td (click)="onClick(item.title , item.campaign)" class="align-importnad">{{item.title}}</td>
+                  <td (click)="onClick(item.title , item.campaign)" class="align-importnad">{{item.impressions}}</td>
+                  <td (click)="onClick(item.title , item.campaign)" class="align-importnad">{{item.clicks}}</td>
                 </tr>
                 </tbody>
               </table>
