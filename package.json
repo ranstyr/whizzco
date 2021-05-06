@@ -111,7 +111,7 @@
     "typedoc": "0.5.6",
     "typescript": "2.0.10",
     "typogr": "0.6.6",
-    "underscore": "1.8.3",
+    "underscore": "1.12.1",
     "url-loader": "0.5.7",
     "webpack": "2.2.0",
     "webpack-dev-middleware": "1.9.0",
